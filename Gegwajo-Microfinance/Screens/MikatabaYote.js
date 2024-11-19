@@ -34,34 +34,48 @@ import { useFocusEffect } from '@react-navigation/native';
 
 const { width, height } = Dimensions.get('screen');
 
-const MikatabaYote = ({navigation}) => {
+const MikatabaYote = ({ navigation }) => {
+  const [fontsLoaded] = useFonts({
+    Bold: require('../assets/fonts/Poppins-Bold.ttf'),
+    Medium: require('../assets/fonts/Poppins-Medium.ttf'),
+    SemiBold: require('../assets/fonts/Poppins-SemiBold.ttf'),
+    Regular: require('../assets/fonts/Poppins-Regular.ttf'),
+    Thin: require('../assets/fonts/Poppins-Thin.ttf'),
+    Light: require('../assets/fonts/Poppins-Light.ttf'),
+  });
+
+ const [queryset, setQueryset] = useState([]);
+const [current_page, setcurrent_page] = useState(1);
+const [isLoading, setIsLoading] = useState(false);
+const [loading, setLoading] = useState(false);
+const [endReached, setEndReached] = useState(false)
+const [isPending, setPending] = useState(true);
+
+  const [input, setInput] = useState('');
 
 
+    const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
 
-  let [fontsLoaded] = useFonts({
-    
-    'Bold': require('../assets/fonts/Poppins-Bold.ttf'),
-    'Medium': require('../assets/fonts/Poppins-Medium.ttf'),
-    'SemiBold': require('../assets/fonts/Poppins-SemiBold.ttf'),
-    'Regular': require('../assets/fonts/Poppins-Regular.ttf'),
-    'Thin': require('../assets/fonts/Poppins-Thin.ttf'),
-    'Light': require('../assets/fonts/Poppins-Light.ttf'),
-    
-    
+ const showAlertFunction = (message) => {
+    setAlertMessage(message);
+    setShowAlert(true);
+  };
+
+  const hideAlert = () => {
+    setShowAlert(false);
+  };
+
+
   
-});
-
 
 // kwaajili ya kupata taarifa za aliyelogin
 const [userData, setUserData] = useState({});
   const [userToken, setUserToken] = useState('');
 
   useEffect(() => {
-    AsyncStorage.getItem("userToken").then(token => {
-      setUserToken(token)
-    })
     fetchUserData();
-  }, [userData]);
+  }, []);
 
   const fetchUserData = async () => {
     try {
@@ -78,43 +92,125 @@ const [userData, setUserData] = useState({});
     }
   };
 
+//console.log("USERDATA USERNAME", userData.username);
 
  useEffect(() => {
-    checkLoggedIn();
+    const fetchTokenAndData = async () => {
+      const token = await AsyncStorage.getItem('userToken');
+      setUserToken(token);
+      if (token) {
+        setIsLoading(true);
+        getItems(token);
+      }
+    };
+    fetchTokenAndData();
+  }, []);
 
-     if (userToken) {
-     setLoading(true)
-     getItems();
+
+
+const getItems = (token) => {
+  if (endReached) {
+    setLoading(false);
+    setIsLoading(false);
+    setPending(false);
+    return;
+  } else {
+    setIsLoading(true);
+    //console.log('USERTOKEN', userToken);
+    //setPending(true);
+    //const url = EndPoint + `/GetAllUniversities/?page=${current_page}&page_size=2`;
+   const url = EndPoint + `/GetAllWatejaWoteView/?page=${current_page}&page_size=500`
+    // console.log(url);
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Token ${token}`, // Add the Authorization header here
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.queryset.length > 0) {
+          setQueryset(data.queryset);
+
+        
+        
+          setIsLoading(false);
+          setLoading(false);
+          setcurrent_page(current_page + 1);
+          setPending(false);
+
+          // console.log("NEW CRRRENT", current_page);
+          console.log(queryset);
+
+        } else {
+          setIsLoading(false);
+          setEndReached(true);
+          setLoading(false);
+          setPending(false);
+          console.log("Error fetching data");;
+        }
+      });
+  }
+};
+
+
+
+//console.log("Test userToken", userToken);
+
+ const renderLoader = () => {
+    return (
+      isLoading ?
+        <View style={globalStyles.loaderStyle}>
+          <ActivityIndicator size="large" color="red" />
+        </View> : null
+    );
+  };
+
+  // const loadMoreItem = () => {
+  //   setcurrent_page(current_page + 1);
+  // };
+
+  // useEffect(() => {
+  //   setLoading(true)
+  //   getItems();
+  // }, []);
+
+
+ const handleScroll = (event) =>{
+    const {layoutMeasurement, contentOffset, contentSize} = event.nativeEvent;
+    const scrollEndY = layoutMeasurement.height + contentOffset.y
+    const contetHeight = contentSize.height
+
+    if (scrollEndY >= contetHeight - 50) {
+      getItems()
     }
+  }
 
 
-
-  }, [userToken]);
-
-  const checkLoggedIn = async () => {
-    const token = await AsyncStorage.getItem('userToken');
-    setUserToken(token);
+  const formatDate = (dateString) => {
+    if (!dateString) return null;
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
   };
 
-
-
-
-//FOR SEARCHING
-const [input, setInput] = useState('');
-
-
-    const [showAlert, setShowAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
-
- const showAlertFunction = (message) => {
-    setAlertMessage(message);
-    setShowAlert(true);
+  const formatToThreeDigits = (number) => {
+    return number
+      ? number.toLocaleString('en-US', {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 2,
+        })
+      : null;
   };
 
-  const hideAlert = () => {
-    setShowAlert(false);
-  };
+  const handlePress = (item) => navigation.navigate('Home', { item });
+  const DeletehandlePress = (item) =>
+    navigation.navigate('Delete Mteja', { ...item, postId: item.id });
 
+const handlePressDetailsPage = (item) =>
+    navigation.navigate('Mteja Details Page', { item });
 
 
 
@@ -152,268 +248,273 @@ useEffect(() => {
 
 
 
-//Load more
-const [queryset, setQueryset] = useState([]);
-const [current_page, setcurrent_page] = useState(1);
-const [isLoading, setIsLoading] = useState(false);
-const [loading, setLoading] = useState(false);
-const [endReached, setEndReached] = useState(false)
-const [isPending, setPending] = useState(true);
+// New Component for Table Row
+const TableRowComponent = ({ item}) => {
 
+  //mwanzo wa search
+   if (input === ""){
 
-
-const [wateja_wote, setwateja_wote] = useState(0);
-
-
-const getItems = () => {
-  if (endReached) {
-    setLoading(false);
-    setIsLoading(false);
-    setPending(false);
-    return;
-  } else {
-    setIsLoading(true);
-    //console.log('USERTOKEN', userToken);
-    //setPending(true);
-    //const url = EndPoint + `/GetAllUniversities/?page=${current_page}&page_size=2`;
-   const url = EndPoint + `/GetAllWatejaWoteView/?page=${current_page}&page_size=500`
-    // console.log(url);
-    fetch(url, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Token ${userToken}`, // Add the Authorization header here
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.queryset.length > 0) {
-          setQueryset(data.queryset);
-
-        
-        
-          setIsLoading(false);
-          setLoading(false);
-          setcurrent_page(current_page + 1);
-          setPending(false);
-
-          // console.log("NEW CRRRENT", current_page);
-          console.log(queryset);
-
-        } else {
-          setIsLoading(false);
-          setEndReached(true);
-          setLoading(false);
-          setPending(false);
-          console.log("Error fetching data");;
-        }
-      });
-  }
-};
-
-
-//console.log("Test userToken", userToken);
-
- const renderLoader = () => {
-    return (
-      isLoading ?
-        <View style={globalStyles.loaderStyle}>
-          <ActivityIndicator size="large" color="red" />
-        </View> : null
-    );
-  };
-
-  // const loadMoreItem = () => {
-  //   setcurrent_page(current_page + 1);
-  // };
-
-  // useEffect(() => {
-  //   setLoading(true)
-  //   getItems();
-  // }, []);
-
-
- const handleScroll = (event) =>{
-    const {layoutMeasurement, contentOffset, contentSize} = event.nativeEvent;
-    const scrollEndY = layoutMeasurement.height + contentOffset.y
-    const contetHeight = contentSize.height
-
-    if (scrollEndY >= contetHeight - 50) {
-      getItems()
-    }
-  }
-
-
-
- const formatDate = (dateString) => {
-    if (!dateString) return null;
-    const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear();
-    return `${day}/${month}/${year}`;
-  };
-
-
-const formatToThreeDigits = (number) => {
-  if (number !== null) {
-    return number.toLocaleString('en-US', {
-      minimumFractionDigits: 0, // Ensure two decimal places
-      maximumFractionDigits: 2, // Limit to two decimal places
-      minimumIntegerDigits: 1, // Ensure at least one integer digit
-    });
-  }
-  return null;
-};
-
-
-
-
-
-
-  const handlePress = (item) => {
-    navigation.navigate('Home', { item });
-  };
-
-   const DeletehandlePress = (item) => {
-    navigation.navigate('Delete Mteja', { ...item, postId: item.id});
-  };
 
   return (
+    <View key={item.id} style={globalStyles.row2}>
+      <Text style={[globalStyles.cell, globalStyles.firstNameColumn]}>{item.JinaKamiliLaMteja}</Text>
+      <Text style={[globalStyles.cell, globalStyles.tarehecolumn]}>{formatDate(item.Created)}</Text>
+      {item.KiasiAnachokopa > 0 ? (
+      <Text style={[globalStyles.cell, globalStyles.otherColumns]}>{formatToThreeDigits(item.KiasiAnachokopa)}</Text>
+     ):(
+     <Text style={[globalStyles.cell, globalStyles.otherColumns]}>0</Text>
+     )}
 
+
+      {item.KiasiAlicholipa > 0 ? (
+      <Text style={[globalStyles.cell, globalStyles.otherColumns]}>{formatToThreeDigits(item.KiasiAlicholipa)}</Text>
+      ):(
+       <Text style={[globalStyles.cell, globalStyles.otherColumns]}>0</Text>
+      )}
+
+      {item.JumlaYaDeni > 0 ? (
+      <Text style={[globalStyles.cell, globalStyles.otherColumns]}>{formatToThreeDigits(item.JumlaYaDeni)}</Text>
+       ):(
+       <Text style={[globalStyles.cell, globalStyles.otherColumns]}>0</Text>
+       )}
+
+      <TouchableOpacity
+        style={[
+          globalStyles.cell,
+          globalStyles.buttoncolumn,
+          { justifyContent: 'center', alignItems: 'center' },
+        ]}
+        onPress={() => handlePressDetailsPage(item)}
+      >
+        <MaterialCommunityIcons
+          name="gesture-tap-button"
+          size={30}
+          style={globalStyles.TableIconColor}
+        />
+      </TouchableOpacity>
+
+ {userData && userData.is_admin === true && (
+      <TouchableOpacity
+        style={[
+          globalStyles.cell,
+          globalStyles.buttoncolumn,
+          { justifyContent: 'center', alignItems: 'center' },
+        ]}
+        onPress={() => DeletehandlePress(item)}
+      >
+        <FontAwesome name="pencil-square-o" size={30} style={globalStyles.TableIconColorUpdate} />
+      </TouchableOpacity>
+      )}
+
+ {userData && userData.is_admin === true && (
+      <TouchableOpacity
+        style={[
+          globalStyles.cell,
+          globalStyles.buttoncolumn,
+          { justifyContent: 'center', alignItems: 'center' },
+        ]}
+        onPress={() => DeletehandlePress(item)}
+      >
+        <FontAwesome name="trash-o" size={30} style={globalStyles.TableIconColorDelete} />
+      </TouchableOpacity>
+      )}
+
+    </View>
+  )
+
+    // hili bano la chini ni la if ya juu kama mtu akitype   
+}
+
+ if (item.JinaKamiliLaMteja.toLowerCase().includes(input.toLowerCase())) {
+
+
+
+
+  return (
+    <View key={item.id} style={globalStyles.row2}>
+      <Text style={[globalStyles.cell, globalStyles.firstNameColumn]}>{item.JinaKamiliLaMteja}</Text>
+      <Text style={[globalStyles.cell, globalStyles.tarehecolumn]}>{formatDate(item.Created)}</Text>
+      {item.KiasiAnachokopa > 0 ? (
+      <Text style={[globalStyles.cell, globalStyles.otherColumns]}>{formatToThreeDigits(item.KiasiAnachokopa)}</Text>
+     ):(
+     <Text style={[globalStyles.cell, globalStyles.otherColumns]}>0</Text>
+     )}
+
+
+      {item.KiasiAlicholipa > 0 ? (
+      <Text style={[globalStyles.cell, globalStyles.otherColumns]}>{formatToThreeDigits(item.KiasiAlicholipa)}</Text>
+      ):(
+       <Text style={[globalStyles.cell, globalStyles.otherColumns]}>0</Text>
+      )}
+
+      {item.JumlaYaDeni > 0 ? (
+      <Text style={[globalStyles.cell, globalStyles.otherColumns]}>{formatToThreeDigits(item.JumlaYaDeni)}</Text>
+       ):(
+       <Text style={[globalStyles.cell, globalStyles.otherColumns]}>0</Text>
+       )}
+
+      <TouchableOpacity
+        style={[
+          globalStyles.cell,
+          globalStyles.buttoncolumn,
+          { justifyContent: 'center', alignItems: 'center' },
+        ]}
+        onPress={() => handlePressDetailsPage(item)}
+      >
+        <MaterialCommunityIcons
+          name="gesture-tap-button"
+          size={30}
+          style={globalStyles.TableIconColor}
+        />
+      </TouchableOpacity>
+
+ {userData && userData.is_admin === true && (
+      <TouchableOpacity
+        style={[
+          globalStyles.cell,
+          globalStyles.buttoncolumn,
+          { justifyContent: 'center', alignItems: 'center' },
+        ]}
+        onPress={() => DeletehandlePress(item)}
+      >
+        <FontAwesome name="pencil-square-o" size={30} style={globalStyles.TableIconColorUpdate} />
+      </TouchableOpacity>
+      )}
+
+ {userData && userData.is_admin === true && (
+      <TouchableOpacity
+        style={[
+          globalStyles.cell,
+          globalStyles.buttoncolumn,
+          { justifyContent: 'center', alignItems: 'center' },
+        ]}
+        onPress={() => DeletehandlePress(item)}
+      >
+        <FontAwesome name="trash-o" size={30} style={globalStyles.TableIconColorDelete} />
+      </TouchableOpacity>
+      )}
+
+    </View>
+  )
+
+
+
+
+  // hili bano la chini ni la if ya pili mwisho
+  }
+
+
+};
+
+
+
+  return (
       <>{!fontsLoaded ? (<View/>):(
 
-       <>
+            <>
 
 
  {!isPending ? (
 
 
 
-    <View style={globalStyles.container}>
-     
+        <View style={globalStyles.container}>
+          <MinorHeader />
+
+          <View style={{ width: '100%', marginVertical: 0 }}>
+            <Text
+              style={{
+                color: 'white',
+                paddingVertical: 10,
+                paddingHorizontal: 20,
+                width: '90%',
+                marginHorizontal: 10,
+                borderRadius: 10,
+                fontFamily: 'Medium',
+              }}
+            >
+              Taarifa za mikataba yote
+            </Text>
+          </View>
+
+          <View style={globalStyles.searchbarOtherPages}>
+            <View style={globalStyles.searchbarIconContainerOtherPages}>
+              <Ionicons
+                name="search-outline"
+                size={25}
+                color={COLORS.black}
+                style={globalStyles.AppIConHomeScreenOtherPages}
+              />
+            </View>
+            <View style={globalStyles.searchbarInputContainerOtherPages}>
+              <TextInput
+                value={input}
+                onChangeText={(text) => setInput(text)}
+                placeholder="Ingiza jina"
+                placeholderTextColor="black"
+                style={globalStyles.AppInputHomeScreenOtherPages}
+              />
+            </View>
+          </View>
+
+          <ScrollView 
+          keyboardShouldPersistTaps="handled"
+          horizontal>
+            <ScrollView 
+            keyboardShouldPersistTaps="handled"
+            >
+
+            {queryset && queryset.length > 0 ? (
 
 
+      <>
 
-<MinorHeader />
+              <View style={globalStyles.table}>
+                <View style={[globalStyles.row, globalStyles.header]}>
+                  <Text style={[globalStyles.cell2, globalStyles.firstNameColumn]}>Jina</Text>
+                  <Text style={[globalStyles.cell2, globalStyles.tarehecolumn]}>Tarehe</Text>
+                  <Text style={[globalStyles.cell2, globalStyles.otherColumns]}>Mkopo</Text>
+                  <Text style={[globalStyles.cell2, globalStyles.otherColumns]}>Lipwa</Text>
+                  <Text style={[globalStyles.cell2, globalStyles.otherColumns]}>Deni</Text>
+                  <Text style={[globalStyles.cell2, globalStyles.buttoncolumn]}>Hali</Text>
+                   {userData && userData.is_admin === true && (
+                  <Text style={[globalStyles.cell2, globalStyles.buttoncolumn]}>Badiliisha</Text>
+                  )}
 
-<View style={{
-  width:'100%',
-  marginVertical:0,
-  // marginHorizontal:20,
-  //flex:1,
-  //backgroundColor:'wheat',
+                    {userData && userData.is_admin === true && (
+                  <Text style={[globalStyles.cell2, globalStyles.buttoncolumn]}>Futa</Text>
+                  )}
+                </View>
 
-}}>
-  
-  <Text style={{
-    color:'white',
-    // backgroundColor:'wheat',
-    paddingVertical:10,
-  paddingHorizontal:20,
-  width:'90%',
-  marginHorizontal:10,
-  borderRadius:10,
-  fontFamily:'Medium',
+                {/* Render Table Rows */}
+                {queryset.map((item) => (
+                  <TableRowComponent
+                    key={item.id}
+                    item={item}
+                    // formatDate={formatDate}
+                    // formatToThreeDigits={formatToThreeDigits}
+                    // handlePress={handlePress}
+                    // DeletehandlePress={DeletehandlePress}
+                  />
+                ))}
+              </View>
 
-  }}>Taarifa za mikataba yote</Text>
+
+               </>  
+
+   ) :(
+   <View style={[globalStyles.noitemTextContainer,{}]}>
+  <Text style={globalStyles.noitemText}>hukuna Taarifa
+  </Text>
+
+
 </View>
 
+  )} 
 
 
-
-
-    <View style={globalStyles.searchbarOtherPages}>
-
-                 <View style={globalStyles.searchbarIconContainerOtherPages}>
-                    <Ionicons name="search-outline" 
-                    size={25} 
-                    color={COLORS.black} 
-
-                    style={globalStyles.AppIConHomeScreenOtherPages}
-
-                      />
-                    </View>
-
-                    <View style={globalStyles.searchbarInputContainerOtherPages}>
-                    <TextInput 
-                    value={input} onChangeText ={(text) => setInput(text)}
-                    placeholder="Ingiza jina" 
-                     placeholderTextColor='black'
-                    style={globalStyles.AppInputHomeScreenOtherPages}
-                    
-                    ></TextInput>
-                    </View>
-
-                  </View>
-
-
-        <ScrollView horizontal>
-          <ScrollView>
-            <View style={globalStyles.table}>
-              {/* Table Header */}
-              <View style={[globalStyles.row, globalStyles.header]}>
-              <Text style={[globalStyles.cell2, globalStyles.firstNameColumn]}>Jina</Text>
-                <Text style={[globalStyles.cell2, globalStyles.otherColumns]}>Tarehe</Text>
-                <Text style={[globalStyles.cell2, globalStyles.otherColumns]}>Mkopo</Text>
-                <Text style={[globalStyles.cell2, globalStyles.otherColumns]}>Lipwa</Text>
-                <Text style={[globalStyles.cell2, globalStyles.otherColumns]}>Deni</Text>
-                <Text style={[globalStyles.cell2, globalStyles.otherColumns]}>Hali</Text>
-                <Text style={[globalStyles.cell2, globalStyles.otherColumns]}>Futa</Text>
-              </View>
-              {/* Table Rows */}
-              {queryset.map((item) => (
-                <View key={item.id} style={globalStyles.row}>
-                
-                  <Text style={[globalStyles.cell, globalStyles.firstNameColumn]}>{item.JinaKamiliLaMteja}</Text>
-                    <Text style={[globalStyles.cell, globalStyles.otherColumns]}>{formatDate(item.Created)}</Text>
-                    <Text style={[globalStyles.cell, globalStyles.otherColumns]}>{formatToThreeDigits(item.KiasiAnachokopa)}</Text>
-                    <Text style={[globalStyles.cell, globalStyles.otherColumns]}>{formatToThreeDigits(item.KiasiAlicholipa)}</Text>
-                    <Text style={[globalStyles.cell, globalStyles.otherColumns]}>{formatToThreeDigits(item.JumlaYaDeni)}</Text>
-                    
-   
-                  <TouchableOpacity
-                     style={[globalStyles.cell, globalStyles.otherColumns, 
-
-                          {
-                            justifyContent:'center',
-                            alignItems:'center',
-                          }
-
-                          ]}
-                    onPress={() => handlePress(item)}
-                  >
-                     <MaterialCommunityIcons name='gesture-tap-button' 
-                  size={30}
-                  //color="black" 
-                  style={globalStyles.TableIconColor}      
-                   />
-                   </TouchableOpacity>
-
-                     <TouchableOpacity
-                     style={[globalStyles.cell, globalStyles.otherColumns, 
-
-                          {
-                            justifyContent:'center',
-                            alignItems:'center',
-                          }
-
-                          ]}
-                    onPress={() => DeletehandlePress(item)}
-                  >
-                    <FontAwesome name='trash-o' 
-                  size={30}
-                  //color="black" 
-                  style={globalStyles.TableIconColorDelete}      
-                   />
-                   </TouchableOpacity>
-                </View>
-              ))}
-            </View>
+            </ScrollView>
           </ScrollView>
-        </ScrollView>
-
-
-
 
 
 
@@ -522,16 +623,15 @@ const formatToThreeDigits = (number) => {
                 customView={
                   <View style={globalStyles.alertContent}>
                     <Image source={require('../assets/icon.png')} style={globalStyles.alertImage} />
-                    <Text style={globalStyles.alertTitle}>Gegwajo Microfinance</Text>
+                    <Text style={globalStyles.alertTitle}>Mfugaji Smart</Text>
                     <Text style={globalStyles.alertMessage}>{alertMessage}</Text>
                   </View>
                 }
               />
-      
-    </View>
+        </View>
+  
 
-
-                 ):(
+                ):(
 
 <LotterViewScreen />
 
@@ -542,51 +642,9 @@ const formatToThreeDigits = (number) => {
     </>
 
 
-
      )}</>
+    
   );
 };
 
 export default MikatabaYote;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 10,
-  },
-  table: {
-    borderWidth: 1,
-    borderColor: "black",
-  },
-  header: {
-    backgroundColor: "red",
-  },
-  row: {
-    flexDirection: "row",
-  },
-  cell: {
-    padding: 10,
-    textAlign: "center",
-    color: "black",
-    borderWidth: 1,
-    borderColor: "black",
-  },
-  idColumn: {
-    width: 50,
-  },
-  firstNameColumn: {
-    width: 200,
-  },
-  otherColumns: {
-    width: 100,
-  },
-  buttonCell: {
-    backgroundColor: "#4CAF50",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  buttonText: {
-    color: "white",
-    fontWeight: "bold",
-  },
-});

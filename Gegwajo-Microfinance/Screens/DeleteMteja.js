@@ -252,7 +252,7 @@ keyboardShouldPersistTaps="handled"
       )}
 
       <Text style={globalStyles.TaarifaBinafsiJinaLaMteja}>
-      Adelina Mgaya Petro    
+     {JinaKamiliLaMteja}    
       </Text>
       
       {Mahali && (

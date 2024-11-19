@@ -222,7 +222,11 @@ ProjectBodyInputIcon:{
 },
 
 
+TableIconColorUpdate:{
+  color:'wheat',
+  fontFamily:'Bold',
 
+},
 
 
   ButtonAdd: {
@@ -527,36 +531,92 @@ TableIconColorDelete:{
  //    padding: 10,
  //  },
   table: {
-    borderWidth: 1,
-    borderColor: "white",
+    // borderWidth: 1,
+    // borderColor: "white",
   },
   header: {
-    backgroundColor: "wheat",
-    padding:10,
+    backgroundColor: "#c07d18",
+    //padding:10,
+    //marginHorizontal:20,
+    // borderWidth: 1,
+    // borderColor: "white",
+     justifyContent:'center',
+    alignItems:'center',
   },
   row: {
     flexDirection: "row",
+    // justifyContent:'center',
+    // alignItems:'center',
   },
+
+    row2: {
+    flexDirection: "row",
+    justifyContent:'center',
+    alignItems:'center',
+  },
+
   cell: {
     padding: 10,
-    textAlign: "center",
+    //textAlign: "center",
+
     color: "white",
-    borderWidth: 1,
-    borderColor: "white",
+    // borderWidth: 1,
+    // borderColor: "white",
+      //borderColor:COLORS.white,
+    elevation: 3,
+    shadowOffset: { width: 1, height: 1 },
+    shadowColor: Platform.OS === "android" ? COLORS.white : COLORS.white,
+    shadowOpacity: 1,
+    shadowRadius: 2,
+    //marginHorizontal:18,
+    borderTopRightRadius:0,
+
+    marginBottom:30,
   },
+
+ cell2: {
+    //padding: 10,
+    textAlign: "center",
+  // borderWidth: 1,
+  //   borderColor: "white",
+    color: "white",
+    fontFamily:'Bold',
+    //textAlign:'left',
+  
+
+  },
+
   idColumn: {
     width: 50,
+    alignItems:'flex-start',
   },
   firstNameColumn: {
+    width: 250,
+    paddingVertical:15,
+    // alignItems:'flex-start',
+    // justifyContent:'flex-start',
+  },
+  tarehecolumn:{
     width: 200,
+    paddingVertical:15,
+    // justifyContent: "center",
+    // alignItems: "center",
+  },
+  buttoncolumn:{
+      width: 100,
+    // justifyContent: "center",
+    // alignItems: "center",
   },
   otherColumns: {
     width: 100,
+    paddingVertical:15,
+    // justifyContent: "center",
+    // alignItems: "center",
   },
   buttonCell: {
     backgroundColor: "#4CAF50",
-    justifyContent: "center",
-    alignItems: "center",
+    // justifyContent: "center",
+    // alignItems: "center",
   },
   buttonText: {
     color: "white",
