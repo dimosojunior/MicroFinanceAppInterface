@@ -50,7 +50,115 @@ export default function HomeScreen ({navigation}) {
 });
 
 
+  const [dateTime, setDateTime] = useState({
+    day: '',
+    date: '',
+    time: '',
+  });
 
+  useEffect(() => {
+    const updateDateTime = () => {
+      const now = new Date();
+
+      // Days of the week
+      const days = [
+        'Sunday',
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+      ];
+
+      // Formatting time with leading zeros
+      const formatTime = (value) => (value < 10 ? `0${value}` : value);
+
+      // Get current day, date, and time
+      const day = days[now.getDay()];
+      const date = `${now.getDate()}-${now.getMonth() + 1}-${now.getFullYear()}`;
+      const time = `${formatTime(now.getHours())}:${formatTime(
+        now.getMinutes()
+      )}:${formatTime(now.getSeconds())}`;
+
+      setDateTime({ day, date, time });
+    };
+
+    // Update every second
+    const intervalId = setInterval(updateDateTime, 1000);
+
+    // Cleanup interval on unmount
+    return () => clearInterval(intervalId);
+  }, []);
+
+
+
+// kwaajili ya kupata taarifa za aliyelogin
+const [userData, setUserData] = useState({});
+  const [userToken, setUserToken] = useState('');
+
+  useEffect(() => {
+    AsyncStorage.getItem("userToken").then(token => {
+      setUserToken(token)
+    })
+    fetchUserData();
+  }, [userData]);
+
+  const fetchUserData = async () => {
+    try {
+      const userDataJSON = await AsyncStorage.getItem('userData');
+      if (userDataJSON) {
+        const parsedUserData = JSON.parse(userDataJSON);
+        setUserData(parsedUserData);
+
+        //console.log(parsedUserData);
+        //console.log(userDataJSON);
+      }
+    } catch (error) {
+      // console.log(error);
+    }
+  };
+
+
+ useEffect(() => {
+    checkLoggedIn();
+
+
+  }, [userToken]);
+
+  const checkLoggedIn = async () => {
+    const token = await AsyncStorage.getItem('userToken');
+    setUserToken(token);
+  };
+
+
+const [WatejaWote, setWatejaWote] = useState(0);
+const [ActiveProjects, setActiveProjects] = useState(0);
+
+// Fetch Wateja Data
+useEffect(() => {
+  const fetchWatejaData = async () => {
+    try {
+      const token = await AsyncStorage.getItem('userToken'); // Get the token
+      if (token) {
+        const response = await axios.get(EndPoint + '/CountAllWatejaWoteView/', {
+          headers: {
+            Authorization: `Token ${token}`, // Pass the token in the header
+          },
+        });
+        const { wateja_wote, wateja_hai } = response.data;
+        setWatejaWote(wateja_wote);
+        setActiveProjects(wateja_hai);
+      } else {
+        console.error("No user token found");
+      }
+    } catch (error) {
+      console.error("Error fetching Wateja data:", error);
+    }
+  };
+
+  fetchWatejaData();
+}, []);
 
 
     const [showAlert, setShowAlert] = useState(false);
@@ -88,7 +196,7 @@ export default function HomeScreen ({navigation}) {
 
   <View style={{
     padding:20,
-      backgroundColor:"#fff",
+      backgroundColor:"#c07d18",
       borderRadius:15,
       marginBottom:10,
       marginHorizontal:20,
@@ -106,7 +214,7 @@ export default function HomeScreen ({navigation}) {
                 borderRadius:30,
                 width:'20%',
               }} 
-             source={require('../assets/i2.jpg')} 
+             source={require('../assets/icon.png')} 
               >
               </Image>
               <Text style={{
@@ -127,12 +235,24 @@ export default function HomeScreen ({navigation}) {
             justifyContent:"space-around",
             alignItems:'center',
           }}>
+            <View style={{
+              flexDirection:'column',
+            }}>
               <Text style={{
                 fontFamily:'Medium',
                 marginLeft:5,
                 color:"black"
               }}>
-              Kituo</Text>
+              {dateTime.day}</Text>
+
+               <Text style={{
+                fontFamily:'Medium',
+                marginLeft:5,
+                color:"white"
+              }}>
+              {dateTime.date}, {dateTime.time}</Text>
+              </View>
+
               <View style={{
                 borderRadius:7,
                 backgroundColor:'green',
@@ -144,7 +264,7 @@ export default function HomeScreen ({navigation}) {
                   color:"white",
                   fontFamily:'Light',
                 }}>
-                Nzovye</Text>
+                {userData && userData.JinaLaKituo && userData.JinaLaKituo.JinaLaKituo}</Text>
               </View>
             </View>
            
@@ -164,6 +284,8 @@ export default function HomeScreen ({navigation}) {
 {/*mwanzo wa item*/}
 
   <Pressable 
+   onPress={() => navigation.navigate('Mikataba Yote')}
+
 style={globalStyles.ItemHomeScreenPressableContainer}
 
   >
@@ -183,7 +305,7 @@ style={globalStyles.ItemHomeScreenPressableContainer}
      source={require('../assets/i2.jpg')} 
      >
      </Image>*/}
-        <FontAwesome name='heart' 
+        <FontAwesome name='th-large' 
       size={30}
       //color="black" 
       style={globalStyles.ItemHomeScreenLeftContainerIcon}      
@@ -200,11 +322,11 @@ style={globalStyles.ItemHomeScreenPressableContainer}
         style={globalStyles.ItemHomeScreenMiddleContainerText1}
         
         >
-        Mikataba Yote
+        MIKATABA YOTE
         </Text>
         <Text 
         style={globalStyles.ItemHomeScreenMiddleContainerText2}
-        >(50)</Text>
+        >({WatejaWote})</Text>
       </View>
 
       <View 
@@ -214,6 +336,7 @@ style={globalStyles.ItemHomeScreenPressableContainer}
         {/*<Text style={{color:'red',fontWeight:"600"}}>percentage </Text>*/}
 
        <Ionicons name='arrow-forward-circle' 
+        onPress={() => navigation.navigate('Mikataba Yote')}
       size={30}
       //color="black" 
       //color="red"
@@ -259,7 +382,7 @@ style={globalStyles.ItemHomeScreenPressableContainer}
      source={require('../assets/i2.jpg')} 
      >
      </Image>*/}
-        <FontAwesome name='heart' 
+        <FontAwesome name='book' 
       size={30}
       //color="black" 
       style={globalStyles.ItemHomeScreenLeftContainerIcon}      
@@ -276,11 +399,11 @@ style={globalStyles.ItemHomeScreenPressableContainer}
         style={globalStyles.ItemHomeScreenMiddleContainerText1}
         
         >
-        Mikataba Hai
+        MIKATABA HAI
         </Text>
         <Text 
         style={globalStyles.ItemHomeScreenMiddleContainerText2}
-        >(50)</Text>
+        >({ActiveProjects})</Text>
       </View>
 
       <View 
@@ -335,7 +458,7 @@ style={globalStyles.ItemHomeScreenPressableContainer}
      source={require('../assets/i2.jpg')} 
      >
      </Image>*/}
-        <FontAwesome name='heart' 
+        <FontAwesome name='user-times' 
       size={30}
       //color="black" 
       style={globalStyles.ItemHomeScreenLeftContainerIcon}      
@@ -352,7 +475,7 @@ style={globalStyles.ItemHomeScreenPressableContainer}
         style={globalStyles.ItemHomeScreenMiddleContainerText1}
         
         >
-        Nje Ya Mkataba Jana
+        NJE YA MKATABA LEO
         </Text>
         <Text 
         style={globalStyles.ItemHomeScreenMiddleContainerText2}
@@ -408,7 +531,7 @@ style={globalStyles.ItemHomeScreenPressableContainer}
      source={require('../assets/i2.jpg')} 
      >
      </Image>*/}
-        <FontAwesome name='heart' 
+        <FontAwesome name='user-secret' 
       size={30}
       //color="black" 
       style={globalStyles.ItemHomeScreenLeftContainerIcon}      
@@ -425,7 +548,7 @@ style={globalStyles.ItemHomeScreenPressableContainer}
         style={globalStyles.ItemHomeScreenMiddleContainerText1}
         
         >
-        Ripoti
+        NJE YA MKATABA WOTE
         </Text>
         <Text 
         style={globalStyles.ItemHomeScreenMiddleContainerText2}
@@ -456,6 +579,77 @@ style={globalStyles.ItemHomeScreenPressableContainer}
 {/*mwisho wa item */}
 
 
+
+
+
+{/*mwanzo wa item*/}
+
+  <Pressable 
+style={globalStyles.ItemHomeScreenPressableContainer}
+
+  >
+ {/* mwanzowa view kubwa*/}
+  <View 
+  style={globalStyles.ItemHomeScreenContainer}
+  >
+
+{/* mwanzo wa view ya icon*/}
+    <View 
+     style={globalStyles.ItemHomeScreenFirstLeftContainer}
+   >
+   {/*  <Image style={{
+      height:60,
+      width:60
+    }} 
+     source={require('../assets/i2.jpg')} 
+     >
+     </Image>*/}
+        <FontAwesome name='users' 
+      size={30}
+      //color="black" 
+      style={globalStyles.ItemHomeScreenLeftContainerIcon}      
+       />
+    </View>
+  {/* mwiso wa view ya icon*/}
+
+   
+      <View 
+       style={globalStyles.ItemHomeScreenMiddleContainer}
+
+    >
+        <Text 
+        style={globalStyles.ItemHomeScreenMiddleContainerText1}
+        
+        >
+        HAWAJAREJESHA JANA
+        </Text>
+        <Text 
+        style={globalStyles.ItemHomeScreenMiddleContainerText2}
+        >(50)</Text>
+      </View>
+
+      <View 
+      style={globalStyles.ItemHomeScreenRightContainer}
+     >
+        {/*<Text style={{color:'black',fontWeight:"600"}}>difference</Text>*/}
+        {/*<Text style={{color:'red',fontWeight:"600"}}>percentage </Text>*/}
+
+       <Ionicons name='arrow-forward-circle' 
+      size={30}
+      //color="black" 
+      //color="red"
+      style={globalStyles.ItemHomeScreenRightContainerIcon}
+         />
+      
+      </View>
+
+   
+
+  </View>
+{/* mwisho wa view kubwa*/}
+          </Pressable>
+
+{/*mwisho wa item */}
 
 
 </ScrollView>

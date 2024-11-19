@@ -3,6 +3,9 @@ import  {
   View,StyleSheet,Image,
   ActivityIndicator,
   ImageBackground,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Keyboard,
   Linking,
   Animated,
   Alert,
@@ -31,9 +34,7 @@ import { useFocusEffect } from '@react-navigation/native';
 
 const { width, height } = Dimensions.get('screen');
 
-
-const Test = () => {
-
+const MikatabaYote = ({navigation}) => {
 
 
 
@@ -266,146 +267,20 @@ const formatToThreeDigits = (number) => {
 
 
 
-const ReportCard = ({item , index}) => {
-  
-
-//mwanzo wa search
-   if (input === ""){
-
-
- return (
-
-
-<View key={item.id} style={globalStyles.row}>
-    {/*<Text style={[globalStyles.cell, globalStyles.idColumn]}>{item.id}</Text>*/}
-    <Text style={[globalStyles.cell, globalStyles.firstNameColumn]}>{item.JinaKamiliLaMteja}</Text>
-    <Text style={[globalStyles.cell, globalStyles.otherColumns]}>{formatDate(item.Created)}</Text>
-    <Text style={[globalStyles.cell, globalStyles.otherColumns]}>{formatToThreeDigits(item.KiasiAnachokopa)}</Text>
-    <Text style={[globalStyles.cell, globalStyles.otherColumns]}>{formatToThreeDigits(item.KiasiAlicholipa)}</Text>
-    <Text style={[globalStyles.cell, globalStyles.otherColumns]}>{formatToThreeDigits(item.JumlaYaDeni)}</Text>
-    
-   
-    <TouchableOpacity 
-    style={[globalStyles.cell, globalStyles.otherColumns, 
-
-      {
-        justifyContent:'center',
-        alignItems:'center',
-      }
-
-      ]}
-    >
-         <MaterialCommunityIcons name='gesture-tap-button' 
-      size={30}
-      //color="black" 
-      style={globalStyles.TableIconColor}      
-       />
-    </TouchableOpacity>
-
-  {userData && userData.is_admin === true && (
-        <TouchableOpacity 
-   onPress={() => navigation.navigate('Delete Mteja', {...item, postId: item.id })}
-
-    style={[globalStyles.cell, globalStyles.otherColumns, 
-
-      {
-        justifyContent:'center',
-        alignItems:'center',
-      }
-
-      ]}
-    >
-         <FontAwesome name='trash-o' 
-          onPress={() => navigation.navigate('Delete Mteja', {...item, postId: item.id })}
-      size={30}
-      //color="black" 
-      style={globalStyles.TableIconColorDelete}      
-       />
-    </TouchableOpacity>
-    )}
-    
-
-
-  </View>
-
-
-)
 
 
 
+  const handlePress = (item) => {
+    navigation.navigate('Home', { item });
+  };
 
-  // hili bano la chini ni la if ya juu kama mtu akitype   
-}
-
- if (item.JinaKamiliLaMteja.toLowerCase().includes(input.toLowerCase())) {
-
- return (
-
-
-<View key={item.id} style={globalStyles.row}>
-    {/*<Text style={[globalStyles.cell, globalStyles.idColumn]}>{item.id}</Text>*/}
-    <Text style={[globalStyles.cell, globalStyles.firstNameColumn]}>{item.JinaKamiliLaMteja}</Text>
-    <Text style={[globalStyles.cell, globalStyles.otherColumns]}>{formatDate(item.Created)}</Text>
-    <Text style={[globalStyles.cell, globalStyles.otherColumns]}>{formatToThreeDigits(item.KiasiAnachokopa)}</Text>
-    <Text style={[globalStyles.cell, globalStyles.otherColumns]}>{formatToThreeDigits(item.KiasiAlicholipa)}</Text>
-    <Text style={[globalStyles.cell, globalStyles.otherColumns]}>{formatToThreeDigits(item.JumlaYaDeni)}</Text>
-    
-   
-    <TouchableOpacity 
-    style={[globalStyles.cell, globalStyles.otherColumns, 
-
-      {
-        justifyContent:'center',
-        alignItems:'center',
-      }
-
-      ]}
-    >
-         <MaterialCommunityIcons name='gesture-tap-button' 
-      size={30}
-      //color="black" 
-      style={globalStyles.TableIconColor}      
-       />
-    </TouchableOpacity>
-
-  {userData && userData.is_admin === true && (
-        <TouchableOpacity 
-    style={[globalStyles.cell, globalStyles.otherColumns, 
-
-      {
-        justifyContent:'center',
-        alignItems:'center',
-      }
-
-      ]}
-    >
-         <FontAwesome name='trash-o' 
-      size={30}
-      //color="black" 
-      style={globalStyles.TableIconColorDelete}      
-       />
-    </TouchableOpacity>
-    )}
-    
-
-
-  </View>
-
-
-)
-
-
-// hili bano la chini ni la if ya pili mwisho
-  }
-
-
-}
-  
-
+   const DeletehandlePress = (item) => {
+    navigation.navigate('Delete Mteja', { ...item, postId: item.id});
+  };
 
   return (
 
-     <>{!fontsLoaded ? (<View/>):(
+      <>{!fontsLoaded ? (<View/>):(
 
        <>
 
@@ -415,6 +290,9 @@ const ReportCard = ({item , index}) => {
 
 
     <View style={globalStyles.container}>
+     
+
+
 
 <MinorHeader />
 
@@ -469,58 +347,77 @@ const ReportCard = ({item , index}) => {
                   </View>
 
 
-      <ScrollView horizontal>
-        <ScrollView>
+        <ScrollView horizontal>
+          <ScrollView>
+            <View style={globalStyles.table}>
+              {/* Table Header */}
+              <View style={[globalStyles.row, globalStyles.header]}>
+              <Text style={[globalStyles.cell2, globalStyles.firstNameColumn]}>Jina</Text>
+                <Text style={[globalStyles.cell2, globalStyles.otherColumns]}>Tarehe</Text>
+                <Text style={[globalStyles.cell2, globalStyles.otherColumns]}>Mkopo</Text>
+                <Text style={[globalStyles.cell2, globalStyles.otherColumns]}>Lipwa</Text>
+                <Text style={[globalStyles.cell2, globalStyles.otherColumns]}>Deni</Text>
+                <Text style={[globalStyles.cell2, globalStyles.otherColumns]}>Hali</Text>
+                <Text style={[globalStyles.cell2, globalStyles.otherColumns]}>Futa</Text>
+              </View>
+              {/* Table Rows */}
+              {queryset.map((item) => (
+                <View key={item.id} style={globalStyles.row}>
+                
+                  <Text style={[globalStyles.cell, globalStyles.firstNameColumn]}>{item.JinaKamiliLaMteja}</Text>
+                    <Text style={[globalStyles.cell, globalStyles.otherColumns]}>{formatDate(item.Created)}</Text>
+                    <Text style={[globalStyles.cell, globalStyles.otherColumns]}>{formatToThreeDigits(item.KiasiAnachokopa)}</Text>
+                    <Text style={[globalStyles.cell, globalStyles.otherColumns]}>{formatToThreeDigits(item.KiasiAlicholipa)}</Text>
+                    <Text style={[globalStyles.cell, globalStyles.otherColumns]}>{formatToThreeDigits(item.JumlaYaDeni)}</Text>
+                    
+   
+                  <TouchableOpacity
+                     style={[globalStyles.cell, globalStyles.otherColumns, 
 
+                          {
+                            justifyContent:'center',
+                            alignItems:'center',
+                          }
 
+                          ]}
+                    onPress={() => handlePress(item)}
+                  >
+                     <MaterialCommunityIcons name='gesture-tap-button' 
+                  size={30}
+                  //color="black" 
+                  style={globalStyles.TableIconColor}      
+                   />
+                   </TouchableOpacity>
 
+                     <TouchableOpacity
+                     style={[globalStyles.cell, globalStyles.otherColumns, 
 
- {queryset && queryset.length > 0 ? (
+                          {
+                            justifyContent:'center',
+                            alignItems:'center',
+                          }
 
-
-      <>
-
-
-        <View style={[globalStyles.row, globalStyles.header]}>
-  {/*<Text style={[globalStyles.cell, globalStyles.idColumn]}>ID</Text>*/}
-  <Text style={[globalStyles.cell2, globalStyles.firstNameColumn]}>Jina</Text>
-  <Text style={[globalStyles.cell2, globalStyles.otherColumns]}>Tarehe</Text>
-  <Text style={[globalStyles.cell2, globalStyles.otherColumns]}>Mkopo</Text>
-  <Text style={[globalStyles.cell2, globalStyles.otherColumns]}>Lipwa</Text>
-  <Text style={[globalStyles.cell2, globalStyles.otherColumns]}>Deni</Text>
-  <Text style={[globalStyles.cell2, globalStyles.otherColumns]}>Hali</Text>
-{userData && userData.is_admin === true && (
-  <Text style={[globalStyles.cell2, globalStyles.otherColumns]}>Futa</Text>
-  )}
-</View>
-
-  {setLoading===true?(<ActivityIndicator/>):(
-
-             <>
-
-          {queryset.map((item, index) => {
-          return <ReportCard item={item} key={item.id || index} />;
-          })}
-
-          {isLoading&&(<ActivityIndicator/>)}
-          </>
-          )}
-
- </>  
-
-   ) :(
-   <View style={[globalStyles.noitemTextContainer,{}]}>
-  <Text style={globalStyles.noitemText}>hukuna Taarifa
-  </Text>
-
-
-</View>
-
-  )} 
-
-
+                          ]}
+                    onPress={() => DeletehandlePress(item)}
+                  >
+                    <FontAwesome name='trash-o' 
+                  size={30}
+                  //color="black" 
+                  style={globalStyles.TableIconColorDelete}      
+                   />
+                   </TouchableOpacity>
+                </View>
+              ))}
+            </View>
+          </ScrollView>
         </ScrollView>
-      </ScrollView>
+
+
+
+
+
+
+
 
 
 <View style={{
@@ -625,16 +522,16 @@ const ReportCard = ({item , index}) => {
                 customView={
                   <View style={globalStyles.alertContent}>
                     <Image source={require('../assets/icon.png')} style={globalStyles.alertImage} />
-                    <Text style={globalStyles.alertTitle}>Mfugaji Smart</Text>
+                    <Text style={globalStyles.alertTitle}>Gegwajo Microfinance</Text>
                     <Text style={globalStyles.alertMessage}>{alertMessage}</Text>
                   </View>
                 }
               />
+      
     </View>
 
 
-
-                ):(
+                 ):(
 
 <LotterViewScreen />
 
@@ -650,8 +547,46 @@ const ReportCard = ({item , index}) => {
   );
 };
 
-export default Test;
+export default MikatabaYote;
 
 const styles = StyleSheet.create({
- 
+  container: {
+    flex: 1,
+    padding: 10,
+  },
+  table: {
+    borderWidth: 1,
+    borderColor: "black",
+  },
+  header: {
+    backgroundColor: "red",
+  },
+  row: {
+    flexDirection: "row",
+  },
+  cell: {
+    padding: 10,
+    textAlign: "center",
+    color: "black",
+    borderWidth: 1,
+    borderColor: "black",
+  },
+  idColumn: {
+    width: 50,
+  },
+  firstNameColumn: {
+    width: 200,
+  },
+  otherColumns: {
+    width: 100,
+  },
+  buttonCell: {
+    backgroundColor: "#4CAF50",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "white",
+    fontWeight: "bold",
+  },
 });

@@ -64,7 +64,7 @@ const navigation = useNavigation();
             </View>
           </TouchableOpacity>
 
-          <Text style={{fontSize:25,fontWeight:"500",color:'black'}}>MICROFINANCE</Text>
+          <Text style={{fontSize:20,fontFamily:"Regular",color:'black'}}>MICROFINANCE</Text>
           <TouchableOpacity>
           <FontAwesome name="user-o" size={26} color="black"/>
           </TouchableOpacity>
@@ -91,8 +91,8 @@ const navigation = useNavigation();
 
 const styles = StyleSheet.create({
       headerbar:{
-        paddingTop:50,
-        paddingBottom:20,
+        paddingTop:30,
+        //paddingBottom:20,
         paddingHorizontal:20,
         flexDirection:"row",
         backgroundColor:"#fff",

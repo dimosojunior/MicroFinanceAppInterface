@@ -26,7 +26,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import { EndPoint } from "../Constant/links";
+
+
 import Test from '../Screens/Test';
+import AddMteja from '../Wateja/AddMteja';
+import MtejaDetails from '../Screens/MtejaDetails';
+// import DeleteMteja from '../Screens/DeleteMteja';
 
 const Drawer = createDrawerNavigator();
 function MyDrawer(){
@@ -350,7 +355,7 @@ const [userData, setUserData] = useState({});
         drawerStyle: {
           // backgroundColor: 'rgb(5,5,49)',
           //backgroundColor: '#F0F0F0',
-          backgroundColor:'black', //'#233329',
+          backgroundColor:'#243137', //'#233329',
           width: width -70 //260
         },
         headerStyle: {
@@ -410,6 +415,20 @@ const [userData, setUserData] = useState({});
         />
 
 
+            <Drawer.Screen
+          name="Sajili Mteja"
+          options={{
+            drawerLabel: "Sajili Mteja",
+            title: "Sajili Mteja",
+            
+            drawerIcon: () => (
+              <MaterialIcons name="home" size={30} color="white" />
+            )
+          }}
+          component={AddMteja}
+        />
+
+
    <Drawer.Screen
           name="Hawajarejesha tarehe"
           options={{
@@ -436,6 +455,20 @@ const [userData, setUserData] = useState({});
           component={Test}
         />
 
+          <Drawer.Screen
+          name="Mteja Details"
+          options={{
+            drawerLabel: "Mteja Details",
+            title: "Mteja Details",
+            
+            drawerIcon: () => (
+              <FontAwesome name="folder-open" size={30} color="white" />
+            )
+          }}
+          component={MtejaDetails}
+        />
+
+     
 
            <Drawer.Screen
           name="Mikataba Hai"

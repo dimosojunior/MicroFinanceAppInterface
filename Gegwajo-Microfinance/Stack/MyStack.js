@@ -20,7 +20,8 @@ import SigninScreen from '../AccountScreens/SigninScreen';
 
 
 import HomeScreen from '../Screens/HomeScreen';
-
+import MikatabaYote from '../Screens/MikatabaYote';
+import DeleteMteja from '../Screens/DeleteMteja';
 
 
 const Stack = createStackNavigator();
@@ -95,6 +96,22 @@ function MyStack( {navigation}){
        <Stack.Screen
       name="Home Stack"
       component={HomeScreen}
+      // options={ () => ({ 
+      //       headerLeft: () => <Header  title='About Page' />,
+      //     })}
+      />
+
+            <Stack.Screen
+      name="Mikataba Yote"
+      component={MikatabaYote}
+      // options={ () => ({ 
+      //       headerLeft: () => <Header  title='About Page' />,
+      //     })}
+      />
+
+           <Stack.Screen
+      name="Delete Mteja"
+      component={DeleteMteja}
       // options={ () => ({ 
       //       headerLeft: () => <Header  title='About Page' />,
       //     })}

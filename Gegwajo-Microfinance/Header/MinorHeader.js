@@ -1,19 +1,16 @@
 
-import { StyleSheet, Text, View, Image, ImageBackground} from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
-import { Dimensions } from 'react-native';
+import  {View,StyleSheet,Image,Text,TouchableOpacity,FlatList,Dimensions} from 'react-native';
+
+// import {WalletCoinCard} from './WalletCoinCard';
+// import {CoinCard} from './CoinCard';
 import { useNavigation } from '@react-navigation/native';
 
+import {MaterialIcons,Entypo,MaterialCommunityIcons,FontAwesome5, Ionicons,Feather,AntDesign, FontAwesome} from '@expo/vector-icons';
 
-// This import used to change color
-import { EventRegister } from 'react-native-event-listeners';
-// import theme from '../theme/theme';
-// import themeContext from '../theme/themeContext';
+
 import React, {useState, useEffect, useContext} from 'react';
 import {globalStyles} from '../Styles/GlobalStyles';
 import {useFonts} from 'expo-font';
-import { Ionicons, FontAwesome } from '@expo/vector-icons';
-import COLORS  from '../Constant/colors';
 
 export default function MinorHeader(  {title} ) {
 
@@ -31,90 +28,92 @@ export default function MinorHeader(  {title} ) {
 });
 
 
-  // To change color
-// const theme = useContext(themeContext)
-// const [darkMode, setdarkMode] = useState(false)
 
+const navigation = useNavigation();
 
- const navigation = useNavigation();
-
+   
   const goBackPage = () => {
     //navigation.navigate(screenName);
     navigation.goBack();
   }
 
-   const goHomePage = () => {
-    //navigation.navigate(screenName);
-    //navigation.goBack();
-    navigation.navigate("Home Stack");
-  }
 
-
-
-
-  const [greeting, setGreeting] = useState('');
-
-  // Function to get the current time and set the greeting based on the time
-  const setGreetingBasedOnTime = () => {
-    const currentHour = new Date().getHours();
-
-    if (currentHour >= 5 && currentHour < 12) {
-      setGreeting('Good Morning');
-    } else if (currentHour >= 12 && currentHour <= 15) {
-      setGreeting('Good Afternoon');
-    } else if (currentHour > 15 && currentHour <= 18) {
-      setGreeting('Good Evening');
-    } else {
-      setGreeting('Good Night');
-    }
-
-  };
-
-  // Use useEffect to set the initial greeting and update it when needed
-  useEffect(() => {
-    setGreetingBasedOnTime();
-  }, []);
 
   return (
-  
-<View style={globalStyles.headerHeaderFile}>
- 
 
-      <Ionicons name='arrow-back' 
+     <>{!fontsLoaded ? (<View/>):(
+  
+ <View style={{
+  backgroundColor:'#F5F8FF',
+  marginBottom: 10,
+}}>          
+             
+
+
+      <View style={styles.headerbar}>
+          <TouchableOpacity 
+          onPress={goBackPage}
+          >
+            
+        
+                   <Ionicons name='arrow-back' 
       size={28} onPress={goBackPage} style={globalStyles.iconHeaderFile} />
 
-        <Text style={[
-          globalStyles.headerTextHeaderFile1,
-          {
-            // width:'50%',
-            // marginLeft:10,
-          }
+                
+          </TouchableOpacity>
 
-          ]}>
-          {title}</Text>
-{/*<Image source={require('../assets/i2.jpg')} 
-  style={globalStyles.headerImageHeaderFile} />*/}
-   <FontAwesome 
-   onPress={goHomePage}
-
-   name='home' 
-      size={28}  
-      style={[globalStyles.iconHeaderFile,
-        {
-          marginRight:10,
-          color:'green',
-        }
-
-        ]} 
-      />
+          <Text style={{fontSize:20,
+            fontFamily:"Regular",color:'black'}}>MICROFINANCE</Text>
+          <TouchableOpacity>
+          <FontAwesome name="user-o" size={26} color="black"/>
+          </TouchableOpacity>
+      </View>
 
 
-        </View>  
-    
+
+
+
+              
+
+
+
+
+
+
+
+
+          </View>
+
+     )}</>
   );
 }
 
 const styles = StyleSheet.create({
-  
+      headerbar:{
+        paddingTop:30,
+        // paddingBottom:20,
+        paddingHorizontal:20,
+        flexDirection:"row",
+        backgroundColor:"#fff",
+        alignItems:"center",
+        justifyContent:"space-between",
+        marginBottom:20
+    },
+    filters:
+    {
+        flexDirection:"row",
+        marginTop:10,
+        marginHorizontal:5,
+        justifyContent:"space-between"
+    },
+    footer:{
+      position:"absolute",
+      left:1,
+      right:1,
+      bottom:0,
+      backgroundColor:"#fff",
+      paddingHorizontal:25,
+      paddingTop:20
+    }
      });
 

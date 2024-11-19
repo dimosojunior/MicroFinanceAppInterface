@@ -204,7 +204,7 @@ const handleErrorMessage = (error) => {
                     height:100,
                     borderRadius:50,
                   }}
-                   source={require('../assets/i2.jpg')} 
+                   source={require('../assets/icon.png')} 
                   >
                   </Image>
 

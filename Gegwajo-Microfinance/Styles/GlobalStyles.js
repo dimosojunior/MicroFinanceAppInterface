@@ -35,7 +35,7 @@ export const globalStyles = StyleSheet.create({
     
 container: {
     flex:1,
-    backgroundColor:'black',
+    backgroundColor:'#243137',
     width:'100%'
   },
 
@@ -453,17 +453,17 @@ ItemHomeScreenContainer:{
    flexDirection:"row",
     alignItems:"center",
     justifyContent:'space-between',
-    backgroundColor:"gold",
+    backgroundColor:"#243137",
     borderRadius:15,
     paddingHorizontal:10,
     paddingVertical:10,
     width:'90%',
 
     //borderWidth:.2,
-    borderColor:COLORS.green,
+    borderColor:COLORS.white,
     elevation: 3,
     shadowOffset: { width: 1, height: 1 },
-    shadowColor: Platform.OS === "android" ? COLORS.green : COLORS.green,
+    shadowColor: Platform.OS === "android" ? COLORS.white : COLORS.white,
     shadowOpacity: 1,
     shadowRadius: 2,
     marginHorizontal:18,
@@ -480,11 +480,11 @@ ItemHomeScreenMiddleContainer:{
   justifyContent:'center',
 },
 ItemHomeScreenMiddleContainerText1:{
-  color:'black',
+  color:'white',
   fontFamily:'Medium',
 },
 ItemHomeScreenMiddleContainerText2:{
-  color:'black',
+  color:'white',
   fontFamily:'Medium',
   marginLeft:20,
 },
@@ -494,18 +494,21 @@ ItemHomeScreenRightContainer:{
    width:'15%',
 },
 ItemHomeScreenRightContainerIcon:{
-  color:'red',
+  color:'#c07d18',
 },
 
 ItemHomeScreenLeftContainerIcon:{
-  color:'red',
+  color:'#c07d18',
 },
 
 TableIconColor:{
   color:'green',
 },
 
+TableIconColorDelete:{
+  color:'red',
 
+},
 
 
 
@@ -519,16 +522,17 @@ TableIconColor:{
 
 //-----------------------MIKATABA YOTE STYLES-------------
 
- // container: {
- //    flex: 1,
+ // Tablecontainer: {
+ //    //flex: 1,
  //    padding: 10,
  //  },
   table: {
     borderWidth: 1,
-    borderColor: "black", // Consistent border color
+    borderColor: "white",
   },
   header: {
-    backgroundColor: "red",
+    backgroundColor: "wheat",
+    padding:10,
   },
   row: {
     flexDirection: "row",
@@ -538,17 +542,218 @@ TableIconColor:{
     textAlign: "center",
     color: "white",
     borderWidth: 1,
-    borderColor: "white", // Consistent border for all cells
+    borderColor: "white",
   },
   idColumn: {
-    width: 50, // Small width for ID column
+    width: 50,
   },
   firstNameColumn: {
-    width: 250, // Larger width for firstName
+    width: 200,
   },
   otherColumns: {
-    width: 100, // Equal width for other columns
+    width: 100,
+  },
+  buttonCell: {
+    backgroundColor: "#4CAF50",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "white",
+    fontWeight: "bold",
   },
 
+
+
+
+
+
+
+
+
+
+//------------------Taarifa Binafsi za mteja------------
+TaarifaBinafsiMainContainer:{
+  width:'90%',
+  alignItems:'center',
+  marginHorizontal:20,
+
+},
+
+TaarifaBinafsiMtejaImage:{
+  width:100,
+  height:100,
+  borderRadius:50,
+},
+TaarifaBinafsiJinaLaMteja:{
+  marginTop:10,
+  color:'white',
+  fontFamily:'Medium',
+  fontSize:20,
+},
+TaarifaBinafsiJinaLaKituo:{
+  marginTop:10,
+  color:'white',
+  fontFamily:'Regular',
+  fontSize:18,
+
+},
+TaarifaBinafsiSimuYaMteja:{
+  marginTop:20,
+  color:'white',
+  borderColor:'white',
+  borderWidth:1,
+  paddingHorizontal:40,
+  paddingVertical:12,
+  borderRadius:8,
+},
+TaarifaBinafsimkopo:{
+  flexDirection:'row',
+  justifyContent:'space-around',
+  alignItems:'center',
+  width:'90%',
+  marginHorizontal:20,
+  marginTop:25,
+},
+TaarifaBinafsiSimuYaMtejaMkopoText:{
+  color:'green',
+  fontFamily:'Medium',
+  width:'40%',
+},
+
+TaarifaBinafsiSimuYaMtejaMkatoText:{
+  color:'white',
+  fontFamily:'Bold',
+  width:'10%',
+
+},
+
+TaarifaBinafsiSimuYaMtejaDeniText:{
+  color:'red',
+  fontFamily:'Medium',
+  width:'40%',
+},
+
+
+TaarifaBinafsiTareheZamkopo:{
+  flexDirection:'row',
+  justifyContent:'space-around',
+  alignItems:'center',
+  width:'90%',
+  marginHorizontal:20,
+  marginTop:25,
+
+},
+TaarifaBinafsiSimuYaMtejaTareheYakukopaText:{
+  color:'green',
+  fontFamily:'Medium',
+  width:'40%',
+
+},
+
+TaarifaBinafsiSimuYaMtejaIconTareheYakukopaText:{
+  color:'white',
+  fontFamily:'Bold',
+  width:'10%',
+
+},
+
+TaarifaBinafsiSimuYaMtejaMwishoTareheYakukopaText:{
+  color:'red',
+  fontFamily:'Medium',
+  width:'40%',
+
+},
+
+TaarifaBinafsiMarejeshoYakeHeadingContainer:{
+  width:'100%',
+  marginVertical:0,
+  marginTop:30,
+},
+
+TaarifaBinafsiMarejeshoYakeHeadingText:{
+   color:'black',
+  backgroundColor:'wheat',
+  paddingVertical:10,
+paddingHorizontal:20,
+width:'90%',
+marginHorizontal:10,
+borderRadius:10,
+fontFamily:'Medium',
+},
+
+
+
+FullTaarifaZaMarejeshoContainer:{
+  width:'90%',
+  alignItems:'center',
+  marginHorizontal:20,
+  marginTop:30,
+  justifyContent:'space-between',
+  flexDirection:'row',
+
+  borderWidth:.2,
+    borderColor:COLORS.white,
+    elevation: 3,
+
+    shadowOffset: { width: 1, height: 1 },
+    shadowColor: Platform.OS === "android" ? COLORS.white : COLORS.white,
+    shadowOpacity: 1,
+    shadowRadius: 2,
+
+    paddingHorizontal:10,
+    paddingVertical:10,
+    borderRadius:10,
+    borderTopRightRadius:0,
+    marginBottom:10
+
+},
+
+
+FullTaarifaZaMarejeshoLeftContainer:{
+  width:'45%',
+  alignItems:'flex-start',
+  // borderColor:'white',
+  // borderWidth:1,
+},
+FullTaarifaZaMarejeshoRightContainer:{
+  width:'45%',
+  alignItems:'flex-end',
+  // borderColor:'white',
+  // borderWidth:1,
+},
+FullTaarifaZaMarejeshoLeftText:{
+  color:'white',
+  fontFamily:'Light',
+
+},
+
+FullTaarifaZaMarejeshoRightText:{
+  color:'white',
+  fontFamily:'Light',
+},
+
+
+
+
+
+
+
   });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

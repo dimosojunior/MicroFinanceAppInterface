@@ -144,6 +144,23 @@ const [input, setInput] = useState('');
 
 
 
+const handleDeletePost = async () => {
+    const token = await AsyncStorage.getItem('token');
+    //setUserToken(token);
+    //console.log("USER", userToken);
+    try {
+      await axios.delete(EndPoint + `/DeleteWatejaWotePostView/${postId}/delete/`, {
+        headers: {
+          Authorization: `Token ${userToken}`,
+        },
+      });
+      showAlertFunction('Umefanikiwa kumfuta mteja');
+      navigation.replace('Home Stack');  // Navigate back to the previous screen
+    } catch (error) {
+      showAlertFunction('Imeshindikana kumfuta mteja');
+      //console.log(error);
+    }
+  };
 
 
 
@@ -215,12 +232,24 @@ keyboardShouldPersistTaps="handled"
 {/*mwanzo wa view ya taarifa binafsi*/}
 <View style={globalStyles.TaarifaBinafsiMainContainer}>
   
+  {PichaYaMteja ? (
       <Image
+     style={globalStyles.TaarifaBinafsiMtejaImage}
+      source={{
+      uri: EndPoint + '/' + PichaYaMteja
+    }}
+       //source={require('../assets/profile.jpg')} 
+      >
+      </Image>
+
+      ):(
+     <Image
      style={globalStyles.TaarifaBinafsiMtejaImage}
       
        source={require('../assets/profile.jpg')} 
       >
       </Image>
+      )}
 
       <Text style={globalStyles.TaarifaBinafsiJinaLaMteja}>
       Adelina Mgaya Petro    
@@ -238,11 +267,17 @@ keyboardShouldPersistTaps="handled"
       </Text>
       )}
 
+
+
     {/*mwanzo wa view ya taarifa za mkopo*/}
 <View style={globalStyles.TaarifaBinafsimkopo}>
-{KiasiAnachokopa && (
+{KiasiAnachokopa > 0 ? (
  <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaMkopoText}>
      Mkopo: {formatToThreeDigits(KiasiAnachokopa)}    
+      </Text>
+      ):(
+    <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaMkopoText}>
+     Mkopo: 0   
       </Text>
       )}
 
@@ -250,21 +285,31 @@ keyboardShouldPersistTaps="handled"
      |   
       </Text>
     
-    {JumlaYaDeni && (
+    {JumlaYaDeni> 0 ? (
        <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaDeniText}>
      Deni: {formatToThreeDigits(JumlaYaDeni)}    
+      </Text>
+      ):(
+ <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaDeniText}>
+     Deni: 0    
       </Text>
       )}
 
 </View>
-{/*mwanzo wa view ya taarifa za mkopo*/}
+{/*mwisho wa view ya taarifa za mkopo*/}
 
 
-    {/*mwanzo wa view ya taarifa za mkopo*/}
+
+
+   {/*mwanzo wa view ya taarifa za mkopo*/}
 <View style={globalStyles.TaarifaBinafsimkopo}>
-{KiasiAlicholipa && (
+{KiasiAlicholipa > 0 ? (
  <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaMkopoText}>
      Lipwa: {formatToThreeDigits(KiasiAlicholipa)}    
+      </Text>
+      ):(
+<Text style={globalStyles.TaarifaBinafsiSimuYaMtejaMkopoText}>
+     Lipwa: 0   
       </Text>
       )}
 
@@ -272,14 +317,21 @@ keyboardShouldPersistTaps="handled"
      |   
       </Text>
       
-      {RejeshoKwaSiku && (
+      {RejeshoKwaSiku > 0 ? (
        <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaDeniText}>
      Rejesho: {formatToThreeDigits(RejeshoKwaSiku)}    
+      </Text>
+      ):(
+     <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaDeniText}>
+     Rejesho: 0    
       </Text>
       )}
 
 </View>
-{/*mwanzo wa view ya taarifa za mkopo*/}
+{/*mwisho wa view ya taarifa za mkopo*/}
+
+
+
 
 
   {/*mwanzo wa view ya taarifa za mwanzo wa kukopa*/}
@@ -303,6 +355,14 @@ keyboardShouldPersistTaps="handled"
 
 </View>
 {/*mwanzo wa view ya taarifa za  mwanzo wa kukopa*/}
+
+
+
+
+
+
+
+
 
 
 
@@ -374,7 +434,7 @@ keyboardShouldPersistTaps="handled"
          
 
           <TouchableOpacity
-         onPress={() => navigation.navigate("Home Stack")}
+         onPress={handleDeletePost}
            
             style={{
               

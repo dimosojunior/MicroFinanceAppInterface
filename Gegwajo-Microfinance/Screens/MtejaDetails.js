@@ -47,25 +47,7 @@ const { width, height } = Dimensions.get('screen');
 //   { id: 10, firstName: "Henry", middleName: "Tom", lastName: "Harris", age: 21, gender: "Male", phone: "012-345-6789" },
 // ];
 
-const DeleteMteja = ({navigation, route}) => {
-
-   const { 
-    postId,
-    JinaKamiliLaMteja,
-    SimuYaMteja,
-    EmailYaMteja,
-    Mahali,
-    KiasiAnachokopa,
-    KiasiAlicholipa,
-    RejeshoKwaSiku,
-    JumlaYaDeni,
-    Riba,
-    AmesajiliwaNa,
-    PichaYaMteja,
-    Ni_Mteja_Hai,
-    Created
-   
-   } = route.params
+const MtejaDetails = () => {
 
 
 
@@ -207,7 +189,7 @@ keyboardShouldPersistTaps="handled"
   borderRadius:10,
   fontFamily:'Medium',
 
-  }}>Futa taarifa za  {JinaKamiliLaMteja}</Text>
+  }}>Taarifa za mkataba wa mteja Juma</Text>
 </View>
 
 
@@ -225,58 +207,28 @@ keyboardShouldPersistTaps="handled"
       <Text style={globalStyles.TaarifaBinafsiJinaLaMteja}>
       Adelina Mgaya Petro    
       </Text>
-      
-      {Mahali && (
+
        <Text style={globalStyles.TaarifaBinafsiJinaLaKituo}>
-     {Mahali} 
+     Utukuyu uyole kati    
       </Text>
-      )}
 
-     {SimuYaMteja && (
        <Text style={globalStyles.TaarifaBinafsiSimuYaMteja}>
-     Simu: {SimuYaMteja}    
+     Simu: 0628431507    
       </Text>
-      )}
 
     {/*mwanzo wa view ya taarifa za mkopo*/}
 <View style={globalStyles.TaarifaBinafsimkopo}>
-{KiasiAnachokopa && (
  <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaMkopoText}>
-     Mkopo: {formatToThreeDigits(KiasiAnachokopa)}    
+     Mkopo: 200000    
       </Text>
-      )}
 
       <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaMkatoText}>
      |   
       </Text>
-    
-    {JumlaYaDeni && (
+
        <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaDeniText}>
-     Deni: {formatToThreeDigits(JumlaYaDeni)}    
+     Deni: 180000    
       </Text>
-      )}
-
-</View>
-{/*mwanzo wa view ya taarifa za mkopo*/}
-
-
-    {/*mwanzo wa view ya taarifa za mkopo*/}
-<View style={globalStyles.TaarifaBinafsimkopo}>
-{KiasiAlicholipa && (
- <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaMkopoText}>
-     Lipwa: {formatToThreeDigits(KiasiAlicholipa)}    
-      </Text>
-      )}
-
-      <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaMkatoText}>
-     |   
-      </Text>
-      
-      {RejeshoKwaSiku && (
-       <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaDeniText}>
-     Rejesho: {formatToThreeDigits(RejeshoKwaSiku)}    
-      </Text>
-      )}
 
 </View>
 {/*mwanzo wa view ya taarifa za mkopo*/}
@@ -284,11 +236,9 @@ keyboardShouldPersistTaps="handled"
 
   {/*mwanzo wa view ya taarifa za mwanzo wa kukopa*/}
 <View style={globalStyles.TaarifaBinafsiTareheZamkopo}>
-{Created && (
  <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaTareheYakukopaText}>
-     {formatDate(Created)}   
+     01/04/2024   
       </Text>
-      )}
 
     
        <Ionicons
@@ -316,6 +266,59 @@ keyboardShouldPersistTaps="handled"
 
 
 
+
+
+{/*mwanzo wa marejesho yake heading*/}
+
+<View 
+style={globalStyles.TaarifaBinafsiMarejeshoYakeHeadingContainer}
+
+>
+  
+  <Text 
+
+  style={globalStyles.TaarifaBinafsiMarejeshoYakeHeadingText}
+
+ >MAREJESHO YAKE</Text>
+</View>
+
+{/*mwisho wa marejesho yake heading*/}
+     
+        
+
+{/*mwanzo wa Full taarifa za marejesho*/}
+
+<View 
+style={globalStyles.FullTaarifaZaMarejeshoContainer}
+>
+  
+
+{/*mwanzo wa Left View*/} 
+<View 
+style={globalStyles.FullTaarifaZaMarejeshoLeftContainer}
+>
+<Text 
+style={globalStyles.FullTaarifaZaMarejeshoLeftText}
+ >01/01/2024</Text>
+</View>
+{/*mwanzo wa Left View*/} 
+
+
+
+{/*mwanzo wa Right View*/} 
+<View 
+style={globalStyles.FullTaarifaZaMarejeshoRightContainer}
+>
+<Text 
+style={globalStyles.FullTaarifaZaMarejeshoRightText}
+ >2000</Text>
+</View>
+{/*mwanzo wa Right View*/} 
+
+
+</View>
+
+{/*mwiso wa Full taarifa za marejesho*/}
 
       
 
@@ -403,7 +406,7 @@ keyboardShouldPersistTaps="handled"
              paddingVertical:10,
 
            }}>
-              Futa
+              Jumla: 300000
             </Text>
           </TouchableOpacity>
           
@@ -445,7 +448,7 @@ keyboardShouldPersistTaps="handled"
   );
 };
 
-export default DeleteMteja;
+export default MtejaDetails;
 
 const styles = StyleSheet.create({
  

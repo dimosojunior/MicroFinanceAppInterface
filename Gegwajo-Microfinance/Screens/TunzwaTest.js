@@ -3,6 +3,9 @@ import  {
   View,StyleSheet,Image,
   ActivityIndicator,
   ImageBackground,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Keyboard,
   Linking,
   Animated,
   Alert,
@@ -32,7 +35,7 @@ import { useFocusEffect } from '@react-navigation/native';
 const { width, height } = Dimensions.get('screen');
 
 
-const Test = () => {
+const MikatabaYote = ({navigation}) => {
 
 
 
@@ -277,6 +280,7 @@ const ReportCard = ({item , index}) => {
 
 
 <View key={item.id} style={globalStyles.row}>
+
     {/*<Text style={[globalStyles.cell, globalStyles.idColumn]}>{item.id}</Text>*/}
     <Text style={[globalStyles.cell, globalStyles.firstNameColumn]}>{item.JinaKamiliLaMteja}</Text>
     <Text style={[globalStyles.cell, globalStyles.otherColumns]}>{formatDate(item.Created)}</Text>
@@ -315,6 +319,7 @@ const ReportCard = ({item , index}) => {
 
       ]}
     >
+
          <FontAwesome name='trash-o' 
           onPress={() => navigation.navigate('Delete Mteja', {...item, postId: item.id })}
       size={30}
@@ -416,6 +421,9 @@ const ReportCard = ({item , index}) => {
 
     <View style={globalStyles.container}>
 
+
+
+
 <MinorHeader />
 
 <View style={{
@@ -468,9 +476,19 @@ const ReportCard = ({item , index}) => {
 
                   </View>
 
+<KeyboardAvoidingView
+  behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+  style={{ flex: 1 }}
+>
+  <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 
-      <ScrollView horizontal>
-        <ScrollView>
+      <ScrollView 
+       contentContainerStyle={{ flexGrow: 1 }}
+  keyboardShouldPersistTaps="handled"
+      horizontal>
+        <ScrollView 
+
+        >
 
 
 
@@ -492,6 +510,9 @@ const ReportCard = ({item , index}) => {
 {userData && userData.is_admin === true && (
   <Text style={[globalStyles.cell2, globalStyles.otherColumns]}>Futa</Text>
   )}
+
+
+
 </View>
 
   {setLoading===true?(<ActivityIndicator/>):(
@@ -521,6 +542,8 @@ const ReportCard = ({item , index}) => {
 
         </ScrollView>
       </ScrollView>
+       </TouchableWithoutFeedback>
+</KeyboardAvoidingView>
 
 
 <View style={{
@@ -650,7 +673,7 @@ const ReportCard = ({item , index}) => {
   );
 };
 
-export default Test;
+export default MikatabaYote;
 
 const styles = StyleSheet.create({
  
