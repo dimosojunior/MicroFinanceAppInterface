@@ -9,6 +9,7 @@ import  {
   Keyboard,
   Linking,
   Animated,
+  Modal,
   Alert,
   ScrollView,
   Dimensions,
@@ -32,10 +33,12 @@ import LotterViewScreen from '../Screens/LotterViewScreen';
 
 import MinorHeader from '../Header/MinorHeader';
 import { useFocusEffect } from '@react-navigation/native';
+import { getFormatedDate } from "react-native-modern-datepicker";
+import DatePicker from "react-native-modern-datepicker";
 
 const { width, height } = Dimensions.get('screen');
 
-const MikatabaYote = ({ navigation }) => {
+const MarejeshoYaLeo = ({ navigation }) => {
   const [fontsLoaded] = useFonts({
     Bold: require('../assets/fonts/Poppins-Bold.ttf'),
     Medium: require('../assets/fonts/Poppins-Medium.ttf'),
@@ -44,6 +47,8 @@ const MikatabaYote = ({ navigation }) => {
     Thin: require('../assets/fonts/Poppins-Thin.ttf'),
     Light: require('../assets/fonts/Poppins-Light.ttf'),
   });
+
+const [totalRejeshoLeo, setTotalRejeshoLeo] = useState(0);
 
  const [queryset, setQueryset] = useState([]);
 const [current_page, setcurrent_page] = useState(1);
@@ -120,7 +125,7 @@ const getItems = (token) => {
     //console.log('USERTOKEN', userToken);
     //setPending(true);
     //const url = EndPoint + `/GetAllUniversities/?page=${current_page}&page_size=2`;
-   const url = EndPoint + `/GetAllWatejaWoteView/?page=${current_page}&page_size=500`
+   const url = EndPoint + `/GetMarejeshoKwaSikuYaLeoView/?page=${current_page}&page_size=500`
     // console.log(url);
     fetch(url, {
       method: 'GET',
@@ -132,6 +137,7 @@ const getItems = (token) => {
       .then((data) => {
         if (data.queryset.length > 0) {
           setQueryset(data.queryset);
+          setTotalRejeshoLeo(data.total_rejesho_leo); // Set the total amount
 
         
         
@@ -178,7 +184,7 @@ const handleRefresh = async () => {
     const token = await AsyncStorage.getItem('userToken');
     if (token) {
       // Call getItems with the token and reset page
-      const url = EndPoint + `/GetAllWatejaWoteView/?page=1&page_size=500`;
+      const url = EndPoint + `/GetMarejeshoKwaSikuYaLeoView/?page=1&page_size=500`;
       const response = await fetch(url, {
         method: 'GET',
         headers: {
@@ -190,6 +196,7 @@ const handleRefresh = async () => {
       if (data.queryset.length > 0) {
         setQueryset(data.queryset); // Replace with new data
         //setcurrent_page(2); // Prepare for next page
+        setTotalRejeshoLeo(data.total_rejesho_leo); // Set the total amount
 
          setIsLoading(false);
           setLoading(false);
@@ -243,7 +250,7 @@ const handleRefresh = async () => {
   }
 
 
-  const formatDate = (dateString) => {
+  const formatDate2 = (dateString) => {
     if (!dateString) return null;
     const date = new Date(dateString);
     const day = String(date.getDate()).padStart(2, '0');
@@ -304,6 +311,87 @@ useEffect(() => {
 
 
 
+
+
+
+
+//-----------filter data by date-----------------
+const [startDate, setStartDate] = useState(null);
+ const [modalVisible, setModalVisible] = useState(false);
+ const [isRange, setisRange] = useState(false);
+
+  //const [endDate, setEndDate] = useState(null);
+
+  // Utility function to format the date as "YYYY-MM-DD"
+  const formatDate = (dateString) => {
+    if (!dateString) {
+      return null;
+    }
+    const [year, month, day] = dateString.split("/");
+    return `${year}-${month}-${day}`;
+  };
+
+  useEffect(() => {
+    if (startDate) {
+      handleFilterByDate();
+      //setisPending(true);
+    }
+  }, [startDate]);
+
+
+
+
+  const handleFilterByDate = () => {
+  // Convert the selected dates to the desired format (e.g., "YYYY-MM-DD")
+  const formattedStartDate = formatDate(startDate);
+
+  if (!startDate) {
+    // Check if the startDate is not selected
+    Alert.alert("Tafadhali chagua tarehe husika.");
+    return;
+  }
+
+  setPending(true);
+
+  axios
+    .get(`${EndPoint}/FilterMarejeshoYaSikuByDate/?startDate=${formattedStartDate}`, {
+      headers: {
+        Authorization: `Token ${userToken}`, // Add the Authorization header here
+      },
+    })
+    .then((response) => {
+      const { queryset, total_rejesho_leo } = response.data;
+      setQueryset(queryset);
+      setTotalRejeshoLeo(total_rejesho_leo);
+      setModalVisible(false);
+      setPending(false);
+      setisRange(true);
+    })
+    .catch((error) => {
+      console.error("Error fetching filtered data: ", error);
+      setModalVisible(false);
+      setPending(false);
+    });
+};
+
+
+// Function to format the datetime to date
+  const formatToShortDate = (dateTimeString) => {
+    if (!dateTimeString) {
+      return "";
+    }
+    const date = new Date(dateTimeString);
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return date.toLocaleDateString("en-US", options);
+  };
+
+
+
+
+
+
+
+
 // New Component for Table Row
 const TableRowComponent = ({ item}) => {
 
@@ -314,7 +402,7 @@ const TableRowComponent = ({ item}) => {
   return (
     <View key={item.id} style={globalStyles.row2}>
       <Text style={[globalStyles.cell, globalStyles.firstNameColumn]}>{item.JinaKamiliLaMteja}</Text>
-      <Text style={[globalStyles.cell, globalStyles.tarehecolumn]}>{formatDate(item.Created)}</Text>
+      <Text style={[globalStyles.cell, globalStyles.tarehecolumn]}>{formatDate2(item.Created)}</Text>
       {item.KiasiAnachokopa > 0 ? (
       <Text style={[globalStyles.cell, globalStyles.otherColumns]}>{formatToThreeDigits(item.KiasiAnachokopa)}</Text>
      ):(
@@ -349,31 +437,6 @@ const TableRowComponent = ({ item}) => {
         />
       </TouchableOpacity>
 
- {userData && userData.is_admin === true && (
-      <TouchableOpacity
-        style={[
-          globalStyles.cell,
-          globalStyles.buttoncolumn,
-          { justifyContent: 'center', alignItems: 'center' },
-        ]}
-        onPress={() => DeletehandlePress(item)}
-      >
-        <FontAwesome name="pencil-square-o" size={30} style={globalStyles.TableIconColorUpdate} />
-      </TouchableOpacity>
-      )}
-
- {userData && userData.is_admin === true && (
-      <TouchableOpacity
-        style={[
-          globalStyles.cell,
-          globalStyles.buttoncolumn,
-          { justifyContent: 'center', alignItems: 'center' },
-        ]}
-        onPress={() => DeletehandlePress(item)}
-      >
-        <FontAwesome name="trash-o" size={30} style={globalStyles.TableIconColorDelete} />
-      </TouchableOpacity>
-      )}
 
     </View>
   )
@@ -389,7 +452,7 @@ const TableRowComponent = ({ item}) => {
   return (
     <View key={item.id} style={globalStyles.row2}>
       <Text style={[globalStyles.cell, globalStyles.firstNameColumn]}>{item.JinaKamiliLaMteja}</Text>
-      <Text style={[globalStyles.cell, globalStyles.tarehecolumn]}>{formatDate(item.Created)}</Text>
+      <Text style={[globalStyles.cell, globalStyles.tarehecolumn]}>{formatDate2(item.Created)}</Text>
       {item.KiasiAnachokopa > 0 ? (
       <Text style={[globalStyles.cell, globalStyles.otherColumns]}>{formatToThreeDigits(item.KiasiAnachokopa)}</Text>
      ):(
@@ -423,32 +486,6 @@ const TableRowComponent = ({ item}) => {
           style={globalStyles.TableIconColor}
         />
       </TouchableOpacity>
-
- {userData && userData.is_admin === true && (
-      <TouchableOpacity
-        style={[
-          globalStyles.cell,
-          globalStyles.buttoncolumn,
-          { justifyContent: 'center', alignItems: 'center' },
-        ]}
-        onPress={() => DeletehandlePress(item)}
-      >
-        <FontAwesome name="pencil-square-o" size={30} style={globalStyles.TableIconColorUpdate} />
-      </TouchableOpacity>
-      )}
-
- {userData && userData.is_admin === true && (
-      <TouchableOpacity
-        style={[
-          globalStyles.cell,
-          globalStyles.buttoncolumn,
-          { justifyContent: 'center', alignItems: 'center' },
-        ]}
-        onPress={() => DeletehandlePress(item)}
-      >
-        <FontAwesome name="trash-o" size={30} style={globalStyles.TableIconColorDelete} />
-      </TouchableOpacity>
-      )}
 
     </View>
   )
@@ -478,6 +515,7 @@ const TableRowComponent = ({ item}) => {
           <MinorHeader />
 
           <View style={{ width: '100%', marginVertical: 0 }}>
+           {!isRange ? (
             <Text
               style={{
                 color: 'white',
@@ -489,8 +527,30 @@ const TableRowComponent = ({ item}) => {
                 fontFamily: 'Medium',
               }}
             >
-              Taarifa za mikataba yote
+              Marejesho ya leo
             </Text>
+            ):(
+          <Text
+              style={{
+                color: 'white',
+                paddingVertical: 10,
+                paddingHorizontal: 20,
+                width: '90%',
+                marginHorizontal: 10,
+                borderRadius: 10,
+                fontFamily: 'Medium',
+              }}
+            >
+              Marejesho ya tarehe  {formatDate(startDate)}
+            </Text>
+            )}
+
+           
+  
+
+
+
+
           </View>
 
           <View style={globalStyles.searchbarOtherPages}>
@@ -553,13 +613,7 @@ const TableRowComponent = ({ item}) => {
                   <Text style={[globalStyles.cell2, globalStyles.otherColumns]}>Lipwa</Text>
                   <Text style={[globalStyles.cell2, globalStyles.otherColumns]}>Deni</Text>
                   <Text style={[globalStyles.cell2, globalStyles.buttoncolumn]}>Hali</Text>
-                   {userData && userData.is_admin === true && (
-                  <Text style={[globalStyles.cell2, globalStyles.buttoncolumn]}>Badiliisha</Text>
-                  )}
-
-                    {userData && userData.is_admin === true && (
-                  <Text style={[globalStyles.cell2, globalStyles.buttoncolumn]}>Futa</Text>
-                  )}
+      
                 </View>
 
                 {/* Render Table Rows */}
@@ -626,32 +680,46 @@ const TableRowComponent = ({ item}) => {
            
           ]}
         >
-        {/*  <View style={{
-            width:'50%',
-          }}>
-            <Text style={{ 
-              fontFamily:'Medium'
-            }}>
-              Bei ya jumla
-            </Text>
 
-             <Text style={{ 
-              fontFamily:'Medium'
-            }}>
-              Tsh. {formatToThreeDigits(totalCartPrice)}/=
-            </Text>
-           
-          </View>*/}
+        <TouchableOpacity
+onPress={() => setModalVisible(true)}
+style={{
+   padding: 10,
+    width:'50%',
+    borderRadius: 6,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 10,
+}}
+ >
+    <Text 
+    style={{
+      color: "white" ,
+      // padding:13,
+       backgroundColor: "green",
+       borderColor:'white',
+       borderWidth:1,
+       textAlign:'center',
+       borderRadius:8,
+       width:'100%',
+       fontFamily:'Light',
+       paddingVertical:10,
+    }}
 
-         
+   >Tarehe ?</Text>
 
+</TouchableOpacity>
+
+
+       
           <TouchableOpacity
          //onPress={() => navigation.navigate("Home Stack")}
            
             style={{
               
               padding: 10,
-              width:'100%',
+              width:'50%',
               borderRadius: 6,
               flexDirection: "row",
               alignItems: "center",
@@ -659,7 +727,7 @@ const TableRowComponent = ({ item}) => {
               gap: 10,
             }}
           >
-            
+            {totalRejeshoLeo > 0 ? (
             <Text style={{
              //fontSize: 16, 
              //fontWeight: "500", 
@@ -675,13 +743,105 @@ const TableRowComponent = ({ item}) => {
              paddingVertical:10,
 
            }}>
-              Jumla: {WatejaWote}
+              Jumla: {formatToThreeDigits(totalRejeshoLeo)}
             </Text>
+            ):(
+           <Text style={{
+             //fontSize: 16, 
+             //fontWeight: "500", 
+             color: "white" ,
+            // padding:13,
+             backgroundColor: "black",
+             borderColor:'white',
+             borderWidth:1,
+             textAlign:'center',
+             borderRadius:8,
+             width:'100%',
+             fontFamily:'Light',
+             paddingVertical:10,
+
+           }}>
+              Jumla: 0
+            </Text>
+            )}
           </TouchableOpacity>
           
 
         </Pressable>
    
+
+
+
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+      <ScrollView>
+        <View style={globalStyles.FilterModalmodalContainer}>
+          <View style={globalStyles.FilterModalmodalContent}>
+         {/* <TouchableOpacity 
+          onPress ={move}>
+            <Text style={globalstyles.modalTitle}>ALL</Text>
+            </TouchableOpacity>*/}
+            <DatePicker
+              mode="calendar"
+              selected={startDate}
+              onDateChange={(date) => setStartDate(date)}
+              format="YYYY-MM-DD" // Set the date format to "YYYY-MM-DD"
+               options={{
+                    backgroundColor: "#080516",
+                    textHeaderColor: "red",
+                    textDefaultColor: "#FFFFFF",
+                    selectedTextColor: "#FFF",
+                    mainColor: "red",
+                    textSecondaryColor: "#FFFFFF",
+                    borderColor: 'red',
+                    borderRadius:10,
+                  }}
+            />
+
+        
+            <View style={[{
+                      justifyContent:'space-between',
+                      alignItems:'center',
+                      flexDirection:'row',
+                      marginVertical:15,
+                      margin:6,
+                    },globalStyles.ButtonConatinere]}>
+                    
+                    <Pressable style={[globalStyles.ButtonAdd,{
+                        width:'45%',
+                        backgroundColor:'red'
+                    }]}  onPress={() => setModalVisible(false)} >
+                        <Text style={{
+                            color:'white'
+                        }}>Ondoa</Text>
+                    </Pressable>
+
+
+                     <TouchableOpacity
+              onPress={handleFilterByDate}
+               
+              style={[globalStyles.ButtonAdd, {
+                width:'45%'
+              }]}
+            >
+              <Text style={{  color: "white" }}>Tafuta</Text>
+            </TouchableOpacity>
+            </View>
+
+
+
+
+          </View>
+        </View>
+        </ScrollView>
+      </Modal>
+
+    
 
 
 
@@ -725,4 +885,4 @@ const TableRowComponent = ({ item}) => {
   );
 };
 
-export default MikatabaYote;
+export default MarejeshoYaLeo;

@@ -184,7 +184,7 @@ const addCartItem = async () => {
   if (!KiasiChaRejeshoChaSiku) {
     setPending(false); 
     //Alert.alert('Error', 'Please enter a quantity of product(s) you want to order');
-    showAlertFunction("Tafadhali, ingiza kiasi cha rejesho");
+    Alert.alert("Tafadhali, ingiza kiasi cha rejesho");
     return;
   }
 
@@ -214,7 +214,7 @@ const addCartItem = async () => {
 
     setPending(false);
      
-     showAlertFunction("umefanikiwa kupokea rejesho la" + " " + JinaKamiliLaMteja);
+     Alert.alert("umefanikiwa kupokea rejesho");
      //setShouldReload(true); 
       navigation.replace('Pokea Rejesho HomeScreen'); 
         
@@ -239,15 +239,18 @@ const addCartItem = async () => {
     //setDisplayedItemsCount((prevCount) => prevCount + 1);
    
    } catch (error) {
+    setModalVisible(false);
      setPending(false);
      console.log("ERROR", error);
     //Alert.alert('Error', 'Failed to add item to cart');
      if (error.response && error.response.data && error.response.data.error) {
-      showAlertFunction(error.response.data.error);
+      Alert.alert(error.response.data.error);
       setPending(false);
+      setModalVisible(false);
     } else {
-      showAlertFunction("Imeshindikana kupokea rejesho la" + " " + JinaKamiliLaMteja);
+      Alert.alert("Imeshindikana kupokea rejesho ");
       setPending(false);
+      setModalVisible(false);
     }
     
     
@@ -542,7 +545,27 @@ keyboardShouldPersistTaps="handled"
         </Pressable>
    
 
-
+  <AwesomeAlert
+                show={showAlert}
+                showProgress={false}
+                // title="Overdose Stores"
+                closeOnTouchOutside={true}
+                closeOnHardwareBackPress={false}
+                showCancelButton={false}
+                showConfirmButton={true}
+                confirmText="OK"
+                confirmButtonColor="green"
+                onConfirmPressed={hideAlert}
+                 confirmButtonStyle={globalStyles.alertButton}
+                contentContainerStyle={globalStyles.alertContainer}
+                customView={
+                  <View style={globalStyles.alertContent}>
+                    <Image source={require('../assets/icon.png')} style={globalStyles.alertImage} />
+                    <Text style={globalStyles.alertTitle}>Gegwajo Microfinance</Text>
+                    <Text style={globalStyles.alertMessage}>{alertMessage}</Text>
+                  </View>
+                }
+              />
 
 
 {/*MODAL FOR MAKING ORDER*/}
@@ -608,27 +631,7 @@ keyboardShouldPersistTaps="handled"
 
 
 
-         <AwesomeAlert
-                show={showAlert}
-                showProgress={false}
-                // title="Overdose Stores"
-                closeOnTouchOutside={true}
-                closeOnHardwareBackPress={false}
-                showCancelButton={false}
-                showConfirmButton={true}
-                confirmText="OK"
-                confirmButtonColor="green"
-                onConfirmPressed={hideAlert}
-                 confirmButtonStyle={globalStyles.alertButton}
-                contentContainerStyle={globalStyles.alertContainer}
-                customView={
-                  <View style={globalStyles.alertContent}>
-                    <Image source={require('../assets/icon.png')} style={globalStyles.alertImage} />
-                    <Text style={globalStyles.alertTitle}>Gegwajo Microfinance</Text>
-                    <Text style={globalStyles.alertMessage}>{alertMessage}</Text>
-                  </View>
-                }
-              />
+       
     </View>
 
 

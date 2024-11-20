@@ -47,8 +47,27 @@ const { width, height } = Dimensions.get('screen');
 //   { id: 10, firstName: "Henry", middleName: "Tom", lastName: "Harris", age: 21, gender: "Male", phone: "012-345-6789" },
 // ];
 
-const MtejaDetails = () => {
+const MtejaDetails = ({navigation, route}) => {
 
+
+
+   const { 
+    postId,
+    JinaKamiliLaMteja,
+    SimuYaMteja,
+    EmailYaMteja,
+    Mahali,
+    KiasiAnachokopa,
+    KiasiAlicholipa,
+    RejeshoKwaSiku,
+    JumlaYaDeni,
+    Riba,
+    AmesajiliwaNa,
+    PichaYaMteja,
+    Ni_Mteja_Hai,
+    Created
+   
+   } = route.params
 
 
 
@@ -75,7 +94,7 @@ const [userData, setUserData] = useState({});
       setUserToken(token)
     })
     fetchUserData();
-  }, [userData]);
+  }, []);
 
   const fetchUserData = async () => {
     try {
@@ -189,56 +208,124 @@ keyboardShouldPersistTaps="handled"
   borderRadius:10,
   fontFamily:'Medium',
 
-  }}>Taarifa za mkataba wa mteja Juma</Text>
+  }}>Taarifa za mkataba wa  {JinaKamiliLaMteja}</Text>
 </View>
+
 
 
 
 {/*mwanzo wa view ya taarifa binafsi*/}
 <View style={globalStyles.TaarifaBinafsiMainContainer}>
   
+  {PichaYaMteja ? (
       <Image
+     style={globalStyles.TaarifaBinafsiMtejaImage}
+      source={{
+      uri: EndPoint + '/' + PichaYaMteja
+    }}
+       //source={require('../assets/profile.jpg')} 
+      >
+      </Image>
+
+      ):(
+     <Image
      style={globalStyles.TaarifaBinafsiMtejaImage}
       
        source={require('../assets/profile.jpg')} 
       >
       </Image>
+      )}
 
       <Text style={globalStyles.TaarifaBinafsiJinaLaMteja}>
-      Adelina Mgaya Petro    
+     {JinaKamiliLaMteja}    
       </Text>
-
+      
+      {Mahali && (
        <Text style={globalStyles.TaarifaBinafsiJinaLaKituo}>
-     Utukuyu uyole kati    
+     {Mahali} 
       </Text>
+      )}
 
+     {SimuYaMteja && (
        <Text style={globalStyles.TaarifaBinafsiSimuYaMteja}>
-     Simu: 0628431507    
+     Simu: {SimuYaMteja}    
       </Text>
+      )}
+
+
 
     {/*mwanzo wa view ya taarifa za mkopo*/}
 <View style={globalStyles.TaarifaBinafsimkopo}>
+{KiasiAnachokopa > 0 ? (
  <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaMkopoText}>
-     Mkopo: 200000    
+     Mkopo: {formatToThreeDigits(KiasiAnachokopa)}    
       </Text>
+      ):(
+    <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaMkopoText}>
+     Mkopo: 0   
+      </Text>
+      )}
 
       <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaMkatoText}>
      |   
       </Text>
-
+    
+    {JumlaYaDeni> 0 ? (
        <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaDeniText}>
-     Deni: 180000    
+     Deni: {formatToThreeDigits(JumlaYaDeni)}    
       </Text>
+      ):(
+ <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaDeniText}>
+     Deni: 0    
+      </Text>
+      )}
 
 </View>
-{/*mwanzo wa view ya taarifa za mkopo*/}
+{/*mwisho wa view ya taarifa za mkopo*/}
+
+
+
+
+   {/*mwanzo wa view ya taarifa za mkopo*/}
+<View style={globalStyles.TaarifaBinafsimkopo}>
+{KiasiAlicholipa > 0 ? (
+ <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaMkopoText}>
+     Lipwa: {formatToThreeDigits(KiasiAlicholipa)}    
+      </Text>
+      ):(
+<Text style={globalStyles.TaarifaBinafsiSimuYaMtejaMkopoText}>
+     Lipwa: 0   
+      </Text>
+      )}
+
+      <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaMkatoText}>
+     |   
+      </Text>
+      
+      {RejeshoKwaSiku > 0 ? (
+       <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaDeniText}>
+     Rejesho: {formatToThreeDigits(RejeshoKwaSiku)}    
+      </Text>
+      ):(
+     <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaDeniText}>
+     Rejesho: 0    
+      </Text>
+      )}
+
+</View>
+{/*mwisho wa view ya taarifa za mkopo*/}
+
+
+
 
 
   {/*mwanzo wa view ya taarifa za mwanzo wa kukopa*/}
 <View style={globalStyles.TaarifaBinafsiTareheZamkopo}>
+{Created && (
  <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaTareheYakukopaText}>
-     01/04/2024   
+     {formatDate(Created)}   
       </Text>
+      )}
 
     
        <Ionicons
@@ -257,8 +344,17 @@ keyboardShouldPersistTaps="handled"
 
 
 
+
+
+
+
+
+
+
+
 </View>
   {/*mwisho wa view ya taarifa binafsi*/}
+
 
 
 

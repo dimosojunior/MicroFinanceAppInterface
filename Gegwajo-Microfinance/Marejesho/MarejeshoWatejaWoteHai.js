@@ -128,7 +128,7 @@ const getItems = (token) => {
     //console.log('USERTOKEN', userToken);
     //setPending(true);
     //const url = EndPoint + `/GetAllUniversities/?page=${current_page}&page_size=2`;
-   const url = EndPoint + `/GetAllWatejaWoteView/?page=${current_page}&page_size=500`
+   const url = EndPoint + `/GetMarejeshoWatejaWoteHaiView/?page=${current_page}&page_size=500`
     // console.log(url);
     fetch(url, {
       method: 'GET',
@@ -186,7 +186,7 @@ const handleRefresh = async () => {
     const token = await AsyncStorage.getItem('userToken');
     if (token) {
       // Call getItems with the token and reset page
-      const url = EndPoint + `/GetAllWatejaWoteView/?page=1&page_size=500`;
+      const url = EndPoint + `/GetMarejeshoWatejaWoteHaiView/?page=1&page_size=500`;
       const response = await fetch(url, {
         method: 'GET',
         headers: {

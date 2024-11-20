@@ -28,12 +28,16 @@ import { useNavigation } from '@react-navigation/native';
 import { EndPoint } from "../Constant/links";
 
 
-import Test from '../Screens/Test';
+//import Test from '../Screens/Test';
 import AddMteja from '../Wateja/AddMteja';
 import MtejaDetails from '../Screens/MtejaDetails';
 // import DeleteMteja from '../Screens/DeleteMteja';
 
 import PokeaRejeshoStack from '../Stack/PokeaRejeshoStack';
+
+import MarejeshoYaLeo from '../Marejesho/MarejeshoYaLeo';
+
+import MikatabaHai from '../Screens/MikatabaHai';
 
 const Drawer = createDrawerNavigator();
 function MyDrawer(){
@@ -403,19 +407,6 @@ const [userData, setUserData] = useState({});
 
 
 
-        <Drawer.Screen
-          name="Mwanzo"
-          options={{
-            drawerLabel: "Mwanzo",
-            title: "Mwanzo",
-            
-            drawerIcon: () => (
-              <MaterialIcons name="home" size={30} color="white" />
-            )
-          }}
-          component={MyStack}
-        />
-
 
             <Drawer.Screen
           name="Sajili Mteja"
@@ -424,7 +415,7 @@ const [userData, setUserData] = useState({});
             title: "Sajili Mteja",
             
             drawerIcon: () => (
-              <MaterialIcons name="home" size={30} color="white" />
+              <FontAwesome name="user" size={30} color="white" />
             )
           }}
           component={AddMteja}
@@ -444,43 +435,18 @@ const [userData, setUserData] = useState({});
           component={PokeaRejeshoStack}
         />
 
-   <Drawer.Screen
-          name="Hawajarejesha tarehe"
-          options={{
-            drawerLabel: "Hawajarejesha tarehe",
-            title: "Hawajarejesha tarehe",
-            
-            drawerIcon: () => (
-              <FontAwesome name="user-circle" size={30} color="white" />
-            )
-          }}
-          component={MyStack}
-        />
-
-       <Drawer.Screen
-          name="Test"
-          options={{
-            drawerLabel: "Test",
-            title: "Test",
-            
-            drawerIcon: () => (
-              <FontAwesome name="folder-open" size={30} color="white" />
-            )
-          }}
-          component={Test}
-        />
-
+   
           <Drawer.Screen
-          name="Mteja Details"
+          name="MarejeshoYaLeo"
           options={{
-            drawerLabel: "Mteja Details",
-            title: "Mteja Details",
+            drawerLabel: "MarejeshoYaLeo",
+            title: "MarejeshoYaLeo",
             
             drawerIcon: () => (
               <FontAwesome name="folder-open" size={30} color="white" />
             )
           }}
-          component={MtejaDetails}
+          component={MarejeshoYaLeo}
         />
 
      
@@ -495,25 +461,12 @@ const [userData, setUserData] = useState({});
               <FontAwesome name="product-hunt" size={30} color="white" />
             )
           }}
-          component={MyStack}
+          component={MikatabaHai}
         />
 
 
 
-   <Drawer.Screen
-          name="Ripoti"
-          options={{
-            drawerLabel: "Ripoti",
-            title: "Ripoti",
-            
-            drawerIcon: () => (
-              <MaterialIcons name="home" size={30} color="white" />
-            )
-          }}
-          component={MyStack}
-        />
-
-
+ 
 
 
 

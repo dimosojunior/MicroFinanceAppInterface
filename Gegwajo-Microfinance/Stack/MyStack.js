@@ -24,7 +24,8 @@ import MikatabaYote from '../Screens/MikatabaYote';
 import DeleteMteja from '../Screens/DeleteMteja';
 
 import JazaRejesho from '../Marejesho/JazaRejesho';
-
+import MikatabaHai from '../Screens/MikatabaHai';
+import MtejaDetails from '../Screens/MtejaDetails';
 
 const Stack = createStackNavigator();
 
@@ -120,15 +121,31 @@ function MyStack( {navigation}){
       />
 
  
-           <Stack.Screen
+   {/*        <Stack.Screen
       name="Jaza Rejesho"
       component={JazaRejesho}
       // options={ () => ({ 
       //       headerLeft: () => <Header  title='About Page' />,
       //     })}
       />
+*/}
 
 
+         <Stack.Screen
+      name="Mikataba Hai"
+      component={MikatabaHai}
+      // options={ () => ({ 
+      //       headerLeft: () => <Header  title='About Page' />,
+      //     })}
+      />
+
+              <Stack.Screen
+      name="Mteja Details"
+      component={MtejaDetails}
+      // options={ () => ({ 
+      //       headerLeft: () => <Header  title='About Page' />,
+      //     })}
+      />
 
       </Stack.Navigator>
       //	</NavigationContainer>

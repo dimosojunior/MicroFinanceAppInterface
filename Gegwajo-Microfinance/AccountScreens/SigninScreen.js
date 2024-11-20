@@ -200,15 +200,23 @@ const handleErrorMessage = (error) => {
                      <Image
 
                   style={{
-                    width:100,
-                    height:100,
+                    width:120,
+                    height:120,
                     borderRadius:50,
                   }}
                    source={require('../assets/icon.png')} 
                   >
                   </Image>
 
-            <Text style={styles.title}>GEGWAJO</Text>
+            <Text style={[styles.title,
+              {
+                fontSize:20,
+
+              }
+              ]}>GEGWAJO <Text style={{
+              color:'#012827',
+              fontSize:20,
+            }}>MICROFINANCE</Text></Text>
             {/*<Text style={styles.subtitle}>Free Projects Share</Text>*/}
         </View>
 

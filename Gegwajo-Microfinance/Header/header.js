@@ -35,6 +35,10 @@ const navigation = useNavigation();
     navigation.openDrawer();
   }
 
+const GoHome = () => {
+    navigation.navigate('Home Stack');
+  }
+
 
 
   return (
@@ -65,8 +69,10 @@ const navigation = useNavigation();
           </TouchableOpacity>
 
           <Text style={{fontSize:20,fontFamily:"Regular",color:'black'}}>MICROFINANCE</Text>
-          <TouchableOpacity>
-          <FontAwesome name="user-o" size={26} color="black"/>
+          <TouchableOpacity 
+           onPress={GoHome}
+          >
+          <FontAwesome name="home" size={26} color="#c07d18"/>
           </TouchableOpacity>
       </View>
 

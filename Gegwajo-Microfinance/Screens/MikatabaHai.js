@@ -35,7 +35,7 @@ import { useFocusEffect } from '@react-navigation/native';
 
 const { width, height } = Dimensions.get('screen');
 
-const MikatabaYote = ({ navigation }) => {
+const MikatabaHai = ({ navigation }) => {
   const [fontsLoaded] = useFonts({
     Bold: require('../assets/fonts/Poppins-Bold.ttf'),
     Medium: require('../assets/fonts/Poppins-Medium.ttf'),
@@ -120,7 +120,7 @@ const getItems = (token) => {
     //console.log('USERTOKEN', userToken);
     //setPending(true);
     //const url = EndPoint + `/GetAllUniversities/?page=${current_page}&page_size=2`;
-   const url = EndPoint + `/GetAllWatejaWoteView/?page=${current_page}&page_size=500`
+   const url = EndPoint + `/GetMarejeshoWatejaWoteHaiView/?page=${current_page}&page_size=500`
     // console.log(url);
     fetch(url, {
       method: 'GET',
@@ -178,7 +178,7 @@ const handleRefresh = async () => {
     const token = await AsyncStorage.getItem('userToken');
     if (token) {
       // Call getItems with the token and reset page
-      const url = EndPoint + `/GetAllWatejaWoteView/?page=1&page_size=500`;
+      const url = EndPoint + `/GetMarejeshoWatejaWoteHaiView/?page=1&page_size=500`;
       const response = await fetch(url, {
         method: 'GET',
         headers: {
@@ -349,31 +349,6 @@ const TableRowComponent = ({ item}) => {
         />
       </TouchableOpacity>
 
- {userData && userData.is_admin === true && (
-      <TouchableOpacity
-        style={[
-          globalStyles.cell,
-          globalStyles.buttoncolumn,
-          { justifyContent: 'center', alignItems: 'center' },
-        ]}
-        onPress={() => DeletehandlePress(item)}
-      >
-        <FontAwesome name="pencil-square-o" size={30} style={globalStyles.TableIconColorUpdate} />
-      </TouchableOpacity>
-      )}
-
- {userData && userData.is_admin === true && (
-      <TouchableOpacity
-        style={[
-          globalStyles.cell,
-          globalStyles.buttoncolumn,
-          { justifyContent: 'center', alignItems: 'center' },
-        ]}
-        onPress={() => DeletehandlePress(item)}
-      >
-        <FontAwesome name="trash-o" size={30} style={globalStyles.TableIconColorDelete} />
-      </TouchableOpacity>
-      )}
 
     </View>
   )
@@ -424,32 +399,6 @@ const TableRowComponent = ({ item}) => {
         />
       </TouchableOpacity>
 
- {userData && userData.is_admin === true && (
-      <TouchableOpacity
-        style={[
-          globalStyles.cell,
-          globalStyles.buttoncolumn,
-          { justifyContent: 'center', alignItems: 'center' },
-        ]}
-        onPress={() => DeletehandlePress(item)}
-      >
-        <FontAwesome name="pencil-square-o" size={30} style={globalStyles.TableIconColorUpdate} />
-      </TouchableOpacity>
-      )}
-
- {userData && userData.is_admin === true && (
-      <TouchableOpacity
-        style={[
-          globalStyles.cell,
-          globalStyles.buttoncolumn,
-          { justifyContent: 'center', alignItems: 'center' },
-        ]}
-        onPress={() => DeletehandlePress(item)}
-      >
-        <FontAwesome name="trash-o" size={30} style={globalStyles.TableIconColorDelete} />
-      </TouchableOpacity>
-      )}
-
     </View>
   )
 
@@ -489,7 +438,7 @@ const TableRowComponent = ({ item}) => {
                 fontFamily: 'Medium',
               }}
             >
-              Taarifa za mikataba yote
+              Taarifa za mikataba hai
             </Text>
           </View>
 
@@ -553,13 +502,7 @@ const TableRowComponent = ({ item}) => {
                   <Text style={[globalStyles.cell2, globalStyles.otherColumns]}>Lipwa</Text>
                   <Text style={[globalStyles.cell2, globalStyles.otherColumns]}>Deni</Text>
                   <Text style={[globalStyles.cell2, globalStyles.buttoncolumn]}>Hali</Text>
-                   {userData && userData.is_admin === true && (
-                  <Text style={[globalStyles.cell2, globalStyles.buttoncolumn]}>Badiliisha</Text>
-                  )}
-
-                    {userData && userData.is_admin === true && (
-                  <Text style={[globalStyles.cell2, globalStyles.buttoncolumn]}>Futa</Text>
-                  )}
+      
                 </View>
 
                 {/* Render Table Rows */}
@@ -675,7 +618,7 @@ const TableRowComponent = ({ item}) => {
              paddingVertical:10,
 
            }}>
-              Jumla: {WatejaWote}
+              Jumla: {ActiveProjects}
             </Text>
           </TouchableOpacity>
           
@@ -725,4 +668,4 @@ const TableRowComponent = ({ item}) => {
   );
 };
 
-export default MikatabaYote;
+export default MikatabaHai;

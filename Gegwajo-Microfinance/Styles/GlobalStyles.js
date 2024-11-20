@@ -1006,6 +1006,110 @@ EnterQuntityTextViewProduct:{
 
 
 
+  //---------------REPORT FILTER MODAL------------------
+
+  FilterModalcontainer: {
+    flex: 1,
+    padding: 16,
+  },
+  FilterModalfilterButton: {
+    padding: 16,
+    backgroundColor: "#007BFF",
+    borderRadius: 8,
+    alignItems: "center",
+    marginVertical: 10,
+  },
+  FilterModalfilterButtonText: {
+    color: "white",
+    // fontWeight: "bold",
+    fontFamily:'Light',
+  },
+  FilterModalmodalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  FilterModalmodalContent: {
+    backgroundColor: "black",
+    padding: 10,
+    borderRadius: 8,
+    width: "90%",
+  },
+  FilterModalmodalTitle: {
+     fontFamily:'Light',
+    // fontWeight: "bold",
+    marginBottom: 10,
+    textAlign: 'center',
+    backgroundColor: 'green',
+    padding: 5,
+    borderRadius: 6,
+    color: 'white',
+  },
+  FilterModalapplyButton: {
+    backgroundColor: "#007BFF",
+    padding: 10,
+    borderRadius: 8,
+    alignItems: "center",
+    marginTop: 10,
+  },
+  FilterModalapplyButtonText: {
+    color: "white",
+    // fontWeight: "bold",
+  },
+  FilterModaltotalAmountText: {
+     fontFamily:'Light',
+    // fontWeight: "bold",
+    marginTop: 20,
+  },
+  FilterModalorderContainer: {
+    //backgroundColor: "#F8F8F8",
+    padding: 10,
+    borderRadius: 8,
+    marginTop: 10,
+    elevation: 10,
+    shadowColor: 'green',
+    shadowOpacity: 1,
+    flex: 1,
+    flexDirection: 'row',
+
+
+
+    //alignSelf: "center",
+    borderRadius: 10,
+    // shadowOpacity: 0.5,
+    // shadowColor: "#000",
+    shadowOffset: {
+      height: 5,
+      width: 5
+    },
+    backgroundColor: "white",
+    marginVertical: 10
+  },
+
+
+  ReportRangeText: {
+    color: 'red',
+     fontFamily:'Light',
+ fontFamily:'Light'
+
+  },
+
+
+  ProcessOrderReportScreenFilterReportContainer: {
+    position: "absolute",
+    bottom: 10,
+    left: 10,
+    backgroundColor: 'yellow',
+    padding: 10,
+    borderRadius: 6,
+
+  },
+  ProcessOrderReportScreenFilterReportContainerText: {
+    color: 'black'
+
+  },
+
 
 
   });

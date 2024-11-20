@@ -363,6 +363,7 @@ style={globalStyles.ItemHomeScreenPressableContainer}
 {/*mwanzo wa item*/}
 
   <Pressable 
+   onPress={() => navigation.navigate('Mikataba Hai')}
 style={globalStyles.ItemHomeScreenPressableContainer}
 
   >
@@ -383,6 +384,7 @@ style={globalStyles.ItemHomeScreenPressableContainer}
      >
      </Image>*/}
         <FontAwesome name='book' 
+         onPress={() => navigation.navigate('Mikataba Hai')}
       size={30}
       //color="black" 
       style={globalStyles.ItemHomeScreenLeftContainerIcon}      
