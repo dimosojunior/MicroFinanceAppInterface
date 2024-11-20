@@ -5,6 +5,7 @@ import  {
   ImageBackground,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
+  RefreshControl,
   Keyboard,
   Linking,
   Animated,
@@ -150,6 +151,61 @@ const getItems = (token) => {
           console.log("Error fetching data");;
         }
       });
+  }
+};
+
+
+
+
+
+ //kwa ajili ya kurefresh pages
+   const [refresh, setRefresh] = useState(false);
+
+  // const pullMe =() => {
+  //   setRefresh(true)
+
+  //   setTimeout (() => {
+  //     setRefresh(false)
+  //   }, 10)
+  // }
+
+const handleRefresh = async () => {
+  setRefresh(true);
+  setEndReached(false); // Reset to allow loading more data
+  setcurrent_page(1); // Reset to the first page
+
+  try {
+    const token = await AsyncStorage.getItem('userToken');
+    if (token) {
+      // Call getItems with the token and reset page
+      const url = EndPoint + `/GetAllWatejaWoteView/?page=1&page_size=500`;
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      });
+      const data = await response.json();
+
+      if (data.queryset.length > 0) {
+        setQueryset(data.queryset); // Replace with new data
+        //setcurrent_page(2); // Prepare for next page
+
+         setIsLoading(false);
+          setLoading(false);
+          setcurrent_page(current_page + 1);
+          setPending(false);
+          console.log('Page is Refreshed');
+
+      } else {
+        console.log('No new data available');
+      }
+    }
+  } catch (error) {
+    console.error('Error refreshing data:', error);
+  } finally {
+    setRefresh(false); // Stop the refresh animation
+     setPending(false);
   }
 };
 
@@ -458,10 +514,30 @@ const TableRowComponent = ({ item}) => {
           </View>
 
           <ScrollView 
-          keyboardShouldPersistTaps="handled"
-          horizontal>
+         //   keyboardShouldPersistTaps="handled"
+         //      refreshControl={
+         //    <RefreshControl
+         //    refreshing={refresh}
+         //    onRefresh={() => pullMe()}
+         //    />
+         //   }
+         // showsVerticalScrollIndicator={false}
+       
+         //  onScroll={handleScroll} scrollEventThrottle={16}
+         
+          horizontal
+          >
             <ScrollView 
+
             keyboardShouldPersistTaps="handled"
+              refreshControl={
+            <RefreshControl
+            refreshing={refresh} onRefresh={handleRefresh}
+            />
+           }
+         showsVerticalScrollIndicator={false}
+       
+          onScroll={handleScroll} scrollEventThrottle={16}
             >
 
             {queryset && queryset.length > 0 ? (
@@ -487,16 +563,18 @@ const TableRowComponent = ({ item}) => {
                 </View>
 
                 {/* Render Table Rows */}
-                {queryset.map((item) => (
-                  <TableRowComponent
-                    key={item.id}
-                    item={item}
-                    // formatDate={formatDate}
-                    // formatToThreeDigits={formatToThreeDigits}
-                    // handlePress={handlePress}
-                    // DeletehandlePress={DeletehandlePress}
-                  />
-                ))}
+             {setLoading===true?(<ActivityIndicator/>):(
+
+             <>
+
+                   {queryset.map((item, index) => {
+          return <TableRowComponent item={item} key={item.id || index} />;
+          })}
+        
+          {isLoading&&(<ActivityIndicator/>)}
+          </>
+          )}
+         
               </View>
 
 
@@ -623,7 +701,7 @@ const TableRowComponent = ({ item}) => {
                 customView={
                   <View style={globalStyles.alertContent}>
                     <Image source={require('../assets/icon.png')} style={globalStyles.alertImage} />
-                    <Text style={globalStyles.alertTitle}>Mfugaji Smart</Text>
+                    <Text style={globalStyles.alertTitle}>Gegwajo Microfinance</Text>
                     <Text style={globalStyles.alertMessage}>{alertMessage}</Text>
                   </View>
                 }

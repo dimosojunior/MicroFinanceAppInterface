@@ -799,6 +799,215 @@ FullTaarifaZaMarejeshoRightText:{
 
 
 
+//------------PEOPLE WORKS MODAL STYLE----------------
+
+KeyboardAvoidingViewModalViewProduct:{
+  flex: 1,
+  backgroundColor:'white',
+  justifyContent:'center',
+  alignItems:'center',
+  width:'100%',
+
+
+
+
+},
+ModalTitleViewProduct:{
+  textAlign:'center',
+  fontFamily:'SemiBold',
+  textAlign:'center'
+},
+ConfirmCancelButtonTextViewProduct:{
+  color:'white',
+  fontFamily:'Light',
+  margin:10,
+},
+
+EnterQuntityTextViewProduct:{
+  color:'black',
+   fontFamily:'Light',
+},
+ inputViewProduct: {
+    flexDirection: "row",
+    width: 300,
+    
+    alignItems: "center",
+    padding: 10,
+    borderRadius: 10,
+    marginTop: 10
+  },
+
+
+  
+  ModalViewViewProduct: {
+    padding: 2,
+    paddingHorizontal:20,
+    // width: 340,
+    //width:'100%',
+    backgroundColor: "white",
+    borderRadius: 20,
+    elevation: 3,
+    shadowColor: Platform.OS === "android" ? 'black' : "black",
+    shadowOpacity: 1,
+    paddingBottom:30,
+    marginTop:10,
+    borderWidth:1,
+    borderColor:'black',
+
+
+  },
+
+  inputViewProduct: {
+    flexDirection: "row",
+    //width: 300,
+    height: 50,
+    borderColor: "black",
+    borderWidth: 1,
+    alignItems: "center",
+    padding: 10,
+    borderRadius: 10,
+    marginTop: 10,
+    width: '100%',
+    marginBottom:20,
+  },
+   textInputViewProduct: {
+    // fontSize: 20
+     
+    marginLeft: 10,
+
+    color: 'black',
+    fontFamily:'Light',
+    width: 250,
+    //backgroundColor: 'white',
+    
+    borderRadius: 10,
+    // borderColor: "black",
+    // borderWidth: 1,
+    //padding:12,
+    height: 50,
+  },
+
+
+  ButtonCloseViewProduct: {
+
+    alignItems: 'center',
+    justifyContent: "center",
+    width: 140,
+    height: 50,
+    backgroundColor: "red",
+    borderRadius: 5,
+    marginRight:10,
+
+  },
+  ButtonAddViewProduct: {
+
+    alignItems: 'center',
+    justifyContent: "center",
+    width: 140,
+    height: 50,
+    backgroundColor: "green",
+    borderRadius: 5,
+
+
+  },
+  ButtonScanViewProduct: {
+
+    alignItems: 'center',
+    justifyContent: "center",
+    width: 140,
+    height: 50,
+    backgroundColor: "gray",
+    borderRadius: 5,
+
+  },
+  ButtonBarcodeViewProduct: {
+
+    alignItems: 'center',
+    justifyContent: "center",
+    width: 140,
+    height: 50,
+    //  backgroundColor:"green",
+    borderRadius: 5,
+    borderWidth: 1,
+
+  }, 
+  ButtonConatinerViewProduct: {
+    flexDirection: 'row',
+    marginTop: 10,
+    alignItems:'space-around',
+    flex:1,
+    //justifyContent: "space-between"
+  },
+
+  inputTaxViewProduct: {
+    flexDirection: "row",
+    width: 300,
+    height: 50,
+    backgroundColor: 'green',
+    // borderColor:"black",
+    // borderWidth:1,
+    alignItems: "center",
+    padding: 10,
+    borderRadius: 6,
+    marginTop: 10,
+    justifyContent: 'space-between'
+  },
+  pickerViewProduct: {
+    width: 170,
+    height: 40,
+    backgroundColor: 'white',
+    borderRadius: 5,
+  },
+  pickerInputViewProduct: {
+    top: -7
+  },
+
+ 
+  formViewProduct: {
+    marginTop: 10,
+    alignItems: 'center',
+    flexDirection:'row',
+    alignItems:'space-around',
+    width:width,
+    
+  },
+  
+
+
+
+  InputiconViewProduct: {
+    fontSize: 29,
+    marginRight: 10
+
+  },
+  TaxTypeViewProduct: {
+     fontFamily:'Light',
+    color: "white",
+    fontWeight: '400'
+  },
+  openViewProduct: {
+    width: 200,
+    height: 50,
+    backgroundColor: 'yellow',
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 5,
+
+  },
+
+
+  ButtonAddTextViewProduct: {
+    color: 'white',
+     fontFamily:'Light',
+  },
+
+
+
+
+
+
+
   });
 
 

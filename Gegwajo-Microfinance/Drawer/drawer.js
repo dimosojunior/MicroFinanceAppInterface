@@ -33,6 +33,8 @@ import AddMteja from '../Wateja/AddMteja';
 import MtejaDetails from '../Screens/MtejaDetails';
 // import DeleteMteja from '../Screens/DeleteMteja';
 
+import PokeaRejeshoStack from '../Stack/PokeaRejeshoStack';
+
 const Drawer = createDrawerNavigator();
 function MyDrawer(){
 
@@ -428,6 +430,19 @@ const [userData, setUserData] = useState({});
           component={AddMteja}
         />
 
+
+   <Drawer.Screen
+          name="Pokea Rejesho"
+          options={{
+            drawerLabel: "Pokea Rejesho",
+            title: "Pokea Rejesho",
+            
+            drawerIcon: () => (
+              <FontAwesome name="user-circle" size={30} color="white" />
+            )
+          }}
+          component={PokeaRejeshoStack}
+        />
 
    <Drawer.Screen
           name="Hawajarejesha tarehe"

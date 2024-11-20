@@ -19,16 +19,14 @@ import SigninScreen from '../AccountScreens/SigninScreen';
 
 
 
-import HomeScreen from '../Screens/HomeScreen';
-import MikatabaYote from '../Screens/MikatabaYote';
-import DeleteMteja from '../Screens/DeleteMteja';
+import MarejeshoWatejaWoteHai from '../Marejesho/MarejeshoWatejaWoteHai';
 
 import JazaRejesho from '../Marejesho/JazaRejesho';
 
 
 const Stack = createStackNavigator();
 
-function MyStack( {navigation}){
+function PokeaRejeshoStack( {navigation}){
 
   // hii ni kwa ajili ya zile slide za mwanzo km mtu ameshaingia na akaziona
 // basi akiingia kwa mara ya pili asizione tena
@@ -87,38 +85,15 @@ function MyStack( {navigation}){
 
 
  <Stack.Screen
-      name="Signin Stack"
-      component={SigninScreen}
+      name="Pokea Rejesho HomeScreen"
+      component={MarejeshoWatejaWoteHai}
       // options={ () => ({ 
       //       headerLeft: () => <Header  title='About Page' />,
       //     })}
       />
 
 
-       <Stack.Screen
-      name="Home Stack"
-      component={HomeScreen}
-      // options={ () => ({ 
-      //       headerLeft: () => <Header  title='About Page' />,
-      //     })}
-      />
-
-            <Stack.Screen
-      name="Mikataba Yote"
-      component={MikatabaYote}
-      // options={ () => ({ 
-      //       headerLeft: () => <Header  title='About Page' />,
-      //     })}
-      />
-
-           <Stack.Screen
-      name="Delete Mteja"
-      component={DeleteMteja}
-      // options={ () => ({ 
-      //       headerLeft: () => <Header  title='About Page' />,
-      //     })}
-      />
-
+  
  
            <Stack.Screen
       name="Jaza Rejesho"
@@ -137,4 +112,4 @@ function MyStack( {navigation}){
 
     );
   }
-  export default MyStack;
+  export default PokeaRejeshoStack;
