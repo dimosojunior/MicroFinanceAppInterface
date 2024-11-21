@@ -27,6 +27,12 @@ import JazaRejesho from '../Marejesho/JazaRejesho';
 import MikatabaHai from '../Screens/MikatabaHai';
 import MtejaDetails from '../Screens/MtejaDetails';
 
+import NjeYaMkatabaWote from '../Screens/NjeYaMkatabaWote';
+import NJeYaMkatabaLeo from '../Screens/NJeYaMkatabaLeo';
+
+import MarejeshoYaLeo from '../Marejesho/MarejeshoYaLeo';
+
+
 const Stack = createStackNavigator();
 
 function MyStack( {navigation}){
@@ -146,6 +152,32 @@ function MyStack( {navigation}){
       //       headerLeft: () => <Header  title='About Page' />,
       //     })}
       />
+
+         <Stack.Screen
+      name="Nje Ya Mkataba Leo"
+      component={NJeYaMkatabaLeo}
+      // options={ () => ({ 
+      //       headerLeft: () => <Header  title='About Page' />,
+      //     })}
+      />
+
+               <Stack.Screen
+      name="Nje Ya Mkataba Wote"
+      component={NjeYaMkatabaWote}
+      // options={ () => ({ 
+      //       headerLeft: () => <Header  title='About Page' />,
+      //     })}
+      />
+
+
+             <Stack.Screen
+      name="Marejesho Ya Leo"
+      component={MarejeshoYaLeo}
+      // options={ () => ({ 
+      //       headerLeft: () => <Header  title='About Page' />,
+      //     })}
+      />
+
 
       </Stack.Navigator>
       //	</NavigationContainer>

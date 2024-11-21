@@ -161,6 +161,45 @@ useEffect(() => {
 }, []);
 
 
+
+
+
+
+
+
+//-----------Fetch wateja wote
+
+const [WatejaWote2, setWatejaWote2] = useState(0);
+const [ActiveProjects2, setActiveProjects2] = useState(0);
+
+// Fetch Wateja Data
+useEffect(() => {
+  const fetchWatejaData2 = async () => {
+    try {
+      const token = await AsyncStorage.getItem('userToken'); // Get the token
+      if (token) {
+        const response = await axios.get(EndPoint + '/CountAllWatejaWoteNjeYaMikataView/', {
+          headers: {
+            Authorization: `Token ${token}`, // Pass the token in the header
+          },
+        });
+        const { wateja_wote, wateja_hai } = response.data;
+        setWatejaWote2(wateja_wote);
+        setActiveProjects2(wateja_hai);
+      } else {
+        console.error("No user token found");
+      }
+    } catch (error) {
+      console.error("Error fetching Wateja data:", error);
+    }
+  };
+
+  fetchWatejaData2();
+}, []);
+
+
+
+
     const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
 
@@ -415,6 +454,7 @@ style={globalStyles.ItemHomeScreenPressableContainer}
         {/*<Text style={{color:'red',fontWeight:"600"}}>percentage </Text>*/}
 
        <Ionicons name='arrow-forward-circle' 
+       onPress={() => navigation.navigate('Mikataba Hai')}
       size={30}
       //color="black" 
       //color="red"
@@ -441,6 +481,7 @@ style={globalStyles.ItemHomeScreenPressableContainer}
 {/*mwanzo wa item*/}
 
   <Pressable 
+  onPress={() => navigation.navigate('Nje Ya Mkataba Leo')}
 style={globalStyles.ItemHomeScreenPressableContainer}
 
   >
@@ -461,6 +502,7 @@ style={globalStyles.ItemHomeScreenPressableContainer}
      >
      </Image>*/}
         <FontAwesome name='user-times' 
+        
       size={30}
       //color="black" 
       style={globalStyles.ItemHomeScreenLeftContainerIcon}      
@@ -481,7 +523,7 @@ style={globalStyles.ItemHomeScreenPressableContainer}
         </Text>
         <Text 
         style={globalStyles.ItemHomeScreenMiddleContainerText2}
-        >(50)</Text>
+        >({ActiveProjects2})</Text>
       </View>
 
       <View 
@@ -491,6 +533,7 @@ style={globalStyles.ItemHomeScreenPressableContainer}
         {/*<Text style={{color:'red',fontWeight:"600"}}>percentage </Text>*/}
 
        <Ionicons name='arrow-forward-circle' 
+       onPress={() => navigation.navigate('Nje Ya Mkataba Leo')}
       size={30}
       //color="black" 
       //color="red"
@@ -514,6 +557,7 @@ style={globalStyles.ItemHomeScreenPressableContainer}
 {/*mwanzo wa item*/}
 
   <Pressable 
+  onPress={() => navigation.navigate('Nje Ya Mkataba Wote')}
 style={globalStyles.ItemHomeScreenPressableContainer}
 
   >
@@ -534,6 +578,7 @@ style={globalStyles.ItemHomeScreenPressableContainer}
      >
      </Image>*/}
         <FontAwesome name='user-secret' 
+        
       size={30}
       //color="black" 
       style={globalStyles.ItemHomeScreenLeftContainerIcon}      
@@ -554,7 +599,7 @@ style={globalStyles.ItemHomeScreenPressableContainer}
         </Text>
         <Text 
         style={globalStyles.ItemHomeScreenMiddleContainerText2}
-        >(50)</Text>
+        >({WatejaWote2})</Text>
       </View>
 
       <View 
@@ -564,6 +609,7 @@ style={globalStyles.ItemHomeScreenPressableContainer}
         {/*<Text style={{color:'red',fontWeight:"600"}}>percentage </Text>*/}
 
        <Ionicons name='arrow-forward-circle' 
+         onPress={() => navigation.navigate('Nje Ya Mkataba Wote')}
       size={30}
       //color="black" 
       //color="red"

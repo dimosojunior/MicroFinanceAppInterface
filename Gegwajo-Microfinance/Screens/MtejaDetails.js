@@ -65,7 +65,8 @@ const MtejaDetails = ({navigation, route}) => {
     AmesajiliwaNa,
     PichaYaMteja,
     Ni_Mteja_Hai,
-    Created
+    Created,
+    Up_To
    
    } = route.params
 
@@ -333,10 +334,11 @@ keyboardShouldPersistTaps="handled"
         //color='white'
         style={globalStyles.TaarifaBinafsiSimuYaMtejaIconTareheYakukopaText}
          />
-
+    {Up_To && (
        <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaMwishoTareheYakukopaText}>
-     30/04/2024     
+     {formatDate(Up_To)}        
       </Text>
+      )}
 
 </View>
 {/*mwanzo wa view ya taarifa za  mwanzo wa kukopa*/}

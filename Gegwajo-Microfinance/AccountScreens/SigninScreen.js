@@ -200,8 +200,8 @@ const handleErrorMessage = (error) => {
                      <Image
 
                   style={{
-                    width:120,
-                    height:120,
+                    width:100,
+                    height:100,
                     borderRadius:50,
                   }}
                    source={require('../assets/icon.png')} 
@@ -213,8 +213,8 @@ const handleErrorMessage = (error) => {
                 fontSize:20,
 
               }
-              ]}>GEGWAJO <Text style={{
-              color:'#012827',
+              ]}>GEGWAJO - <Text style={{
+              color:'wheat',
               fontSize:20,
             }}>MICROFINANCE</Text></Text>
             {/*<Text style={styles.subtitle}>Free Projects Share</Text>*/}
@@ -348,7 +348,7 @@ const handleErrorMessage = (error) => {
                 customView={
                   <View style={globalStyles.alertContent}>
                     <Image source={require('../assets/icon.png')} style={globalStyles.alertImage} />
-                    <Text style={globalStyles.alertTitle}>Mfugaji Smart</Text>
+                    <Text style={globalStyles.alertTitle}>Gegwajo Microfinance</Text>
                     <Text style={globalStyles.alertMessage}>{alertMessage}</Text>
                   </View>
                 }

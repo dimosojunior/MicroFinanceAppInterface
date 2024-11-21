@@ -39,6 +39,8 @@ import MarejeshoYaLeo from '../Marejesho/MarejeshoYaLeo';
 
 import MikatabaHai from '../Screens/MikatabaHai';
 
+import HomeScreen from '../Screens/HomeScreen';
+
 const Drawer = createDrawerNavigator();
 function MyDrawer(){
 
@@ -172,6 +174,8 @@ const [userData, setUserData] = useState({});
   };
 
 
+const [dropdownVisible, setDropdownVisible] = useState(false);
+
 	return(
 
 <>{!fontsLoaded ? (<View/>):(
@@ -246,11 +250,43 @@ const [userData, setUserData] = useState({});
 
 
 
+             <TouchableOpacity
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                padding: 10,
+                marginLeft:15,
+              }}
+              onPress={() => setDropdownVisible(!dropdownVisible)}
+            >
+              <FontAwesome name="book" size={30} color="white" />
+              <Text style={{ color: "white", 
+              marginLeft: 30, fontFamily: "Light" 
+            }}>
+                Ripoti
+              </Text>
+            </TouchableOpacity>
 
 
 
+ {dropdownVisible && (
+              <View style={{ 
+                marginLeft: 110,
 
-
+                 }}>
+                <TouchableOpacity
+                  onPress={() => {
+                    setDropdownVisible(false);
+                    navigation.navigate("Marejesho Ya Leo"); // Navigate to first option
+                  }}
+                >
+                  <Text style={{ color: "white", marginVertical: 8 }}>
+                    Marejesho
+                  </Text>
+                </TouchableOpacity>
+               
+              </View>
+            )}
 
             
               
@@ -406,6 +442,19 @@ const [userData, setUserData] = useState({});
 */}
 
 
+    <Drawer.Screen
+          name="Mwanzo"
+          options={{
+            drawerLabel: "Mwanzo",
+            title: "Mwanzo",
+            
+            drawerIcon: () => (
+              <FontAwesome name="home" size={30} color="white" />
+            )
+          }}
+          component={MyStack}
+        />
+
 
 
             <Drawer.Screen
@@ -436,7 +485,7 @@ const [userData, setUserData] = useState({});
         />
 
    
-          <Drawer.Screen
+   {/*       <Drawer.Screen
           name="MarejeshoYaLeo"
           options={{
             drawerLabel: "MarejeshoYaLeo",
@@ -449,7 +498,7 @@ const [userData, setUserData] = useState({});
           component={MarejeshoYaLeo}
         />
 
-     
+     */}
 
            <Drawer.Screen
           name="Mikataba Hai"
@@ -470,8 +519,18 @@ const [userData, setUserData] = useState({});
 
 
 
-
-     
+{/*<Drawer.Screen
+  name="Ripoti"
+  options={{
+    drawerLabel: "Ripoti",
+    title: "Ripoti",
+    drawerIcon: () => (
+      <FontAwesome name="book" size={30} color="white" />
+    ),
+  }}
+  component={() => null} // Set component to null since it's a custom dropdown
+/>
+  */}   
 
        
 
