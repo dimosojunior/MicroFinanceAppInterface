@@ -86,6 +86,10 @@ const [SimuYaMteja, setSimuYaMteja] = useState('');
 const [EmailYaMteja, setEmailYaMteja] = useState('');
 const [Mahali, setMahali] = useState('');
 const [KiasiAnachokopa, setKiasiAnachokopa] = useState(0);
+const [SimuYaMzaminiWa1, setSimuYaMzaminiWa1] = useState('');
+const [SimuYaMzaminiWa2, setSimuYaMzaminiWa2] = useState('');
+const [JinaLaMzaminiWa1, setJinaLaMzaminiWa1] = useState('');
+const [JinaLaMzaminiWa2, setJinaLaMzaminiWa2] = useState('');
 
 
   const [userData, setUserData] = useState({});
@@ -225,10 +229,45 @@ const handleRegistration = async () => {
          if (SimuYaMteja) {
             formData.append('SimuYaMteja', SimuYaMteja);
         } else {
-            showAlertFunction('Tafadhali ingiza namba ya simu ya mteja ?');
+            showAlertFunction('Tafadhali ingiza namba ya simu ya mteja ');
             setIsLoading(false);
             return;
         }
+
+             if (SimuYaMzaminiWa1) {
+            formData.append('SimuYaMzaminiWa1', SimuYaMzaminiWa1);
+        } else {
+            showAlertFunction('Tafadhali ingiza namba ya simu ya mzamini wa kwanza ');
+            setIsLoading(false);
+            return;
+        }
+
+           if (SimuYaMzaminiWa2) {
+            formData.append('SimuYaMzaminiWa2', SimuYaMzaminiWa2);
+        } else {
+            showAlertFunction('Tafadhali ingiza namba ya simu ya mzamini wa pili ');
+            setIsLoading(false);
+            return;
+        }
+
+              if (JinaLaMzaminiWa1) {
+            formData.append('JinaLaMzaminiWa1', JinaLaMzaminiWa1);
+        } else {
+            showAlertFunction('Tafadhali ingiza jina la mzamini wa kwanza ');
+            setIsLoading(false);
+            return;
+        }
+
+           if (JinaLaMzaminiWa2) {
+            formData.append('JinaLaMzaminiWa2', JinaLaMzaminiWa2);
+        } else {
+            showAlertFunction('Tafadhali ingiza jina la mzamini wa pili ');
+            setIsLoading(false);
+            return;
+        }
+
+
+
 
           if (EmailYaMteja) {
             formData.append('EmailYaMteja', EmailYaMteja);
@@ -247,6 +286,30 @@ const handleRegistration = async () => {
   }
 
   if (SimuYaMteja.length !== 10) {
+    showAlertFunction("Namba ya simu lazima iwe na tarakimu 10");
+    return;
+  }
+
+
+           // Validate phone number
+  if (!SimuYaMzaminiWa1.startsWith("0")) {
+    showAlertFunction("Namba ya simu lazima ianze na 0");
+    return;
+  }
+
+  if (SimuYaMzaminiWa1.length !== 10) {
+    showAlertFunction("Namba ya simu lazima iwe na tarakimu 10");
+    return;
+  }
+
+
+           // Validate phone number
+  if (!SimuYaMzaminiWa2.startsWith("0")) {
+    showAlertFunction("Namba ya simu lazima ianze na 0");
+    return;
+  }
+
+  if (SimuYaMzaminiWa2.length !== 10) {
     showAlertFunction("Namba ya simu lazima iwe na tarakimu 10");
     return;
   }
@@ -297,10 +360,13 @@ const handleRegistration = async () => {
             setdisplayContentsState(true);
             //console.log("Well");
             setJinaKamiliLaMteja('');
-            setJinaKamiliLaMteja('');
+            setJinaLaMzaminiWa1('');
+            setJinaLaMzaminiWa2('');
             setPichaYaMteja('');
             setMaelezoYaMteja('');
             setSimuYaMteja(0);
+            setSimuYaMzaminiWa1(0);
+            setSimuYaMzaminiWa2(0);
             setEmailYaMteja('');
             setMahali('');
             setKiasiAnachokopa(0);
@@ -351,7 +417,7 @@ const handleRegistration = async () => {
             height:60,
             borderRadius:50,
           }}
-           source={require('../assets/i2.jpg')} 
+           source={require('../assets/icon.png')} 
           >
          </Image>
 
@@ -664,6 +730,281 @@ const handleRegistration = async () => {
 
 
 
+
+
+
+
+                 {/*  mwanzo wa username*/}
+            <View 
+            style={[styles.dataContainerForPassword, 
+              {
+                 width:width-20,
+                marginTop:0,
+              }
+
+              ]}
+          >
+
+            <View style={{
+          width:'10%',
+          //justifyContent:"center",
+         // backgroundColor:'red',
+        }}>
+
+         {/* Add a button to toggle password visibility */}
+        <TouchableOpacity
+          
+          style={{ 
+            alignSelf: 'flex-start', 
+            marginRight: 0,color:'black',
+            flexDirection:'row',
+            alignItems:'center',
+             }}
+          >
+
+          <FontAwesome size={25} color="green" name="user-circle" />
+
+        {/*  <Text style={{
+           color: 'black', 
+           fontSize: 16,
+           fontWeight:'bold',
+           marginLeft:10,
+            }}>
+            +255
+          </Text>*/}
+        </TouchableOpacity>
+
+        </View>
+
+
+          <TextInput
+          style= {[styles.textinputi,{ 
+            color: 'black',width:'88%',
+            //backgroundColor:'black',
+
+            //paddingVertical:20,
+          }]}
+          placeholder="Ingiza jina kamili la mzamini wa kwanza"
+          //keyboardType="numeric"
+          
+          value={JinaLaMzaminiWa1}
+          onChangeText={setJinaLaMzaminiWa1}
+        placeholderTextColor="black"
+        />
+
+      
+        </View>
+      {/*  mwisho wa username*/}
+
+
+
+
+               {/*  mwanzo wa namba ya simu*/}
+            <View 
+            style={[styles.dataContainerForPassword, 
+              {
+                 width:width-20,
+                marginTop:0,
+              }
+
+              ]}
+          >
+
+            <View style={{
+          width:'10%',
+          //justifyContent:"center",
+        }}>
+
+         {/* Add a button to toggle password visibility */}
+        <TouchableOpacity
+          
+          style={{ 
+            alignSelf: 'flex-start', 
+            marginRight: 0,color:'black',
+            flexDirection:'row',
+            alignItems:'center',
+             }}
+          >
+
+           <Image
+
+          style={{
+            width:30,
+            height:30,
+          }}
+           source={require('../assets/tz.jpg')} 
+          >
+          </Image>
+
+        {/*  <Text style={{
+           color: 'black', 
+           fontSize: 16,
+           fontWeight:'bold',
+           marginLeft:10,
+            }}>
+            +255
+          </Text>*/}
+        </TouchableOpacity>
+
+        </View>
+
+
+          <TextInput
+          style= {[styles.textinputi,{ 
+            color: 'black',width:'88%',
+
+            //paddingVertical:20,
+          }]}
+          placeholder=" Namba ya simu ya mzamini wa kwanza"
+          keyboardType="numeric"
+          
+          value={SimuYaMzaminiWa1}
+          onChangeText={setSimuYaMzaminiWa1}
+        placeholderTextColor="black"
+        />
+
+      
+        </View>
+      {/*  mwisho wa namba ya simu*/}
+
+
+
+
+
+
+
+                 {/*  mwanzo wa username*/}
+            <View 
+            style={[styles.dataContainerForPassword, 
+              {
+                 width:width-20,
+                marginTop:0,
+              }
+
+              ]}
+          >
+
+            <View style={{
+          width:'10%',
+          //justifyContent:"center",
+         // backgroundColor:'red',
+        }}>
+
+         {/* Add a button to toggle password visibility */}
+        <TouchableOpacity
+          
+          style={{ 
+            alignSelf: 'flex-start', 
+            marginRight: 0,color:'black',
+            flexDirection:'row',
+            alignItems:'center',
+             }}
+          >
+
+          <FontAwesome size={25} color="green" name="user-circle" />
+
+        {/*  <Text style={{
+           color: 'black', 
+           fontSize: 16,
+           fontWeight:'bold',
+           marginLeft:10,
+            }}>
+            +255
+          </Text>*/}
+        </TouchableOpacity>
+
+        </View>
+
+
+          <TextInput
+          style= {[styles.textinputi,{ 
+            color: 'black',width:'88%',
+            //backgroundColor:'black',
+
+            //paddingVertical:20,
+          }]}
+          placeholder="Ingiza jina kamili la mzamini wa pili"
+          //keyboardType="numeric"
+          
+          value={JinaLaMzaminiWa2}
+          onChangeText={setJinaLaMzaminiWa2}
+        placeholderTextColor="black"
+        />
+
+      
+        </View>
+      {/*  mwisho wa username*/}
+
+
+
+
+               {/*  mwanzo wa namba ya simu*/}
+            <View 
+            style={[styles.dataContainerForPassword, 
+              {
+                 width:width-20,
+                marginTop:0,
+              }
+
+              ]}
+          >
+
+            <View style={{
+          width:'10%',
+          //justifyContent:"center",
+        }}>
+
+         {/* Add a button to toggle password visibility */}
+        <TouchableOpacity
+          
+          style={{ 
+            alignSelf: 'flex-start', 
+            marginRight: 0,color:'black',
+            flexDirection:'row',
+            alignItems:'center',
+             }}
+          >
+
+           <Image
+
+          style={{
+            width:30,
+            height:30,
+          }}
+           source={require('../assets/tz.jpg')} 
+          >
+          </Image>
+
+        {/*  <Text style={{
+           color: 'black', 
+           fontSize: 16,
+           fontWeight:'bold',
+           marginLeft:10,
+            }}>
+            +255
+          </Text>*/}
+        </TouchableOpacity>
+
+        </View>
+
+
+          <TextInput
+          style= {[styles.textinputi,{ 
+            color: 'black',width:'88%',
+
+            //paddingVertical:20,
+          }]}
+          placeholder=" Namba ya simu ya mzamini wa pili"
+          keyboardType="numeric"
+          
+          value={SimuYaMzaminiWa2}
+          onChangeText={setSimuYaMzaminiWa2}
+        placeholderTextColor="black"
+        />
+
+      
+        </View>
+      {/*  mwisho wa namba ya simu*/}
 
 
 

@@ -16,7 +16,7 @@ import SigninScreen from '../AccountScreens/SigninScreen';
 
 // import SendOTPScreen from '../AccountScreens/SendOTPScreen';
 // import VerifyOTPScreen from '../AccountScreens/VerifyOTPScreen';
-
+import ChangePasswordScreen from '../AccountScreens/ChangePasswordScreen';
 
 
 import HomeScreen from '../Screens/HomeScreen';
@@ -177,6 +177,16 @@ function MyStack( {navigation}){
       //       headerLeft: () => <Header  title='About Page' />,
       //     })}
       />
+
+
+       <Stack.Screen
+      name="Badili Password"
+      component={ChangePasswordScreen}
+      // options={ () => ({ 
+      //       headerLeft: () => <Header  title='About Page' />,
+      //     })}
+      />
+
 
 
       </Stack.Navigator>

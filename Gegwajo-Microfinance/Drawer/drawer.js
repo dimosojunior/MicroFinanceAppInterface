@@ -244,6 +244,33 @@ const [dropdownVisible, setDropdownVisible] = useState(false);
                       fontFamily:'Medium',
                       color: 'white'
                     }}>Karibu => {userData ? userData.username : ''}</Text>
+                  
+
+                    <TouchableOpacity
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                padding: 10,
+                marginLeft:15,
+                justifyContent:'space-between',
+                borderColor:'white',
+                borderWidth:1,
+                marginBottom:10,
+                borderRadius:10,
+              }}
+              onPress={() => navigation.navigate("Badili Password")}
+            >
+               
+             <Text style={{
+              // fontSize: 18,
+              // fontWeight: 'bold',
+              fontFamily:'Medium',
+              color: 'wheat',
+              marginRight:20,
+            }}>Badili neno siri</Text>
+             <FontAwesome name="key" size={20} color="white" />
+            </TouchableOpacity>
+
                   </View>
 
                   <DrawerItemList {...props} />

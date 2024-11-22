@@ -13,10 +13,27 @@ import { EndPoint } from './Constant/links';
 //import * as Application from 'expo-application';
 import AwesomeAlert from 'react-native-awesome-alerts';
 
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { EventRegister } from 'react-native-event-listeners';
 
 export default function App({navigation}) {
 
 
+
+  const [userToken, setUserToken] = useState('');
+  //const Stack = createStackNavigator();
+
+  useEffect(() => {
+    // Listen for the 'updateUserToken' event
+    const tokenUpdateListener = EventRegister.addEventListener('updateUserToken', (token) => {
+      setUserToken(token);
+    });
+
+    // Cleanup the listener when the component unmounts
+    return () => {
+      EventRegister.removeEventListener(tokenUpdateListener);
+    };
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
