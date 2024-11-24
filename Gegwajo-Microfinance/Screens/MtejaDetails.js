@@ -55,6 +55,8 @@ const MtejaDetails = ({navigation, route}) => {
     postId,
     JinaKamiliLaMteja,
     SimuYaMteja,
+    SimuYaMzaminiWa1,
+    SimuYaMzaminiWa2,
     EmailYaMteja,
     Mahali,
     KiasiAnachokopa,
@@ -253,6 +255,28 @@ keyboardShouldPersistTaps="handled"
       </Text>
       )}
 
+
+ {/*mwanzo wa view ya taarifa za mkopo*/}
+<View style={globalStyles.TaarifaBinafsimkopo}>
+{SimuYaMzaminiWa1 && (
+ <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaMkopoText}>
+     Win: {SimuYaMzaminiWa1}    
+      </Text>
+      )}
+ 
+
+      <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaMkatoText}>
+     |   
+      </Text>
+      
+      {SimuYaMzaminiWa2 && (
+       <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaDeniText}>
+     {SimuYaMzaminiWa2}    
+      </Text>
+    )}
+
+</View>
+{/*mwisho wa view ya taarifa za mkopo*/}
 
 
     {/*mwanzo wa view ya taarifa za mkopo*/}

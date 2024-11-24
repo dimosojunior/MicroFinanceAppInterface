@@ -311,6 +311,17 @@ const [dropdownVisible, setDropdownVisible] = useState(false);
                     Marejesho
                   </Text>
                 </TouchableOpacity>
+
+                 <TouchableOpacity
+                  onPress={() => {
+                    setDropdownVisible(false);
+                    navigation.navigate("Ripoti Ya Siku"); // Navigate to first option
+                  }}
+                >
+                  <Text style={{ color: "white", marginVertical: 8 }}>
+                    Ripoti Ya Siku
+                  </Text>
+                </TouchableOpacity>
                
               </View>
             )}

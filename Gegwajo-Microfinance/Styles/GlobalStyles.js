@@ -1112,6 +1112,117 @@ EnterQuntityTextViewProduct:{
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+//---------------------RIPOTI YA SIKU-----------------------
+
+
+FullRipotiYaSikuContainer:{
+  //width:'90%',
+  alignItems:'center',
+  //justifyContent:'center',
+
+  marginHorizontal:0,
+  marginTop:0,
+  //justifyContent:'space-around',
+  flexDirection:'row',
+
+  // borderWidth:.2,
+  //   borderColor:COLORS.white,
+  //   elevation: 3,
+
+  //   shadowOffset: { width: 1, height: 1 },
+  //   shadowColor: Platform.OS === "android" ? COLORS.white : COLORS.white,
+  //   shadowOpacity: 1,
+  //   shadowRadius: 2,
+
+    paddingHorizontal:10,
+    paddingVertical:10,
+    borderRadius:10,
+    borderTopRightRadius:0,
+    marginBottom:10,
+    width:'90%',
+
+
+},
+
+FullRipotiYaSikuLeftMajorContainer:{
+  width:'50%',
+  //backgroundColor:'green',
+
+},
+
+FullRipotiYaSikuRightMajorContainer:{
+  width:'30%',
+  //backgroundColor:'red',
+
+},
+
+
+
+FullRipotiYaSikuLeftContainer:{
+  //width:'45%',
+  //alignItems:'flex-start',
+  // borderColor:'white',
+  // borderWidth:1,
+   borderWidth:.2,
+    borderColor:COLORS.white,
+    elevation: 3,
+
+    shadowOffset: { width: 1, height: 1 },
+    shadowColor: Platform.OS === "android" ? COLORS.white : COLORS.white,
+    shadowOpacity: 1,
+    shadowRadius: 2,
+
+    paddingHorizontal:10,
+    paddingVertical:10,
+    // alignItems:'center',
+    // justifyContent:'center',
+},
+FullRipotiYaSikuRightContainer:{
+  // alignItems:'center',
+  // justifyContent:'center',
+  //width:'45%',
+  //alignItems:'flex-end',
+  // borderColor:'white',
+  // borderWidth:1,
+   borderWidth:.2,
+    borderColor:COLORS.white,
+    elevation: 3,
+
+    shadowOffset: { width: 1, height: 1 },
+    shadowColor: Platform.OS === "android" ? COLORS.white : COLORS.white,
+    shadowOpacity: 1,
+    shadowRadius: 2,
+
+    paddingHorizontal:10,
+    paddingVertical:10,
+},
+FullRipotiYaSikuLeftText:{
+  color:'white',
+  fontFamily:'Light',
+
+},
+
+FullRipotiYaSikuRightText:{
+  color:'white',
+  fontFamily:'Light',
+},
+
+
+
+
+
+
   });
 
 

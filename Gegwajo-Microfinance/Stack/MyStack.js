@@ -31,7 +31,7 @@ import NjeYaMkatabaWote from '../Screens/NjeYaMkatabaWote';
 import NJeYaMkatabaLeo from '../Screens/NJeYaMkatabaLeo';
 
 import MarejeshoYaLeo from '../Marejesho/MarejeshoYaLeo';
-
+import RipotiYaSiku from '../Screens/RipotiYaSiku';
 
 const Stack = createStackNavigator();
 
@@ -177,6 +177,16 @@ function MyStack( {navigation}){
       //       headerLeft: () => <Header  title='About Page' />,
       //     })}
       />
+
+                <Stack.Screen
+      name="Ripoti Ya Siku"
+      component={RipotiYaSiku}
+      // options={ () => ({ 
+      //       headerLeft: () => <Header  title='About Page' />,
+      //     })}
+      />
+
+      
 
 
        <Stack.Screen

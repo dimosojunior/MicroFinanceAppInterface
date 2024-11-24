@@ -54,6 +54,8 @@ const DeleteMteja = ({navigation, route}) => {
     JinaKamiliLaMteja,
     SimuYaMteja,
     EmailYaMteja,
+    SimuYaMzaminiWa1,
+    SimuYaMzaminiWa2,
     Mahali,
     KiasiAnachokopa,
     KiasiAlicholipa,
@@ -267,6 +269,29 @@ keyboardShouldPersistTaps="handled"
      Simu: {SimuYaMteja}    
       </Text>
       )}
+
+
+ {/*mwanzo wa view ya taarifa za mkopo*/}
+<View style={globalStyles.TaarifaBinafsimkopo}>
+{SimuYaMzaminiWa1 && (
+ <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaMkopoText}>
+     Win: {SimuYaMzaminiWa1}    
+      </Text>
+      )}
+ 
+
+      <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaMkatoText}>
+     |   
+      </Text>
+      
+      {SimuYaMzaminiWa2 && (
+       <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaDeniText}>
+     {SimuYaMzaminiWa2}    
+      </Text>
+    )}
+
+</View>
+{/*mwisho wa view ya taarifa za mkopo*/}
 
 
 

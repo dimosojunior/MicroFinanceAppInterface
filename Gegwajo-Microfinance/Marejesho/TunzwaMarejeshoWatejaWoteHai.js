@@ -60,14 +60,6 @@ const [loading, setLoading] = useState(false);
 const [endReached, setEndReached] = useState(false)
 const [isPending, setPending] = useState(true);
 
-
-const [marejesho_queryset, setmarejesho_queryset] = useState([]);
-const [marejeshoisPending, setmarejeshoPending] = useState(true);
-
-const [faini_queryset, setfaini_queryset] = useState([]);
-const [fainiisPending, setfainiPending] = useState(true);
-
-
   const [input, setInput] = useState('');
 
 
@@ -111,90 +103,21 @@ const [userData, setUserData] = useState({});
 
 //console.log("USERDATA USERNAME", userData.username);
 
-
-
  useEffect(() => {
-  const fetchDataSequentially = async () => {
-    try {
+    const fetchTokenAndData = async () => {
       const token = await AsyncStorage.getItem('userToken');
       setUserToken(token);
-
       if (token) {
         setIsLoading(true);
-
-        // Call getItems
-        await getItems(token);
-
-        // Call getMarejeshoYaLeo
-        await getMarejeshoYaLeo(token);
-
-        // Call getFainiZaLeo
-        await getFainiZaLeo(token);
-    setIsLoading(false);
-        
+        getItems(token);
       }
-    } catch (error) {
-      console.error("Hey Error fetching data:", error);
-      setIsLoading(false);
-    }
-  };
-
-  fetchDataSequentially();
-}, []);
+    };
+    fetchTokenAndData();
+  }, []);
 
 
-const [totalRejeshoLeo, setTotalRejeshoLeo] = useState(0);
-const [totalFainiLeo, setTotalFainiLeo] = useState(0);
 
-// const getItems = async (token) => {
-//   if (endReached) {
-//     setLoading(false);
-//     setIsLoading(false);
-//     setPending(false);
-//     return;
-//   }
-
-//   setIsLoading(true);
-
-//   const url = `${EndPoint}/GetMarejeshoWatejaWoteHaiView/?page=${current_page}&page_size=500`;
-//   try {
-//     const response = await fetch(url, {
-//       method: 'GET',
-//       headers: {
-//         Authorization: `Token ${token}`,
-//       },
-//     });
-//     const data = await response.json();
-
-//     if (data.queryset.length > 0) {
-//       setQueryset(data.queryset);
-//       // setcurrent_page((prevPage) => prevPage + 1);
-//       // setEndReached(false);
-
-//       setIsLoading(false);
-//       setLoading(false);
-//       setcurrent_page(current_page + 1);
-//       setPending(false);
-
-//     } else {
-//       setIsLoading(false);
-//       setEndReached(true);
-//       setLoading(false);
-//       setPending(false);
-
-//     }
-//   } catch (error) {
-//     console.error("Error in getItems:", error);
-//   } finally {
-//     setIsLoading(false);
-//     setPending(false);
-//     setLoading(false);
-//     setEndReached(false);
-//   }
-// };
-
-
-const getItems = async (token) => {
+const getItems = (token) => {
   if (endReached) {
     setLoading(false);
     setIsLoading(false);
@@ -217,7 +140,6 @@ const getItems = async (token) => {
       .then((data) => {
         if (data.queryset.length > 0) {
           setQueryset(data.queryset);
-          setTotalRejeshoLeo(data.total_rejesho_leo); // Set the total amount
 
         
         
@@ -241,57 +163,6 @@ const getItems = async (token) => {
 };
 
 
-
-const getMarejeshoYaLeo = async (token) => {
-  setmarejeshoPending(true);
-
-  const url = `${EndPoint}/GetMarejeshoWatejaWoteHaiView2/`;
-  try {
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        Authorization: `Token ${token}`,
-      },
-    });
-    const data = await response.json();
-
-    if (data.marejesho_queryset.length > 0) {
-      setmarejesho_queryset(data.marejesho_queryset);
-      setTotalRejeshoLeo(data.total_rejesho_leo); 
-    }
-  } catch (error) {
-    console.error("Error in getMarejeshoYaLeo:", error);
-  } finally {
-    setmarejeshoPending(false);
-  }
-};
-
-
-
-
-const getFainiZaLeo = async (token) => {
-  setfainiPending(true);
-
-  const url = `${EndPoint}/GetFainiWatejaWoteHaiView2/`;
-  try {
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        Authorization: `Token ${token}`,
-      },
-    });
-    const data = await response.json();
-
-    if (data.faini_queryset.length > 0) {
-      setfaini_queryset(data.faini_queryset);
-      setTotalFainiLeo(data.total_faini_leo); 
-    }
-  } catch (error) {
-    console.error("Error in getFainiZaLeo:", error);
-  } finally {
-    setfainiPending(false);
-  }
-};
 
 
 
@@ -556,287 +427,6 @@ const TableRowComponent = ({ item}) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-// New Component for Table Row
-const MarejeshoYaLeoComponent = ({ item}) => {
-
-  return (
-
-    <Pressable>
-      
-
-    <View 
-style={[globalStyles.FullRipotiYaSikuContainer,
-  {
-    width:'90%',
-  }]}
->
-
-<Pressable 
-style={globalStyles.FullRipotiYaSikuLeftMajorContainer}
->
-  
-
-
-{/*mwanzo wa Left View*/} 
-<View 
-style={globalStyles.FullRipotiYaSikuLeftContainer}
->
-<Text 
-style={globalStyles.FullRipotiYaSikuLeftText}
- >{item.JinaKamiliLaMteja}</Text>
-</View>
-{/*mwanzo wa Left View*/} 
-
-{/*mwanzo wa Left View*/} 
-<View 
-style={[globalStyles.FullRipotiYaSikuLeftContainer,
-  {
-    backgroundColor:'#c07d18',
-  }
-
-  ]}
->
-<Text 
-style={[globalStyles.FullRipotiYaSikuLeftText,
-  {
-    fontFamily:'Bold',
-  }
-
-  ]}
- >Jumla</Text>
-</View>
-{/*mwanzo wa Left View*/} 
-
-
-</Pressable>
-
-
-
-
-
-{/*Right start here----------------------------------------------------*/}
-
-<Pressable 
-style={globalStyles.FullRipotiYaSikuRightMajorContainer}
->
- 
-
-{/*mwanzo wa Right View*/} 
-<View 
-style={globalStyles.FullRipotiYaSikuRightContainer}
->
-{item.RejeshoLililoPokelewaLeo > 0 ? (
-<Text 
-style={globalStyles.FullRipotiYaSikuRightText}
- >{formatToThreeDigits(item.RejeshoLililoPokelewaLeo)}</Text>
- ):(
-<Text 
-style={globalStyles.FullRipotiYaSikuRightText}
- >0</Text>
- )}
-</View>
-{/*mwanzo wa Right View*/} 
-
-
-
-
-{/*mwanzo wa Right View*/} 
-<View 
-style={[globalStyles.FullRipotiYaSikuRightContainer,
-
-   {
-    backgroundColor:'#c07d18',
-  }
-
-
-  ]}
->
-{totalRejeshoLeo > 0 ? (
-<Text 
-style={[globalStyles.FullRipotiYaSikuRightText,
-  {
-    fontFamily:'Bold',
-  }
-
-  ]}
- >{formatToThreeDigits(totalRejeshoLeo)}</Text>
- ):(
-<Text 
-style={[globalStyles.FullRipotiYaSikuRightText,
-  {
-    fontFamily:'Bold',
-  }
-
-  ]}
- >0</Text>
- )}
-</View>
-{/*mwanzo wa Right View*/} 
-
-
-</Pressable>
-
-
-</View>
-
-
-
-    </Pressable>
-   
-  )
-  
-}
-
-
-
-
-
-
-
-
-// New Component for Table Row
-const FainiZaLeoComponent = ({ item}) => {
-
-  return (
-
-  
-    <Pressable>
-      
-
-    <View 
-style={[globalStyles.FullRipotiYaSikuContainer,
-  {
-    width:'90%',
-  }]}
->
-
-<Pressable 
-style={globalStyles.FullRipotiYaSikuLeftMajorContainer}
->
-  
-
-
-{/*mwanzo wa Left View*/} 
-<View 
-style={globalStyles.FullRipotiYaSikuLeftContainer}
->
-<Text 
-style={globalStyles.FullRipotiYaSikuLeftText}
- >{item.JinaKamiliLaMteja}</Text>
-</View>
-{/*mwanzo wa Left View*/} 
-
-{/*mwanzo wa Left View*/} 
-<View 
-style={[globalStyles.FullRipotiYaSikuLeftContainer,
-  {
-    backgroundColor:'#c07d18',
-  }
-
-  ]}
->
-<Text 
-style={[globalStyles.FullRipotiYaSikuLeftText,
-  {
-    fontFamily:'Bold',
-  }
-
-  ]}
- >Jumla</Text>
-</View>
-{/*mwanzo wa Left View*/} 
-
-
-</Pressable>
-
-
-
-
-
-{/*Right start here----------------------------------------------------*/}
-
-<Pressable 
-style={globalStyles.FullRipotiYaSikuRightMajorContainer}
->
- 
-
-{/*mwanzo wa Right View*/} 
-<View 
-style={globalStyles.FullRipotiYaSikuRightContainer}
->
-{item.FainiKwaSiku > 0 ? (
-<Text 
-style={globalStyles.FullRipotiYaSikuRightText}
- >{formatToThreeDigits(item.FainiKwaSiku)}</Text>
- ):(
-<Text 
-style={globalStyles.FullRipotiYaSikuRightText}
- >0</Text>
- )}
-</View>
-{/*mwanzo wa Right View*/} 
-
-
-
-
-{/*mwanzo wa Right View*/} 
-<View 
-style={[globalStyles.FullRipotiYaSikuRightContainer,
-
-   {
-    backgroundColor:'#c07d18',
-  }
-
-
-  ]}
->
-{totalFainiLeo > 0 ? (
-<Text 
-style={[globalStyles.FullRipotiYaSikuRightText,
-  {
-    fontFamily:'Bold',
-  }
-
-  ]}
- >{formatToThreeDigits(totalFainiLeo)}</Text>
- ):(
-<Text 
-style={[globalStyles.FullRipotiYaSikuRightText,
-  {
-    fontFamily:'Bold',
-  }
-
-  ]}
- >0</Text>
- )}
-</View>
-{/*mwanzo wa Right View*/} 
-
-
-</Pressable>
-
-
-</View>
-
-
-
-    </Pressable>
-   
-  )
-  
-}
-
   return (
       <>{!fontsLoaded ? (<View/>):(
 
@@ -957,7 +547,7 @@ style={[globalStyles.FullRipotiYaSikuRightText,
 
                <Text style={{
                 color:'white',
-                fontFamily:'Regular',
+                fontFamily:'Medium',
                 marginLeft:20,
                 marginTop:30,
                 fontSize:18,
@@ -966,30 +556,118 @@ style={[globalStyles.FullRipotiYaSikuRightText,
                </Text>
 
 
-     {marejesho_queryset && marejesho_queryset.length > 0 ? (
 
 
-      <>
 
-       {marejesho_queryset.map((item, index) => {
-          return <MarejeshoYaLeoComponent item={item} key={item.id || index} />;
-          })}
-        
-</>
-):(
+
+{/*mwanzo wa Full taarifa za marejesho View Ya 1*/}
+
+<View 
+style={[globalStyles.FullRipotiYaSikuContainer,
+  {
+    width:'90%',
+  }]}
+>
+
+<Pressable 
+style={globalStyles.FullRipotiYaSikuLeftMajorContainer}
+>
+  
+
+
+{/*mwanzo wa Left View*/} 
+<View 
+style={globalStyles.FullRipotiYaSikuLeftContainer}
+>
+<Text 
+style={globalStyles.FullRipotiYaSikuLeftText}
+ >Juma Shababi Mbonde</Text>
+</View>
+{/*mwanzo wa Left View*/} 
+
+{/*mwanzo wa Left View*/} 
+<View 
+style={[globalStyles.FullRipotiYaSikuLeftContainer,
+  {
+    backgroundColor:'#c07d18',
+  }
+
+  ]}
+>
+<Text 
+style={[globalStyles.FullRipotiYaSikuLeftText,
+  {
+    fontFamily:'Bold',
+  }
+
+  ]}
+ >Mapato ya jumla</Text>
+</View>
+{/*mwanzo wa Left View*/} 
+
+
+</Pressable>
+
+
+
+
+
+{/*Right start here----------------------------------------------------*/}
+
+<Pressable 
+style={globalStyles.FullRipotiYaSikuRightMajorContainer}
+>
  
-  <Text style={[globalStyles.noitemText,
-    {
-      textAlign:'Left',
-      backgroundColor:'rgba(0,0,0,0)',
-      marginLeft:0,
-    }
+
+{/*mwanzo wa Right View*/} 
+<View 
+style={globalStyles.FullRipotiYaSikuRightContainer}
+>
+<Text 
+style={globalStyles.FullRipotiYaSikuRightText}
+ >20000</Text>
+</View>
+{/*mwanzo wa Right View*/} 
 
 
-    ]}>hukuna marejesho ya leo
-  </Text>
 
-)}
+
+{/*mwanzo wa Right View*/} 
+<View 
+style={[globalStyles.FullRipotiYaSikuRightContainer,
+
+   {
+    backgroundColor:'#c07d18',
+  }
+
+
+  ]}
+>
+<Text 
+style={[globalStyles.FullRipotiYaSikuRightText,
+  {
+    fontFamily:'Bold',
+  }
+
+  ]}
+ >20000</Text>
+</View>
+{/*mwanzo wa Right View*/} 
+
+
+</Pressable>
+
+
+</View>
+
+{/*mwiso wa Full taarifa za marejesho View Ya 1*/}
+
+      
+
+
+
+
+
 
 
 
@@ -997,7 +675,7 @@ style={[globalStyles.FullRipotiYaSikuRightText,
 
                <Text style={{
                 color:'white',
-                fontFamily:'Regular',
+                fontFamily:'Medium',
                 marginLeft:20,
                 marginTop:30,
                 fontSize:18,
@@ -1006,36 +684,113 @@ style={[globalStyles.FullRipotiYaSikuRightText,
                </Text>
 
 
-      {faini_queryset && faini_queryset.length > 0 ? (
 
 
-      <>
+
+
+{/*mwanzo wa Full taarifa za marejesho View Ya 1*/}
+
+<View 
+style={[globalStyles.FullRipotiYaSikuContainer,
+  {
+    width:'90%',
+  }]}
+>
+
+<Pressable 
+style={globalStyles.FullRipotiYaSikuLeftMajorContainer}
+>
+  
+
+
+{/*mwanzo wa Left View*/} 
+<View 
+style={globalStyles.FullRipotiYaSikuLeftContainer}
+>
+<Text 
+style={globalStyles.FullRipotiYaSikuLeftText}
+ >faini Mbonde</Text>
+</View>
+{/*mwanzo wa Left View*/} 
+
+{/*mwanzo wa Left View*/} 
+<View 
+style={[globalStyles.FullRipotiYaSikuLeftContainer,
+  {
+    backgroundColor:'#c07d18',
+  }
+
+  ]}
+>
+<Text 
+style={[globalStyles.FullRipotiYaSikuLeftText,
+  {
+    fontFamily:'Bold',
+  }
+
+  ]}
+ >jumla</Text>
+</View>
+{/*mwanzo wa Left View*/} 
+
+
+</Pressable>
+
+
+
+
+
+{/*Right start here----------------------------------------------------*/}
+
+<Pressable 
+style={globalStyles.FullRipotiYaSikuRightMajorContainer}
+>
  
-           {faini_queryset.map((item, index) => {
-          return <FainiZaLeoComponent item={item} key={item.id || index} />;
-          })}
-        
-       
-</>
-):(
- 
-  <Text style={[globalStyles.noitemText,
-    {
-      textAlign:'Left',
-      backgroundColor:'rgba(0,0,0,0)',
-      marginLeft:0,
-    }
 
-
-    ]}>hukuna faini za leo
-  </Text>
-
-)}
+{/*mwanzo wa Right View*/} 
+<View 
+style={globalStyles.FullRipotiYaSikuRightContainer}
+>
+<Text 
+style={globalStyles.FullRipotiYaSikuRightText}
+ >20000</Text>
+</View>
+{/*mwanzo wa Right View*/} 
 
 
 
 
+{/*mwanzo wa Right View*/} 
+<View 
+style={[globalStyles.FullRipotiYaSikuRightContainer,
 
+   {
+    backgroundColor:'#c07d18',
+  }
+
+
+  ]}
+>
+<Text 
+style={[globalStyles.FullRipotiYaSikuRightText,
+  {
+    fontFamily:'Bold',
+  }
+
+  ]}
+ >20000</Text>
+</View>
+{/*mwanzo wa Right View*/} 
+
+
+</Pressable>
+
+
+</View>
+
+{/*mwiso wa Full taarifa za marejesho View Ya 1*/}
+
+    
 
 
 
