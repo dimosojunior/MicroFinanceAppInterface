@@ -36,10 +36,13 @@ import MtejaDetails from '../Screens/MtejaDetails';
 import PokeaRejeshoStack from '../Stack/PokeaRejeshoStack';
 
 import MarejeshoYaLeo from '../Marejesho/MarejeshoYaLeo';
+import FainiZaLeo from '../Marejesho/FainiZaLeo';
 
 import MikatabaHai from '../Screens/MikatabaHai';
 
 import HomeScreen from '../Screens/HomeScreen';
+
+import AddRipoti from '../Screens/AddRipoti';
 
 const Drawer = createDrawerNavigator();
 function MyDrawer(){
@@ -209,23 +212,11 @@ const [dropdownVisible, setDropdownVisible] = useState(false);
 
                     }}
                   >
-                    {userData && userData.profile_image ?
-                       <Image
-                      //source={require('../assets/me.jpg')}
-                      source={{ uri: EndPoint + '/' + userData.profile_image }}
-                       
-                        style={{
-                          height: 80,
-                          width: 80,
-                          borderRadius: 60,
-                          marginBottom: 10,
-                          marginTop: 30,
-                        }}
-                      />
-
-                      :
+                   
+                  
+                      
                       <Image
-                      source={require('../assets/profile.jpg')}
+                      source={require('../assets/icon.png')}
                        
                         style={{
                           height: 80,
@@ -235,7 +226,7 @@ const [dropdownVisible, setDropdownVisible] = useState(false);
                           marginTop: 30,
                         }}
                       />
-                    }
+                    
 
 
                     <Text style={{
@@ -309,6 +300,18 @@ const [dropdownVisible, setDropdownVisible] = useState(false);
                 >
                   <Text style={{ color: "white", marginVertical: 8 }}>
                     Marejesho
+                  </Text>
+                </TouchableOpacity>
+
+
+                   <TouchableOpacity
+                  onPress={() => {
+                    setDropdownVisible(false);
+                    navigation.navigate("Faini Za Leo"); // Navigate to first option
+                  }}
+                >
+                  <Text style={{ color: "white", marginVertical: 8 }}>
+                    Faini
                   </Text>
                 </TouchableOpacity>
 
@@ -507,6 +510,20 @@ const [dropdownVisible, setDropdownVisible] = useState(false);
           }}
           component={AddMteja}
         />
+
+            <Drawer.Screen
+          name="Andaa Ripoti Ya Siku"
+          options={{
+            drawerLabel: "Andaa Ripoti Ya Siku",
+            title: "Andaa Ripoti Ya Siku",
+            
+            drawerIcon: () => (
+              <FontAwesome name="book" size={30} color="white" />
+            )
+          }}
+          component={AddRipoti}
+        />
+
 
 
    <Drawer.Screen

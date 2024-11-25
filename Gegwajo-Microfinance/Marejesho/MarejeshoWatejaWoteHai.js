@@ -579,18 +579,35 @@ const MarejeshoYaLeoComponent = ({ item}) => {
 style={[globalStyles.FullRipotiYaSikuContainer,
   {
     width:'90%',
+     marginBottom:0,
+    marginTop:0,
+    marginVertical:0,
+    //backgroundColor:'red',
+    paddingVertical:0,
+
   }]}
 >
 
 <Pressable 
-style={globalStyles.FullRipotiYaSikuLeftMajorContainer}
+style={[globalStyles.FullRipotiYaSikuLeftMajorContainer,
+
+   {
+
+   }
+  ]}
 >
   
 
 
 {/*mwanzo wa Left View*/} 
 <View 
-style={globalStyles.FullRipotiYaSikuLeftContainer}
+style={[globalStyles.FullRipotiYaSikuLeftContainer,
+
+  {
+  
+  }
+
+  ]}
 >
 <Text 
 style={globalStyles.FullRipotiYaSikuLeftText}
@@ -598,25 +615,6 @@ style={globalStyles.FullRipotiYaSikuLeftText}
 </View>
 {/*mwanzo wa Left View*/} 
 
-{/*mwanzo wa Left View*/} 
-<View 
-style={[globalStyles.FullRipotiYaSikuLeftContainer,
-  {
-    backgroundColor:'#c07d18',
-  }
-
-  ]}
->
-<Text 
-style={[globalStyles.FullRipotiYaSikuLeftText,
-  {
-    fontFamily:'Bold',
-  }
-
-  ]}
- >Jumla</Text>
-</View>
-{/*mwanzo wa Left View*/} 
 
 
 </Pressable>
@@ -651,38 +649,6 @@ style={globalStyles.FullRipotiYaSikuRightText}
 
 
 
-{/*mwanzo wa Right View*/} 
-<View 
-style={[globalStyles.FullRipotiYaSikuRightContainer,
-
-   {
-    backgroundColor:'#c07d18',
-  }
-
-
-  ]}
->
-{totalRejeshoLeo > 0 ? (
-<Text 
-style={[globalStyles.FullRipotiYaSikuRightText,
-  {
-    fontFamily:'Bold',
-  }
-
-  ]}
- >{formatToThreeDigits(totalRejeshoLeo)}</Text>
- ):(
-<Text 
-style={[globalStyles.FullRipotiYaSikuRightText,
-  {
-    fontFamily:'Bold',
-  }
-
-  ]}
- >0</Text>
- )}
-</View>
-{/*mwanzo wa Right View*/} 
 
 
 </Pressable>
@@ -710,7 +676,6 @@ const FainiZaLeoComponent = ({ item}) => {
 
   return (
 
-  
     <Pressable>
       
 
@@ -718,18 +683,35 @@ const FainiZaLeoComponent = ({ item}) => {
 style={[globalStyles.FullRipotiYaSikuContainer,
   {
     width:'90%',
+     marginBottom:0,
+    marginTop:0,
+    marginVertical:0,
+    //backgroundColor:'red',
+    paddingVertical:0,
+
   }]}
 >
 
 <Pressable 
-style={globalStyles.FullRipotiYaSikuLeftMajorContainer}
+style={[globalStyles.FullRipotiYaSikuLeftMajorContainer,
+
+   {
+
+   }
+  ]}
 >
   
 
 
 {/*mwanzo wa Left View*/} 
 <View 
-style={globalStyles.FullRipotiYaSikuLeftContainer}
+style={[globalStyles.FullRipotiYaSikuLeftContainer,
+
+  {
+  
+  }
+
+  ]}
 >
 <Text 
 style={globalStyles.FullRipotiYaSikuLeftText}
@@ -737,25 +719,6 @@ style={globalStyles.FullRipotiYaSikuLeftText}
 </View>
 {/*mwanzo wa Left View*/} 
 
-{/*mwanzo wa Left View*/} 
-<View 
-style={[globalStyles.FullRipotiYaSikuLeftContainer,
-  {
-    backgroundColor:'#c07d18',
-  }
-
-  ]}
->
-<Text 
-style={[globalStyles.FullRipotiYaSikuLeftText,
-  {
-    fontFamily:'Bold',
-  }
-
-  ]}
- >Jumla</Text>
-</View>
-{/*mwanzo wa Left View*/} 
 
 
 </Pressable>
@@ -790,38 +753,6 @@ style={globalStyles.FullRipotiYaSikuRightText}
 
 
 
-{/*mwanzo wa Right View*/} 
-<View 
-style={[globalStyles.FullRipotiYaSikuRightContainer,
-
-   {
-    backgroundColor:'#c07d18',
-  }
-
-
-  ]}
->
-{totalFainiLeo > 0 ? (
-<Text 
-style={[globalStyles.FullRipotiYaSikuRightText,
-  {
-    fontFamily:'Bold',
-  }
-
-  ]}
- >{formatToThreeDigits(totalFainiLeo)}</Text>
- ):(
-<Text 
-style={[globalStyles.FullRipotiYaSikuRightText,
-  {
-    fontFamily:'Bold',
-  }
-
-  ]}
- >0</Text>
- )}
-</View>
-{/*mwanzo wa Right View*/} 
 
 
 </Pressable>
@@ -974,6 +905,101 @@ style={[globalStyles.FullRipotiYaSikuRightText,
        {marejesho_queryset.map((item, index) => {
           return <MarejeshoYaLeoComponent item={item} key={item.id || index} />;
           })}
+
+{/*mwanzo wa jumla*/}
+    <Pressable>
+    
+    <View 
+style={[globalStyles.FullRipotiYaSikuContainer,
+  {
+    width:'90%',
+  }]}
+>
+
+<Pressable 
+style={globalStyles.FullRipotiYaSikuLeftMajorContainer}
+>
+  
+
+
+{/*mwanzo wa Left View*/} 
+<View 
+style={[globalStyles.FullRipotiYaSikuLeftContainer,
+  {
+    backgroundColor:'#c07d18',
+  }
+
+  ]}
+>
+<Text 
+style={[globalStyles.FullRipotiYaSikuLeftText,
+  {
+    fontFamily:'Bold',
+  }
+
+  ]}
+ >Jumla</Text>
+</View>
+{/*mwanzo wa Left View*/} 
+
+
+</Pressable>
+
+
+
+
+
+{/*Right start here----------------------------------------------------*/}
+
+<Pressable 
+style={globalStyles.FullRipotiYaSikuRightMajorContainer}
+>
+ 
+
+
+
+{/*mwanzo wa Right View*/} 
+<View 
+style={[globalStyles.FullRipotiYaSikuRightContainer,
+
+   {
+    backgroundColor:'#c07d18',
+  }
+
+
+  ]}
+>
+{totalRejeshoLeo > 0 ? (
+<Text 
+style={[globalStyles.FullRipotiYaSikuRightText,
+  {
+    fontFamily:'Bold',
+  }
+
+  ]}
+ >{formatToThreeDigits(totalRejeshoLeo)}</Text>
+ ):(
+<Text 
+style={[globalStyles.FullRipotiYaSikuRightText,
+  {
+    fontFamily:'Bold',
+  }
+
+  ]}
+ >0</Text>
+ )}
+</View>
+{/*mwanzo wa Right View*/} 
+
+
+</Pressable>
+
+
+</View>
+
+    </Pressable>
+
+  {/*mwisho wa jumla*/}
         
 </>
 ):(
@@ -1014,7 +1040,102 @@ style={[globalStyles.FullRipotiYaSikuRightText,
            {faini_queryset.map((item, index) => {
           return <FainiZaLeoComponent item={item} key={item.id || index} />;
           })}
-        
+     
+
+{/*mwanzo wa jumla*/}
+    <Pressable>
+    
+    <View 
+style={[globalStyles.FullRipotiYaSikuContainer,
+  {
+    width:'90%',
+  }]}
+>
+
+<Pressable 
+style={globalStyles.FullRipotiYaSikuLeftMajorContainer}
+>
+  
+
+
+{/*mwanzo wa Left View*/} 
+<View 
+style={[globalStyles.FullRipotiYaSikuLeftContainer,
+  {
+    backgroundColor:'#c07d18',
+  }
+
+  ]}
+>
+<Text 
+style={[globalStyles.FullRipotiYaSikuLeftText,
+  {
+    fontFamily:'Bold',
+  }
+
+  ]}
+ >Jumla</Text>
+</View>
+{/*mwanzo wa Left View*/} 
+
+
+</Pressable>
+
+
+
+
+
+{/*Right start here----------------------------------------------------*/}
+
+<Pressable 
+style={globalStyles.FullRipotiYaSikuRightMajorContainer}
+>
+ 
+
+
+
+{/*mwanzo wa Right View*/} 
+<View 
+style={[globalStyles.FullRipotiYaSikuRightContainer,
+
+   {
+    backgroundColor:'#c07d18',
+  }
+
+
+  ]}
+>
+{totalFainiLeo > 0 ? (
+<Text 
+style={[globalStyles.FullRipotiYaSikuRightText,
+  {
+    fontFamily:'Bold',
+  }
+
+  ]}
+ >{formatToThreeDigits(totalFainiLeo)}</Text>
+ ):(
+<Text 
+style={[globalStyles.FullRipotiYaSikuRightText,
+  {
+    fontFamily:'Bold',
+  }
+
+  ]}
+ >0</Text>
+ )}
+</View>
+{/*mwanzo wa Right View*/} 
+
+
+</Pressable>
+
+
+</View>
+
+    </Pressable>
+
+  {/*mwisho wa jumla*/}   
        
 </>
 ):(

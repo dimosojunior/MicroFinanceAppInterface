@@ -38,7 +38,7 @@ import DatePicker from "react-native-modern-datepicker";
 
 const { width, height } = Dimensions.get('screen');
 
-const RipotiYaSiku = ({ navigation }) => {
+const FainiZaLeo = ({ navigation }) => {
   const [fontsLoaded] = useFonts({
     Bold: require('../assets/fonts/Poppins-Bold.ttf'),
     Medium: require('../assets/fonts/Poppins-Medium.ttf'),
@@ -125,7 +125,7 @@ const getItems = (token) => {
     //console.log('USERTOKEN', userToken);
     //setPending(true);
     //const url = EndPoint + `/GetAllUniversities/?page=${current_page}&page_size=2`;
-   const url = EndPoint + `/GetRipotiSikuYaLeoView/?page=${current_page}&page_size=500`
+   const url = EndPoint + `/GetFainiKwaSikuYaLeoView/?page=${current_page}&page_size=500`
     // console.log(url);
     fetch(url, {
       method: 'GET',
@@ -184,7 +184,7 @@ const handleRefresh = async () => {
     const token = await AsyncStorage.getItem('userToken');
     if (token) {
       // Call getItems with the token and reset page
-      const url = EndPoint + `/GetRipotiSikuYaLeoView/?page=1&page_size=500`;
+      const url = EndPoint + `/GetFainiKwaSikuYaLeoView/?page=1&page_size=500`;
       const response = await fetch(url, {
         method: 'GET',
         headers: {
@@ -354,7 +354,7 @@ const [startDate, setStartDate] = useState(null);
   setPending(true);
 
   axios
-    .get(`${EndPoint}/FilterRipotiYaSikuByDate/?startDate=${formattedStartDate}`, {
+    .get(`${EndPoint}/FilterFainiYaSikuByDate/?startDate=${formattedStartDate}`, {
       headers: {
         Authorization: `Token ${userToken}`, // Add the Authorization header here
       },
@@ -395,647 +395,106 @@ const [startDate, setStartDate] = useState(null);
 // New Component for Table Row
 const TableRowComponent = ({ item}) => {
 
+  //mwanzo wa search
+   if (input === ""){
+
 
   return (
-    <Pressable >
+    <View key={item.id} style={globalStyles.row2}>
+      <Text style={[globalStyles.cell, globalStyles.firstNameColumn]}>{item.JinaKamiliLaMteja}</Text>
+      <Text style={[globalStyles.cell, globalStyles.tarehecolumn]}>{formatDate2(item.Created)}</Text>
+      {item.KiasiAnachokopa > 0 ? (
+      <Text style={[globalStyles.cell, globalStyles.otherColumns]}>{formatToThreeDigits(item.KiasiAnachokopa)}</Text>
+     ):(
+     <Text style={[globalStyles.cell, globalStyles.otherColumns]}>0</Text>
+     )}
 
-        <View key={item.id} style={[globalStyles.row2,
-          {
-            alignItems:'flex-start',
-            justifyContent:'Left',
-          }
 
-          ]}>
-        {item.IdadiYaMikopoYaLeo > 0 ? (
-      <Text style={[globalStyles.cell, globalStyles.otherColumns]}>{item.IdadiYaMikopoYaLeo}</Text>
+      {item.KiasiAlicholipa > 0 ? (
+      <Text style={[globalStyles.cell, globalStyles.otherColumns]}>{formatToThreeDigits(item.KiasiAlicholipa)}</Text>
       ):(
        <Text style={[globalStyles.cell, globalStyles.otherColumns]}>0</Text>
       )}
-     
-     {item.IdadiYaMikatabaMipyaLeo > 0 ? (
-      <Text style={[globalStyles.cell, globalStyles.otherColumns]}>{item.IdadiYaMikatabaMipyaLeo}</Text>
-      ):(
-<Text style={[globalStyles.cell, globalStyles.otherColumns]}>0</Text>
-      )}
-   
-   {item.IdadiYaWenyeMikatabaHai > 0 ? (
-      <Text style={[globalStyles.cell, globalStyles.otherColumns]}>{item.IdadiYaWenyeMikatabaHai}</Text>
-      ):(
-       <Text style={[globalStyles.cell, globalStyles.otherColumns]}>0</Text>
-      )}
-    
-    {item.IdadiYaWaliorejeshaLeo > 0 ? (
- <Text style={[globalStyles.cell, globalStyles.otherColumns]}>{item.IdadiYaWaliorejeshaLeo}</Text>
- ):(
- <Text style={[globalStyles.cell, globalStyles.otherColumns]}>0</Text>
- )}
 
- {item.IdadiYaFainiZilizopokelewaLeo > 0 ? (
-  <Text style={[globalStyles.cell, globalStyles.otherColumns]}>{item.IdadiYaFainiZilizopokelewaLeo}</Text>
-  ):(
-  <Text style={[globalStyles.cell, globalStyles.otherColumns]}>0</Text>
- )}
+      {item.JumlaYaDeni > 0 ? (
+      <Text style={[globalStyles.cell, globalStyles.otherColumns]}>{formatToThreeDigits(item.JumlaYaDeni)}</Text>
+       ):(
+       <Text style={[globalStyles.cell, globalStyles.otherColumns]}>0</Text>
+       )}
+
+      <TouchableOpacity
+        style={[
+          globalStyles.cell,
+          globalStyles.buttoncolumn,
+          { justifyContent: 'center', alignItems: 'center' },
+        ]}
+        onPress={() => handlePressDetailsPage(item)}
+      >
+        <MaterialCommunityIcons
+          name="gesture-tap-button"
+          size={30}
+          style={globalStyles.TableIconColor}
+        />
+      </TouchableOpacity>
+
 
     </View>
-
-            
-
-{/*mwanzo wa fomu na bima*/}
-      <View style={{
-        flexDirection:'row',
-        //justifyContent:'space-around',
-        width:'90%',
-        paddingVertical:15,
-        alignItems:'flex-start',
-        marginHorizontal:20,
-      }}>
-        
-<Text style={{
-  width:'30%',
-  color:'white',
-
-}}>Fomu na Bima</Text>
-
-{item.FomuNaBima > 0 ? (
-<Text style={{
-  width:'30%',
-  color:'white',
-  
-}}>{formatToThreeDigits(item.FomuNaBima)}</Text>
-):(
-<Text style={{
-  width:'30%',
-  color:'white',
-  
-}}>0</Text>
-)}
-      </View>
-
-  {/*mwisho wa fomu na bima*/}
-
-    
-
-
-{/*mwanzo wa Full taarifa za marejesho View Ya 1*/}
-
-<View 
-style={globalStyles.FullRipotiYaSikuContainer}
->
-
-<Pressable 
-style={globalStyles.FullRipotiYaSikuLeftMajorContainer}
->
-  
-
-
-{/*mwanzo wa Left View*/} 
-<View 
-style={globalStyles.FullRipotiYaSikuLeftContainer}
->
-<Text 
-style={globalStyles.FullRipotiYaSikuLeftText}
- >Marejesho</Text>
-</View>
-{/*mwanzo wa Left View*/} 
-
-{/*mwanzo wa Left View*/} 
-<View 
-style={globalStyles.FullRipotiYaSikuLeftContainer}
->
-<Text 
-style={globalStyles.FullRipotiYaSikuLeftText}
- >Faini</Text>
-</View>
-{/*mwanzo wa Left View*/} 
-
-{/*mwanzo wa Left View*/} 
-<View 
-style={globalStyles.FullRipotiYaSikuLeftContainer}
->
-<Text 
-style={globalStyles.FullRipotiYaSikuLeftText}
- >Fomu + Bima</Text>
-</View>
-{/*mwanzo wa Left View*/} 
-
-
-{/*mwanzo wa Left View*/} 
-<View 
-style={globalStyles.FullRipotiYaSikuLeftContainer}
->
-<Text 
-style={globalStyles.FullRipotiYaSikuLeftText}
- >Baki Jana</Text>
-</View>
-{/*mwanzo wa Left View*/} 
-
-
-{/*mwanzo wa Left View*/} 
-<View 
-style={globalStyles.FullRipotiYaSikuLeftContainer}
->
-<Text 
-style={globalStyles.FullRipotiYaSikuLeftText}
- >Imetoka Kwa Bosi</Text>
-</View>
-{/*mwanzo wa Left View*/} 
-
-
-{/*mwanzo wa Left View*/} 
-<View 
-style={globalStyles.FullRipotiYaSikuLeftContainer}
->
-<Text 
-style={globalStyles.FullRipotiYaSikuLeftText}
- >Imetoka kituo jirani</Text>
-</View>
-{/*mwanzo wa Left View*/} 
-
-
-{/*mwanzo wa Left View*/} 
-<View 
-style={[globalStyles.FullRipotiYaSikuLeftContainer,
-  {
-    backgroundColor:'#c07d18',
-  }
-
-  ]}
->
-<Text 
-style={[globalStyles.FullRipotiYaSikuLeftText,
-  {
-    fontFamily:'Bold',
-  }
-
-  ]}
- >Mapato ya jumla</Text>
-</View>
-{/*mwanzo wa Left View*/} 
-
-
-</Pressable>
-
-
-
-
-
-{/*Right start here----------------------------------------------------*/}
-
-<Pressable 
-style={globalStyles.FullRipotiYaSikuRightMajorContainer}
->
- 
-
-{/*mwanzo wa Right View*/} 
-<View 
-style={globalStyles.FullRipotiYaSikuRightContainer}
->
-{item.JumlaMarejeshoYaLeo > 0 ? (
-<Text 
-style={globalStyles.FullRipotiYaSikuRightText}
- >{formatToThreeDigits(item.JumlaMarejeshoYaLeo)}</Text>
- ):(
-<Text 
-style={globalStyles.FullRipotiYaSikuRightText}
- >0</Text>
- )}
-</View>
-{/*mwanzo wa Right View*/} 
-
-
-{/*mwanzo wa Right View*/} 
-<View 
-style={globalStyles.FullRipotiYaSikuRightContainer}
->
-{item.JumlaFainiLeo > 0 ? (
-<Text 
-style={globalStyles.FullRipotiYaSikuRightText}
- >{formatToThreeDigits(item.JumlaFainiLeo)}</Text>
- ):(
-<Text 
-style={globalStyles.FullRipotiYaSikuRightText}
- >0</Text>
- )}
-</View>
-{/*mwanzo wa Right View*/} 
-
-
-{/*mwanzo wa Right View*/} 
-<View 
-style={globalStyles.FullRipotiYaSikuRightContainer}
->
-{item.FomuNaBima > 0 ? (
-<Text 
-style={globalStyles.FullRipotiYaSikuRightText}
- >{formatToThreeDigits(item.FomuNaBima)}</Text>
- ):(
-<Text 
-style={globalStyles.FullRipotiYaSikuRightText}
- >0</Text>
- )}
-</View>
-{/*mwanzo wa Right View*/} 
-
-
-{/*mwanzo wa Right View*/} 
-<View 
-style={globalStyles.FullRipotiYaSikuRightContainer}
->
-{item.BakiJana > 0 ? (
-<Text 
-style={globalStyles.FullRipotiYaSikuRightText}
- >{formatToThreeDigits(item.BakiJana)}</Text>
- ):(
-<Text 
-style={globalStyles.FullRipotiYaSikuRightText}
- >0</Text>
- )}
-</View>
-{/*mwanzo wa Right View*/} 
-
-
-{/*mwanzo wa Right View*/} 
-<View 
-style={globalStyles.FullRipotiYaSikuRightContainer}
->
-{item.ImetokaKwaBosi > 0 ? (
-<Text 
-style={globalStyles.FullRipotiYaSikuRightText}
- >{formatToThreeDigits(item.ImetokaKwaBosi)}</Text>
- ):(
-<Text 
-style={globalStyles.FullRipotiYaSikuRightText}
- >0</Text>
- )}
-</View>
-{/*mwanzo wa Right View*/} 
-
-
-{/*mwanzo wa Right View*/} 
-<View 
-style={globalStyles.FullRipotiYaSikuRightContainer}
->
-{item.ImetokaKituoJirani > 0 ? (
-<Text 
-style={globalStyles.FullRipotiYaSikuRightText}
- >{formatToThreeDigits(item.ImetokaKituoJirani)}</Text>
- ):(
-<Text 
-style={globalStyles.FullRipotiYaSikuRightText}
- >0</Text>
- )}
-</View>
-{/*mwanzo wa Right View*/} 
-
-
-
-
-{/*mwanzo wa Right View*/} 
-<View 
-style={[globalStyles.FullRipotiYaSikuRightContainer,
-
-   {
-    backgroundColor:'#c07d18',
-  }
-
-
-  ]}
->
-{item.MapatoYaJumla > 0 ? (
-<Text 
-style={[globalStyles.FullRipotiYaSikuRightText,
-  {
-    fontFamily:'Bold',
-  }
-
-  ]}
- >{formatToThreeDigits(item.MapatoYaJumla)}</Text>
- ):(
-<Text 
-style={[globalStyles.FullRipotiYaSikuRightText,
-  {
-    fontFamily:'Bold',
-  }
-
-  ]}
- >0</Text>
- )}
-</View>
-{/*mwanzo wa Right View*/} 
-
-
-</Pressable>
-
-
-</View>
-
-{/*mwiso wa Full taarifa za marejesho View Ya 1*/}
-
-      
-
-
-
-
-
-
-
-
-
-
-{/*mwanzo wa Full taarifa za marejesho View Ya 2*/}
-
-<View 
-style={globalStyles.FullRipotiYaSikuContainer}
->
-
-<Pressable 
-style={globalStyles.FullRipotiYaSikuLeftMajorContainer}
->
-  
-
-
-{/*mwanzo wa Left View*/} 
-<View 
-style={globalStyles.FullRipotiYaSikuLeftContainer}
->
-<Text 
-style={globalStyles.FullRipotiYaSikuLeftText}
- >Mkopo</Text>
-</View>
-{/*mwanzo wa Left View*/} 
-
-{/*mwanzo wa Left View*/} 
-<View 
-style={globalStyles.FullRipotiYaSikuLeftContainer}
->
-<Text 
-style={globalStyles.FullRipotiYaSikuLeftText}
- >Posho</Text>
-</View>
-{/*mwanzo wa Left View*/} 
-
-{/*mwanzo wa Left View*/} 
-<View 
-style={globalStyles.FullRipotiYaSikuLeftContainer}
->
-<Text 
-style={globalStyles.FullRipotiYaSikuLeftText}
- >Imeenda kwa Bosi</Text>
-</View>
-{/*mwanzo wa Left View*/} 
-
-
-{/*mwanzo wa Left View*/} 
-<View 
-style={globalStyles.FullRipotiYaSikuLeftContainer}
->
-<Text 
-style={globalStyles.FullRipotiYaSikuLeftText}
- >Imeenda kituo jirani</Text>
-</View>
-{/*mwanzo wa Left View*/} 
-
-
-
-{/*mwanzo wa Left View*/} 
-<View 
-style={globalStyles.FullRipotiYaSikuLeftContainer}
->
-<Text 
-style={globalStyles.FullRipotiYaSikuLeftText}
- >Matumizi</Text>
-</View>
-{/*mwanzo wa Left View*/} 
-
-
-{/*mwanzo wa Left View*/} 
-<View 
-style={[globalStyles.FullRipotiYaSikuLeftContainer,
-  {
-    backgroundColor:'#c07d18',
-  }
-
-  ]}
->
-<Text 
-style={[globalStyles.FullRipotiYaSikuLeftText,
-  {
-    fontFamily:'Bold',
-  }
-
-  ]}
- >Matumizi ya jumla</Text>
-</View>
-{/*mwanzo wa Left View*/} 
-
-
-
-
-{/*mwanzo wa Left View*/} 
-<View 
-style={[globalStyles.FullRipotiYaSikuLeftContainer,
-  {
-    backgroundColor:'#012827',
-    marginTop:40,
-  }
-
-  ]}
->
-<Text 
-style={[globalStyles.FullRipotiYaSikuLeftText,
-  {
-    fontFamily:'Bold',
-  }
-
-  ]}
- >Inakabidhiwa</Text>
-</View>
-{/*mwanzo wa Left View*/} 
-
-
-
-</Pressable>
-
-
-
-
-
-{/*Right start here----------------------------------------------------*/}
-
-<Pressable 
-style={globalStyles.FullRipotiYaSikuRightMajorContainer}
->
- 
-
-{/*mwanzo wa Right View*/} 
-<View 
-style={globalStyles.FullRipotiYaSikuRightContainer}
->
-{item.Mkopo > 0 ? (
-<Text 
-style={globalStyles.FullRipotiYaSikuRightText}
- >{formatToThreeDigits(item.Mkopo)}</Text>
- ):(
- <Text 
-style={globalStyles.FullRipotiYaSikuRightText}
- >0</Text>
- )}
-</View>
-{/*mwanzo wa Right View*/} 
-
-
-{/*mwanzo wa Right View*/} 
-<View 
-style={globalStyles.FullRipotiYaSikuRightContainer}
->
-{item.Posho > 0 ? (
-<Text 
-style={globalStyles.FullRipotiYaSikuRightText}
- >{formatToThreeDigits(item.Posho)}</Text>
- ):(
- <Text 
-style={globalStyles.FullRipotiYaSikuRightText}
- >0</Text>
- )}
-</View>
-{/*mwanzo wa Right View*/} 
-
-{/*mwanzo wa Right View*/} 
-<View 
-style={globalStyles.FullRipotiYaSikuRightContainer}
->
-{item.ImeendaKwaBosi > 0 ? (
-<Text 
-style={globalStyles.FullRipotiYaSikuRightText}
- >{formatToThreeDigits(item.ImeendaKwaBosi)}</Text>
- ):(
- <Text 
-style={globalStyles.FullRipotiYaSikuRightText}
- >0</Text>
- )}
-</View>
-{/*mwanzo wa Right View*/} 
-
-{/*mwanzo wa Right View*/} 
-<View 
-style={globalStyles.FullRipotiYaSikuRightContainer}
->
-{item.ImeendaKituoJirani > 0 ? (
-<Text 
-style={globalStyles.FullRipotiYaSikuRightText}
- >{formatToThreeDigits(item.ImeendaKituoJirani)}</Text>
- ):(
- <Text 
-style={globalStyles.FullRipotiYaSikuRightText}
- >0</Text>
- )}
-</View>
-{/*mwanzo wa Right View*/} 
-
-{/*mwanzo wa Right View*/} 
-<View 
-style={globalStyles.FullRipotiYaSikuRightContainer}
->
-{item.MatumiziMengine > 0 ? (
-<Text 
-style={globalStyles.FullRipotiYaSikuRightText}
- >{formatToThreeDigits(item.MatumiziMengine)}</Text>
- ):(
- <Text 
-style={globalStyles.FullRipotiYaSikuRightText}
- >0</Text>
- )}
-</View>
-{/*mwanzo wa Right View*/} 
-
-
-
-{/*mwanzo wa Right View*/} 
-<View 
-style={[globalStyles.FullRipotiYaSikuRightContainer,
-
-   {
-    backgroundColor:'#c07d18',
-  }
-
-
-  ]}
->
-{item.MatumiziYaJumla > 0 ? (
-<Text 
-style={[globalStyles.FullRipotiYaSikuRightText,
-  {
-    fontFamily:'Bold',
-  }
-
-  ]}
- >{formatToThreeDigits(item.MatumiziYaJumla)}</Text>
- ):(
- <Text 
-style={[globalStyles.FullRipotiYaSikuRightText,
-  {
-    fontFamily:'Bold',
-  }
-
-  ]}
- >0</Text>
- )}
-</View>
-{/*mwanzo wa Right View*/} 
-
-
-
-
-{/*mwanzo wa Right View*/} 
-<View 
-style={[globalStyles.FullRipotiYaSikuRightContainer,
-
-   {
-    backgroundColor:'#012827',
-    marginTop:40,
-  }
-
-
-  ]}
->
-{item.Balance > 0 ? (
-<Text 
-style={[globalStyles.FullRipotiYaSikuRightText,
-  {
-    fontFamily:'Bold',
-  }
-
-  ]}
- >{formatToThreeDigits(item.Balance)}</Text>
- ):(
- <Text 
-style={[globalStyles.FullRipotiYaSikuRightText,
-  {
-    fontFamily:'Bold',
-  }
-
-  ]}
- >0</Text>
- )}
-</View>
-{/*mwanzo wa Right View*/} 
-
-
-
-</Pressable>
-
-
-</View>
-
-{/*mwiso wa Full taarifa za marejesho View Ya 2*/}
-
-
-
-    </Pressable>
+  )
+
+    // hili bano la chini ni la if ya juu kama mtu akitype   
+}
+
+ if (item.JinaKamiliLaMteja.toLowerCase().includes(input.toLowerCase())) {
+
+
+
+
+  return (
+    <View key={item.id} style={globalStyles.row2}>
+      <Text style={[globalStyles.cell, globalStyles.firstNameColumn]}>{item.JinaKamiliLaMteja}</Text>
+      <Text style={[globalStyles.cell, globalStyles.tarehecolumn]}>{formatDate2(item.Created)}</Text>
+      {item.KiasiAnachokopa > 0 ? (
+      <Text style={[globalStyles.cell, globalStyles.otherColumns]}>{formatToThreeDigits(item.KiasiAnachokopa)}</Text>
+     ):(
+     <Text style={[globalStyles.cell, globalStyles.otherColumns]}>0</Text>
+     )}
+
+
+      {item.KiasiAlicholipa > 0 ? (
+      <Text style={[globalStyles.cell, globalStyles.otherColumns]}>{formatToThreeDigits(item.KiasiAlicholipa)}</Text>
+      ):(
+       <Text style={[globalStyles.cell, globalStyles.otherColumns]}>0</Text>
+      )}
+
+      {item.JumlaYaDeni > 0 ? (
+      <Text style={[globalStyles.cell, globalStyles.otherColumns]}>{formatToThreeDigits(item.JumlaYaDeni)}</Text>
+       ):(
+       <Text style={[globalStyles.cell, globalStyles.otherColumns]}>0</Text>
+       )}
+
+      <TouchableOpacity
+        style={[
+          globalStyles.cell,
+          globalStyles.buttoncolumn,
+          { justifyContent: 'center', alignItems: 'center' },
+        ]}
+        onPress={() => handlePressDetailsPage(item)}
+      >
+        <MaterialCommunityIcons
+          name="gesture-tap-button"
+          size={30}
+          style={globalStyles.TableIconColor}
+        />
+      </TouchableOpacity>
+
+    </View>
   )
 
 
 
+
+  // hili bano la chini ni la if ya pili mwisho
+  }
 
 
 };
@@ -1068,7 +527,7 @@ style={[globalStyles.FullRipotiYaSikuRightText,
                 fontFamily: 'Medium',
               }}
             >
-              Ripoti Ya Leo
+              Faini za leo
             </Text>
             ):(
           <Text
@@ -1082,7 +541,7 @@ style={[globalStyles.FullRipotiYaSikuRightText,
                 fontFamily: 'Medium',
               }}
             >
-              Ripoti ya tarehe  {formatDate(startDate)}
+              Faini za tarehe  {formatDate(startDate)}
             </Text>
             )}
 
@@ -1094,9 +553,38 @@ style={[globalStyles.FullRipotiYaSikuRightText,
 
           </View>
 
-     
+          <View style={globalStyles.searchbarOtherPages}>
+            <View style={globalStyles.searchbarIconContainerOtherPages}>
+              <Ionicons
+                name="search-outline"
+                size={25}
+                color={COLORS.black}
+                style={globalStyles.AppIConHomeScreenOtherPages}
+              />
+            </View>
+            <View style={globalStyles.searchbarInputContainerOtherPages}>
+              <TextInput
+                value={input}
+                onChangeText={(text) => setInput(text)}
+                placeholder="Ingiza jina"
+                placeholderTextColor="black"
+                style={globalStyles.AppInputHomeScreenOtherPages}
+              />
+            </View>
+          </View>
+
           <ScrollView 
-      
+         //   keyboardShouldPersistTaps="handled"
+         //      refreshControl={
+         //    <RefreshControl
+         //    refreshing={refresh}
+         //    onRefresh={() => pullMe()}
+         //    />
+         //   }
+         // showsVerticalScrollIndicator={false}
+       
+         //  onScroll={handleScroll} scrollEventThrottle={16}
+         
           horizontal
           >
             <ScrollView 
@@ -1112,26 +600,20 @@ style={[globalStyles.FullRipotiYaSikuRightText,
           onScroll={handleScroll} scrollEventThrottle={16}
             >
 
-               {queryset && queryset.length > 0 ? (
+            {queryset && queryset.length > 0 ? (
 
 
       <>
 
               <View style={globalStyles.table}>
-                <View style={[globalStyles.row, globalStyles.header, 
-
-                   {
-                    alignItems:'flex-start',
-                    justifyContent:'Left',
-                  }
-
-                  ]}>
-                  <Text style={[globalStyles.cell2, globalStyles.otherColumns]}>MKP</Text>
-                  <Text style={[globalStyles.cell2, globalStyles.otherColumns]}>MKT</Text>
-                  <Text style={[globalStyles.cell2, globalStyles.otherColumns]}>WOTE</Text>
-                  <Text style={[globalStyles.cell2, globalStyles.otherColumns]}>REJ</Text>
-                  <Text style={[globalStyles.cell2, globalStyles.otherColumns]}>FIN</Text>
-             
+                <View style={[globalStyles.row, globalStyles.header]}>
+                  <Text style={[globalStyles.cell2, globalStyles.firstNameColumn]}>Jina</Text>
+                  <Text style={[globalStyles.cell2, globalStyles.tarehecolumn]}>Tarehe</Text>
+                  <Text style={[globalStyles.cell2, globalStyles.otherColumns]}>Mkopo</Text>
+                  <Text style={[globalStyles.cell2, globalStyles.otherColumns]}>Lipwa</Text>
+                  <Text style={[globalStyles.cell2, globalStyles.otherColumns]}>Deni</Text>
+                  <Text style={[globalStyles.cell2, globalStyles.buttoncolumn]}>Hali</Text>
+      
                 </View>
 
                 {/* Render Table Rows */}
@@ -1162,9 +644,10 @@ style={[globalStyles.FullRipotiYaSikuRightText,
 
   )} 
 
- 
+
             </ScrollView>
           </ScrollView>
+
 
 
 
@@ -1202,7 +685,7 @@ style={[globalStyles.FullRipotiYaSikuRightText,
 onPress={() => setModalVisible(true)}
 style={{
    padding: 10,
-    width:'100%',
+    width:'50%',
     borderRadius: 6,
     flexDirection: "row",
     alignItems: "center",
@@ -1214,7 +697,7 @@ style={{
     style={{
       color: "white" ,
       // padding:13,
-       backgroundColor: "black",
+       backgroundColor: "green",
        borderColor:'white',
        borderWidth:1,
        textAlign:'center',
@@ -1230,6 +713,59 @@ style={{
 
 
        
+          <TouchableOpacity
+         //onPress={() => navigation.navigate("Home Stack")}
+           
+            style={{
+              
+              padding: 10,
+              width:'50%',
+              borderRadius: 6,
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 10,
+            }}
+          >
+            {totalRejeshoLeo > 0 ? (
+            <Text style={{
+             //fontSize: 16, 
+             //fontWeight: "500", 
+             color: "white" ,
+            // padding:13,
+             backgroundColor: "black",
+             borderColor:'white',
+             borderWidth:1,
+             textAlign:'center',
+             borderRadius:8,
+             width:'100%',
+             fontFamily:'Light',
+             paddingVertical:10,
+
+           }}>
+              Jumla: {formatToThreeDigits(totalRejeshoLeo)}
+            </Text>
+            ):(
+           <Text style={{
+             //fontSize: 16, 
+             //fontWeight: "500", 
+             color: "white" ,
+            // padding:13,
+             backgroundColor: "black",
+             borderColor:'white',
+             borderWidth:1,
+             textAlign:'center',
+             borderRadius:8,
+             width:'100%',
+             fontFamily:'Light',
+             paddingVertical:10,
+
+           }}>
+              Jumla: 0
+            </Text>
+            )}
+          </TouchableOpacity>
+          
 
         </Pressable>
    
@@ -1349,4 +885,4 @@ style={{
   );
 };
 
-export default RipotiYaSiku;
+export default FainiZaLeo;
