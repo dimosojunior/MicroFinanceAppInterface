@@ -34,6 +34,9 @@ import MarejeshoYaLeo from '../Marejesho/MarejeshoYaLeo';
 import FainiZaLeo from '../Marejesho/FainiZaLeo';
 
 import RipotiYaSiku from '../Screens/RipotiYaSiku';
+import HawajarejeshaJana from '../Screens/HawajarejeshaJana';
+
+import JazaFaini from '../Marejesho/JazaFaini';
 
 const Stack = createStackNavigator();
 
@@ -209,6 +212,23 @@ function MyStack( {navigation}){
       //     })}
       />
 
+
+        <Stack.Screen
+      name="Hawajarejesha Jana"
+      component={HawajarejeshaJana}
+      // options={ () => ({ 
+      //       headerLeft: () => <Header  title='About Page' />,
+      //     })}
+      />
+
+
+   <Stack.Screen
+      name="Jaza Faini"
+      component={JazaFaini}
+      // options={ () => ({ 
+      //       headerLeft: () => <Header  title='About Page' />,
+      //     })}
+      />
 
 
       </Stack.Navigator>

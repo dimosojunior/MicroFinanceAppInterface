@@ -44,6 +44,8 @@ import HomeScreen from '../Screens/HomeScreen';
 
 import AddRipoti from '../Screens/AddRipoti';
 
+import HawajarejeshaJana from '../Screens/HawajarejeshaJana';
+
 const Drawer = createDrawerNavigator();
 function MyDrawer(){
 
@@ -332,6 +334,15 @@ const [dropdownVisible, setDropdownVisible] = useState(false);
             
               
 
+<View style={{
+  marginBottom:100,
+}}>
+  {/*<Text style={{
+    color:'white',
+  }}>Vuta juu</Text>*/}
+</View>
+
+
 
 
                 </ScrollView>
@@ -540,20 +551,20 @@ const [dropdownVisible, setDropdownVisible] = useState(false);
         />
 
    
-   {/*       <Drawer.Screen
-          name="MarejeshoYaLeo"
+         <Drawer.Screen
+          name="Hawajarejesha tarehe"
           options={{
-            drawerLabel: "MarejeshoYaLeo",
-            title: "MarejeshoYaLeo",
+            drawerLabel: "Hawajarejesha tarehe",
+            title: "Hawajarejesha tarehe",
             
             drawerIcon: () => (
               <FontAwesome name="folder-open" size={30} color="white" />
             )
           }}
-          component={MarejeshoYaLeo}
+          component={HawajarejeshaJana}
         />
 
-     */}
+     
 
            <Drawer.Screen
           name="Mikataba Hai"

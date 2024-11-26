@@ -199,6 +199,36 @@ useEffect(() => {
 
 
 
+const [Total_Hawajarejesha, setTotal_Hawajarejesha] = useState(0);
+//const [ActiveProjects, setActiveProjects] = useState(0);
+
+// Fetch Wateja Data
+useEffect(() => {
+  const fetchWatejaData3 = async () => {
+    try {
+      const token = await AsyncStorage.getItem('userToken'); // Get the token
+      if (token) {
+        const response = await axios.get(EndPoint + '/CountHawajarejeshaJanaView/', {
+          headers: {
+            Authorization: `Token ${token}`, // Pass the token in the header
+          },
+        });
+        const { jumla_hawajarejesha_jana } = response.data;
+        setTotal_Hawajarejesha(jumla_hawajarejesha_jana);
+        //setActiveProjects(wateja_hai);
+      } else {
+        console.error("No user token found");
+      }
+    } catch (error) {
+      console.error("Error fetching Wateja data:", error);
+    }
+  };
+
+  fetchWatejaData3();
+}, []);
+
+
+
 
     const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
@@ -633,6 +663,7 @@ style={globalStyles.ItemHomeScreenPressableContainer}
 {/*mwanzo wa item*/}
 
   <Pressable 
+  onPress={() => navigation.navigate('Hawajarejesha Jana')}
 style={globalStyles.ItemHomeScreenPressableContainer}
 
   >
@@ -673,7 +704,7 @@ style={globalStyles.ItemHomeScreenPressableContainer}
         </Text>
         <Text 
         style={globalStyles.ItemHomeScreenMiddleContainerText2}
-        >(50)</Text>
+        >({Total_Hawajarejesha})</Text>
       </View>
 
       <View 
@@ -683,6 +714,7 @@ style={globalStyles.ItemHomeScreenPressableContainer}
         {/*<Text style={{color:'red',fontWeight:"600"}}>percentage </Text>*/}
 
        <Ionicons name='arrow-forward-circle' 
+       onPress={() => navigation.navigate('Hawajarejesha Jana')}
       size={30}
       //color="black" 
       //color="red"
