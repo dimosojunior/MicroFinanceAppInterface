@@ -403,10 +403,11 @@ const handleRefresh = async () => {
     navigation.navigate('Delete Mteja', { ...item, postId: item.id });
 
 const handlePressPokeaMarejesho = (item) =>
-    navigation.replace('Jaza Rejesho', { ...item });
+    navigation.navigate('Jaza Rejesho', { ...item });
 
 
-
+const handlePressPokeaFaini = (item) =>
+    navigation.navigate('Jaza Faini', { ...item });
 
 //-----------Fetch wateja wote
 
@@ -451,6 +452,10 @@ const TableRowComponent = ({ item}) => {
   return (
     <View key={item.id} style={globalStyles.row2}>
     {userData && userData.is_cashier === true && (
+      
+      <>
+      {item.JumlaYaFainiZote <= 0 ? (
+
       <TouchableOpacity
         style={[
           globalStyles.cell,
@@ -465,8 +470,43 @@ const TableRowComponent = ({ item}) => {
           style={globalStyles.TableIconColor}
         />
       </TouchableOpacity>
+      ):(
+    <TouchableOpacity
+        style={[
+          globalStyles.cell,
+          globalStyles.buttoncolumn,
+          { 
+            justifyContent: 'space-between', 
+            alignItems: 'center',
+            flexDirection:'row' ,
+          },
+        ]}
+        onPress={() => handlePressPokeaFaini(item)}
+      >
+        <MaterialCommunityIcons
+          name="gesture-tap-button"
+          size={30}
+          style={[globalStyles.TableIconColor,
+            {
+              color:'red',
+            }
+
+            ]}
+        />
+
+        <Text style={{
+          color:'white',
+          fontFamily:'Light',
+        }}>{formatToThreeDigits(item.JumlaYaFainiZote)}</Text>
+      </TouchableOpacity>
+
+      )}
+      </>
+
+
       )}
 
+     
       <Text style={[globalStyles.cell, globalStyles.firstNameColumn]}>{item.JinaKamiliLaMteja}</Text>
       <Text style={[globalStyles.cell, globalStyles.tarehecolumn]}>{formatDate(item.Created)}</Text>
       {item.KiasiAnachokopa > 0 ? (
@@ -504,6 +544,10 @@ const TableRowComponent = ({ item}) => {
   return (
     <View key={item.id} style={globalStyles.row2}>
     {userData && userData.is_cashier === true && (
+      
+      <>
+      {item.JumlaYaFainiZote <= 0 ? (
+
       <TouchableOpacity
         style={[
           globalStyles.cell,
@@ -518,6 +562,31 @@ const TableRowComponent = ({ item}) => {
           style={globalStyles.TableIconColor}
         />
       </TouchableOpacity>
+      ):(
+    <TouchableOpacity
+        style={[
+          globalStyles.cell,
+          globalStyles.buttoncolumn,
+          { justifyContent: 'center', alignItems: 'center' },
+        ]}
+        onPress={() => handlePressPokeaFaini(item)}
+      >
+        <MaterialCommunityIcons
+          name="gesture-tap-button"
+          size={30}
+          style={[globalStyles.TableIconColor,
+            {
+              color:'red',
+            }
+
+            ]}
+        />
+      </TouchableOpacity>
+
+      )}
+      </>
+
+
       )}
 
       <Text style={[globalStyles.cell, globalStyles.firstNameColumn]}>{item.JinaKamiliLaMteja}</Text>
@@ -545,7 +614,6 @@ const TableRowComponent = ({ item}) => {
 
     </View>
   )
-
 
 
   // hili bano la chini ni la if ya pili mwisho
@@ -854,6 +922,9 @@ style={globalStyles.FullRipotiYaSikuRightText}
                 {userData && userData.is_cashier === true && (
                 <Text style={[globalStyles.cell2, globalStyles.buttoncolumn]}>Lipa</Text>
                 )}
+
+               
+
                   <Text style={[globalStyles.cell2, globalStyles.firstNameColumn]}>Jina</Text>
                   <Text style={[globalStyles.cell2, globalStyles.tarehecolumn]}>Tarehe</Text>
                   <Text style={[globalStyles.cell2, globalStyles.otherColumns]}>Mkopo</Text>

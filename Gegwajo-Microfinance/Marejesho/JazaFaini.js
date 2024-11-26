@@ -67,7 +67,9 @@ const JazaFaini = ({navigation, route}) => {
     AmesajiliwaNa,
     PichaYaMteja,
     Ni_Mteja_Hai,
-    Created
+    Created,
+    Up_To,
+    JumlaYaFainiZote
    
    } = route.params
 
@@ -198,7 +200,7 @@ const addCartItem = async () => {
 
   try {
     const response = await axios.post(
-      EndPoint + `/WatejaWoteCart/?JinaKamiliLaMteja=${JinaKamiliLaMteja}`,
+      EndPoint + `/MalipoYaFainiCartView/?JinaKamiliLaMteja=${JinaKamiliLaMteja}`,
       {
         Mteja: id,
         KiasiChaFainiChaSiku: parseInt(KiasiChaFainiChaSiku),
@@ -337,6 +339,13 @@ keyboardShouldPersistTaps="handled"
       </Text>
       )}
 
+        {JumlaYaFainiZote && (
+       <Text style={globalStyles.TaarifaBinafsiSimuYaMteja}>
+     Faini: {JumlaYaFainiZote}    
+      </Text>
+      )}
+
+
 
 
     {/*mwanzo wa view ya taarifa za mkopo*/}
@@ -418,10 +427,11 @@ keyboardShouldPersistTaps="handled"
         //color='white'
         style={globalStyles.TaarifaBinafsiSimuYaMtejaIconTareheYakukopaText}
          />
-
+{Up_To && (
        <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaMwishoTareheYakukopaText}>
-     30/04/2024     
+     {formatDate(Up_To)}     
       </Text>
+      )}
 
 </View>
 {/*mwanzo wa view ya taarifa za  mwanzo wa kukopa*/}
@@ -537,7 +547,7 @@ keyboardShouldPersistTaps="handled"
              paddingVertical:10,
 
            }}>
-              Pokea Rejesho
+              Pokea Faini
             </Text>
           </TouchableOpacity>
           
