@@ -408,6 +408,11 @@ const handlePressPokeaMarejesho = (item) =>
 
 const handlePressPokeaFaini = (item) =>
     navigation.navigate('Jaza Faini', { ...item });
+    // navigation.reset({
+    //     index: 0,
+    //     routes: [{ name: 'Jaza Faini', ...item }],
+    //   }); 
+        
 
 //-----------Fetch wateja wote
 
@@ -895,7 +900,7 @@ style={globalStyles.FullRipotiYaSikuRightText}
          //   }
          // showsVerticalScrollIndicator={false}
        
-         //  onScroll={handleScroll} scrollEventThrottle={16}
+          onScroll={handleScroll} scrollEventThrottle={16}
          
           horizontal
           >

@@ -184,7 +184,7 @@ const handleErrorMessage = (error) => {
     <View style={styles.container}>
             <ImageBackground
 
-                source={require('../assets/bg.png')}
+                source={require('../assets/bg.jpg')}
                 style={{
                     flex: 1,
                     opacity:1,

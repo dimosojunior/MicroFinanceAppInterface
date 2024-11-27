@@ -142,6 +142,15 @@ function MyStack( {navigation}){
 */}
 
 
+  {/*<Stack.Screen
+      name="Jaza Faini"
+      component={JazaFaini}
+      // options={ () => ({ 
+      //       headerLeft: () => <Header  title='About Page' />,
+      //     })}
+      />
+*/}
+
          <Stack.Screen
       name="Mikataba Hai"
       component={MikatabaHai}
@@ -222,14 +231,7 @@ function MyStack( {navigation}){
       />
 
 
-   <Stack.Screen
-      name="Jaza Faini"
-      component={JazaFaini}
-      // options={ () => ({ 
-      //       headerLeft: () => <Header  title='About Page' />,
-      //     })}
-      />
-
+ 
 
       </Stack.Navigator>
       //	</NavigationContainer>

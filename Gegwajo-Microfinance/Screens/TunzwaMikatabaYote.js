@@ -3,9 +3,6 @@ import  {
   View,StyleSheet,Image,
   ActivityIndicator,
   ImageBackground,
-  KeyboardAvoidingView,
-  TouchableWithoutFeedback,
-  Keyboard,
   Linking,
   Animated,
   Alert,
@@ -34,7 +31,46 @@ import { useFocusEffect } from '@react-navigation/native';
 
 const { width, height } = Dimensions.get('screen');
 
-const MikatabaYote = ({navigation}) => {
+
+
+
+// const queryset = [
+//   { id: 1, firstName: "John", middleName: "Doe", lastName: "Smith", age: 18, gender: "Male", phone: "123-456-7890" },
+//   { id: 2, firstName: "Jane", middleName: "Mary", lastName: "Doe", age: 19, gender: "Female", phone: "234-567-8901" },
+//   { id: 3, firstName: "Alice", middleName: "Lee", lastName: "Johnson", age: 17, gender: "Female", phone: "345-678-9012" },
+//   { id: 4, firstName: "Bob", middleName: "Ray", lastName: "Brown", age: 20, gender: "Male", phone: "456-789-0123" },
+//   { id: 5, firstName: "Charlie", middleName: "Anna", lastName: "Taylor", age: 21, gender: "Male", phone: "567-890-1234" },
+//   { id: 6, firstName: "Daisy", middleName: "Sue", lastName: "Wilson", age: 18, gender: "Female", phone: "678-901-2345" },
+//   { id: 7, firstName: "Eve", middleName: "May", lastName: "Moore", age: 19, gender: "Female", phone: "789-012-3456" },
+//   { id: 8, firstName: "Frank", middleName: "Joe", lastName: "Martin", age: 20, gender: "Male", phone: "890-123-4567" },
+//   { id: 9, firstName: "Grace", middleName: "Ella", lastName: "Jackson", age: 17, gender: "Female", phone: "901-234-5678" },
+//   { id: 10, firstName: "Henry", middleName: "Tom", lastName: "Harris", age: 21, gender: "Male", phone: "012-345-6789" },
+// ];
+
+const MtejaDetails = ({navigation, route}) => {
+
+
+
+   const { 
+    postId,
+    JinaKamiliLaMteja,
+    SimuYaMteja,
+    SimuYaMzaminiWa1,
+    SimuYaMzaminiWa2,
+    EmailYaMteja,
+    Mahali,
+    KiasiAnachokopa,
+    KiasiAlicholipa,
+    RejeshoKwaSiku,
+    JumlaYaDeni,
+    Riba,
+    AmesajiliwaNa,
+    PichaYaMteja,
+    Ni_Mteja_Hai,
+    Created,
+    Up_To
+   
+   } = route.params
 
 
 
@@ -61,7 +97,7 @@ const [userData, setUserData] = useState({});
       setUserToken(token)
     })
     fetchUserData();
-  }, [userData]);
+  }, []);
 
   const fetchUserData = async () => {
     try {
@@ -81,12 +117,6 @@ const [userData, setUserData] = useState({});
 
  useEffect(() => {
     checkLoggedIn();
-
-     if (userToken) {
-     setLoading(true)
-     getItems();
-    }
-
 
 
   }, [userToken]);
@@ -119,128 +149,6 @@ const [input, setInput] = useState('');
 
 
 
-//-----------Fetch wateja wote
-
-const [WatejaWote, setWatejaWote] = useState(0);
-const [ActiveProjects, setActiveProjects] = useState(0);
-
-// Fetch Wateja Data
-useEffect(() => {
-  const fetchWatejaData = async () => {
-    try {
-      const token = await AsyncStorage.getItem('userToken'); // Get the token
-      if (token) {
-        const response = await axios.get(EndPoint + '/CountAllWatejaWoteView/', {
-          headers: {
-            Authorization: `Token ${token}`, // Pass the token in the header
-          },
-        });
-        const { wateja_wote, wateja_hai } = response.data;
-        setWatejaWote(wateja_wote);
-        setActiveProjects(wateja_hai);
-      } else {
-        console.error("No user token found");
-      }
-    } catch (error) {
-      console.error("Error fetching Wateja data:", error);
-    }
-  };
-
-  fetchWatejaData();
-}, []);
-
-
-
-
-//Load more
-const [queryset, setQueryset] = useState([]);
-const [current_page, setcurrent_page] = useState(1);
-const [isLoading, setIsLoading] = useState(false);
-const [loading, setLoading] = useState(false);
-const [endReached, setEndReached] = useState(false)
-const [isPending, setPending] = useState(true);
-
-
-
-const [wateja_wote, setwateja_wote] = useState(0);
-
-
-const getItems = () => {
-  if (endReached) {
-    setLoading(false);
-    setIsLoading(false);
-    setPending(false);
-    return;
-  } else {
-    setIsLoading(true);
-    //console.log('USERTOKEN', userToken);
-    //setPending(true);
-    //const url = EndPoint + `/GetAllUniversities/?page=${current_page}&page_size=2`;
-   const url = EndPoint + `/GetAllWatejaWoteView/?page=${current_page}&page_size=500`
-    // console.log(url);
-    fetch(url, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Token ${userToken}`, // Add the Authorization header here
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.queryset.length > 0) {
-          setQueryset(data.queryset);
-
-        
-        
-          setIsLoading(false);
-          setLoading(false);
-          setcurrent_page(current_page + 1);
-          setPending(false);
-
-          // console.log("NEW CRRRENT", current_page);
-          console.log(queryset);
-
-        } else {
-          setIsLoading(false);
-          setEndReached(true);
-          setLoading(false);
-          setPending(false);
-          console.log("Error fetching data");;
-        }
-      });
-  }
-};
-
-
-//console.log("Test userToken", userToken);
-
- const renderLoader = () => {
-    return (
-      isLoading ?
-        <View style={globalStyles.loaderStyle}>
-          <ActivityIndicator size="large" color="red" />
-        </View> : null
-    );
-  };
-
-  // const loadMoreItem = () => {
-  //   setcurrent_page(current_page + 1);
-  // };
-
-  // useEffect(() => {
-  //   setLoading(true)
-  //   getItems();
-  // }, []);
-
-
- const handleScroll = (event) =>{
-    const {layoutMeasurement, contentOffset, contentSize} = event.nativeEvent;
-    const scrollEndY = layoutMeasurement.height + contentOffset.y
-    const contetHeight = contentSize.height
-
-    if (scrollEndY >= contetHeight - 50) {
-      getItems()
-    }
-  }
 
 
 
@@ -268,33 +176,21 @@ const formatToThreeDigits = (number) => {
 
 
 
-
-
-  const handlePress = (item) => {
-    navigation.navigate('Home', { item });
-  };
-
-   const DeletehandlePress = (item) => {
-    navigation.navigate('Delete Mteja', { ...item, postId: item.id});
-  };
-
   return (
 
-      <>{!fontsLoaded ? (<View/>):(
+     <>{!fontsLoaded ? (<View/>):(
 
-       <>
-
-
- {!isPending ? (
-
-
+   
 
     <View style={globalStyles.container}>
-     
-
-
 
 <MinorHeader />
+
+<ScrollView 
+keyboardShouldPersistTaps="handled"
+
+>
+
 
 <View style={{
   width:'100%',
@@ -315,104 +211,238 @@ const formatToThreeDigits = (number) => {
   borderRadius:10,
   fontFamily:'Medium',
 
-  }}>Taarifa za mikataba yote</Text>
+  }}>Taarifa za mkataba wa  {JinaKamiliLaMteja}</Text>
 </View>
 
 
 
 
+{/*mwanzo wa view ya taarifa binafsi*/}
+<View style={globalStyles.TaarifaBinafsiMainContainer}>
+  
+  {PichaYaMteja ? (
+      <Image
+     style={globalStyles.TaarifaBinafsiMtejaImage}
+      source={{
+      uri: EndPoint + '/' + PichaYaMteja
+    }}
+       //source={require('../assets/profile.jpg')} 
+      >
+      </Image>
 
-    <View style={globalStyles.searchbarOtherPages}>
+      ):(
+     <Image
+     style={globalStyles.TaarifaBinafsiMtejaImage}
+      
+       source={require('../assets/profile.jpg')} 
+      >
+      </Image>
+      )}
 
-                 <View style={globalStyles.searchbarIconContainerOtherPages}>
-                    <Ionicons name="search-outline" 
-                    size={25} 
-                    color={COLORS.black} 
+      <Text style={globalStyles.TaarifaBinafsiJinaLaMteja}>
+     {JinaKamiliLaMteja}    
+      </Text>
+      
+      {Mahali && (
+       <Text style={globalStyles.TaarifaBinafsiJinaLaKituo}>
+     {Mahali} 
+      </Text>
+      )}
 
-                    style={globalStyles.AppIConHomeScreenOtherPages}
-
-                      />
-                    </View>
-
-                    <View style={globalStyles.searchbarInputContainerOtherPages}>
-                    <TextInput 
-                    value={input} onChangeText ={(text) => setInput(text)}
-                    placeholder="Ingiza jina" 
-                     placeholderTextColor='black'
-                    style={globalStyles.AppInputHomeScreenOtherPages}
-                    
-                    ></TextInput>
-                    </View>
-
-                  </View>
-
-
-        <ScrollView horizontal>
-          <ScrollView>
-            <View style={globalStyles.table}>
-              {/* Table Header */}
-              <View style={[globalStyles.row, globalStyles.header]}>
-              <Text style={[globalStyles.cell2, globalStyles.firstNameColumn]}>Jina</Text>
-                <Text style={[globalStyles.cell2, globalStyles.tarehecolumn]}>Tarehe</Text>
-                <Text style={[globalStyles.cell2, globalStyles.otherColumns]}>Mkopo</Text>
-                <Text style={[globalStyles.cell2, globalStyles.otherColumns]}>Lipwa</Text>
-                <Text style={[globalStyles.cell2, globalStyles.otherColumns]}>Deni</Text>
-                <Text style={[globalStyles.cell2, globalStyles.buttoncolumn]}>Hali</Text>
-                <Text style={[globalStyles.cell2, globalStyles.buttoncolumn]}>Futa</Text>
-              </View>
-              {/* Table Rows */}
-              {queryset.map((item) => (
-                <View key={item.id} style={globalStyles.row2}>
-                
-                  <Text style={[globalStyles.cell, globalStyles.firstNameColumn]}>{item.JinaKamiliLaMteja}</Text>
-                    <Text style={[globalStyles.cell, globalStyles.tarehecolumn]}>{formatDate(item.Created)}</Text>
-                    <Text style={[globalStyles.cell, globalStyles.otherColumns]}>{formatToThreeDigits(item.KiasiAnachokopa)}</Text>
-                    <Text style={[globalStyles.cell, globalStyles.otherColumns]}>{formatToThreeDigits(item.KiasiAlicholipa)}</Text>
-                    <Text style={[globalStyles.cell, globalStyles.otherColumns]}>{formatToThreeDigits(item.JumlaYaDeni)}</Text>
-                    
-   
-                  <TouchableOpacity
-                     style={[globalStyles.cell, globalStyles.buttoncolumn, 
-
-                          {
-                            justifyContent:'center',
-                            alignItems:'center',
-                          }
-
-                          ]}
-                    onPress={() => handlePress(item)}
-                  >
-                     <MaterialCommunityIcons name='gesture-tap-button' 
-                  size={30}
-                  //color="black" 
-                  style={globalStyles.TableIconColor}      
-                   />
-                   </TouchableOpacity>
-
-                     <TouchableOpacity
-                     style={[globalStyles.cell, globalStyles.buttoncolumn, 
-
-                          {
-                            justifyContent:'center',
-                            alignItems:'center',
-                          }
-
-                          ]}
-                    onPress={() => DeletehandlePress(item)}
-                  >
-                    <FontAwesome name='trash-o' 
-                  size={30}
-                  //color="black" 
-                  style={globalStyles.TableIconColorDelete}      
-                   />
-                   </TouchableOpacity>
-                </View>
-              ))}
-            </View>
-          </ScrollView>
-        </ScrollView>
+     {SimuYaMteja && (
+       <Text style={globalStyles.TaarifaBinafsiSimuYaMteja}>
+     Simu: {SimuYaMteja}    
+      </Text>
+      )}
 
 
+ {/*mwanzo wa view ya taarifa za mkopo*/}
+<View style={globalStyles.TaarifaBinafsimkopo}>
+{SimuYaMzaminiWa1 && (
+ <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaMkopoText}>
+     Win: {SimuYaMzaminiWa1}    
+      </Text>
+      )}
+ 
+
+      <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaMkatoText}>
+     |   
+      </Text>
+      
+      {SimuYaMzaminiWa2 && (
+       <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaDeniText}>
+     {SimuYaMzaminiWa2}    
+      </Text>
+    )}
+
+</View>
+{/*mwisho wa view ya taarifa za mkopo*/}
+
+
+    {/*mwanzo wa view ya taarifa za mkopo*/}
+<View style={globalStyles.TaarifaBinafsimkopo}>
+{KiasiAnachokopa > 0 ? (
+ <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaMkopoText}>
+     Mkopo: {formatToThreeDigits(KiasiAnachokopa)}    
+      </Text>
+      ):(
+    <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaMkopoText}>
+     Mkopo: 0   
+      </Text>
+      )}
+
+      <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaMkatoText}>
+     |   
+      </Text>
+    
+    {JumlaYaDeni> 0 ? (
+       <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaDeniText}>
+     Deni: {formatToThreeDigits(JumlaYaDeni)}    
+      </Text>
+      ):(
+ <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaDeniText}>
+     Deni: 0    
+      </Text>
+      )}
+
+</View>
+{/*mwisho wa view ya taarifa za mkopo*/}
+
+
+
+
+   {/*mwanzo wa view ya taarifa za mkopo*/}
+<View style={globalStyles.TaarifaBinafsimkopo}>
+{KiasiAlicholipa > 0 ? (
+ <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaMkopoText}>
+     Lipwa: {formatToThreeDigits(KiasiAlicholipa)}    
+      </Text>
+      ):(
+<Text style={globalStyles.TaarifaBinafsiSimuYaMtejaMkopoText}>
+     Lipwa: 0   
+      </Text>
+      )}
+
+      <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaMkatoText}>
+     |   
+      </Text>
+      
+      {RejeshoKwaSiku > 0 ? (
+       <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaDeniText}>
+     Rejesho: {formatToThreeDigits(RejeshoKwaSiku)}    
+      </Text>
+      ):(
+     <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaDeniText}>
+     Rejesho: 0    
+      </Text>
+      )}
+
+</View>
+{/*mwisho wa view ya taarifa za mkopo*/}
+
+
+
+
+
+  {/*mwanzo wa view ya taarifa za mwanzo wa kukopa*/}
+<View style={globalStyles.TaarifaBinafsiTareheZamkopo}>
+{Created && (
+ <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaTareheYakukopaText}>
+     {formatDate(Created)}   
+      </Text>
+      )}
+
+    
+       <Ionicons
+        name='arrow-forward-circle' size={28} 
+        //color='white'
+        style={globalStyles.TaarifaBinafsiSimuYaMtejaIconTareheYakukopaText}
+         />
+    {Up_To && (
+       <Text style={globalStyles.TaarifaBinafsiSimuYaMtejaMwishoTareheYakukopaText}>
+     {formatDate(Up_To)}        
+      </Text>
+      )}
+
+</View>
+{/*mwanzo wa view ya taarifa za  mwanzo wa kukopa*/}
+
+
+
+
+
+
+
+
+
+
+
+
+</View>
+  {/*mwisho wa view ya taarifa binafsi*/}
+
+
+
+
+
+
+
+
+
+
+{/*mwanzo wa marejesho yake heading*/}
+
+<View 
+style={globalStyles.TaarifaBinafsiMarejeshoYakeHeadingContainer}
+
+>
+  
+  <Text 
+
+  style={globalStyles.TaarifaBinafsiMarejeshoYakeHeadingText}
+
+ >MAREJESHO YAKE</Text>
+</View>
+
+{/*mwisho wa marejesho yake heading*/}
+     
+        
+
+{/*mwanzo wa Full taarifa za marejesho*/}
+
+<View 
+style={globalStyles.FullTaarifaZaMarejeshoContainer}
+>
+  
+
+{/*mwanzo wa Left View*/} 
+<View 
+style={globalStyles.FullTaarifaZaMarejeshoLeftContainer}
+>
+<Text 
+style={globalStyles.FullTaarifaZaMarejeshoLeftText}
+ >01/01/2024</Text>
+</View>
+{/*mwanzo wa Left View*/} 
+
+
+
+{/*mwanzo wa Right View*/} 
+<View 
+style={globalStyles.FullTaarifaZaMarejeshoRightContainer}
+>
+<Text 
+style={globalStyles.FullTaarifaZaMarejeshoRightText}
+ >2000</Text>
+</View>
+{/*mwanzo wa Right View*/} 
+
+
+</View>
+
+{/*mwiso wa Full taarifa za marejesho*/}
+
+      
 
 
 
@@ -430,6 +460,8 @@ const formatToThreeDigits = (number) => {
 
 
 
+  </ScrollView>
+     
 
 
         <Pressable
@@ -467,7 +499,7 @@ const formatToThreeDigits = (number) => {
          
 
           <TouchableOpacity
-         //onPress={() => navigation.navigate("Home Stack")}
+         onPress={() => navigation.navigate("Home Stack")}
            
             style={{
               
@@ -496,7 +528,7 @@ const formatToThreeDigits = (number) => {
              paddingVertical:10,
 
            }}>
-              Jumla: {WatejaWote}
+              Jumla: 300000
             </Text>
           </TouchableOpacity>
           
@@ -527,19 +559,10 @@ const formatToThreeDigits = (number) => {
                   </View>
                 }
               />
-      
     </View>
 
 
-                 ):(
 
-<LotterViewScreen />
-
-)}
-
-    
-
-    </>
 
 
 
@@ -547,46 +570,8 @@ const formatToThreeDigits = (number) => {
   );
 };
 
-export default MikatabaYote;
+export default MtejaDetails;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 10,
-  },
-  table: {
-    borderWidth: 1,
-    borderColor: "black",
-  },
-  header: {
-    backgroundColor: "red",
-  },
-  row: {
-    flexDirection: "row",
-  },
-  cell: {
-    padding: 10,
-    textAlign: "center",
-    color: "black",
-    borderWidth: 1,
-    borderColor: "black",
-  },
-  idColumn: {
-    width: 50,
-  },
-  firstNameColumn: {
-    width: 200,
-  },
-  otherColumns: {
-    width: 100,
-  },
-  buttonCell: {
-    backgroundColor: "#4CAF50",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  buttonText: {
-    color: "white",
-    fontWeight: "bold",
-  },
+ 
 });

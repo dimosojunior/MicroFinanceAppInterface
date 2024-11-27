@@ -218,7 +218,11 @@ const addCartItem = async () => {
      
      Alert.alert("umefanikiwa kupokea faini");
      //setShouldReload(true); 
-      navigation.replace('Pokea Rejesho HomeScreen'); 
+      //navigation.replace('Pokea Rejesho HomeScreen');
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Pokea Rejesho HomeScreen' }],
+      }); 
         
     // Ensure that the response contains the 'id' of the newly added item
     
@@ -236,6 +240,8 @@ const addCartItem = async () => {
       // setModalVisible(false);
       setSelectedProduct(null);
       setKiasiChaFainiChaSiku('');
+
+      //navigation.replace('Pokea Rejesho HomeScreen');
 
      // Increment the displayedItemsCount
     //setDisplayedItemsCount((prevCount) => prevCount + 1);

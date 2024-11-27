@@ -22,6 +22,7 @@ import SigninScreen from '../AccountScreens/SigninScreen';
 import MarejeshoWatejaWoteHai from '../Marejesho/MarejeshoWatejaWoteHai';
 
 import JazaRejesho from '../Marejesho/JazaRejesho';
+import JazaFaini from '../Marejesho/JazaFaini';
 
 
 const Stack = createStackNavigator();
@@ -102,6 +103,16 @@ function PokeaRejeshoStack( {navigation}){
       //       headerLeft: () => <Header  title='About Page' />,
       //     })}
       />
+
+
+       <Stack.Screen
+      name="Jaza Faini"
+      component={JazaFaini}
+      // options={ () => ({ 
+      //       headerLeft: () => <Header  title='About Page' />,
+      //     })}
+      />
+
 
 
 
