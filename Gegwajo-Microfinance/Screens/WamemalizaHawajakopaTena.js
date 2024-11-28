@@ -35,7 +35,7 @@ import { useFocusEffect } from '@react-navigation/native';
 
 const { width, height } = Dimensions.get('screen');
 
-const MikatabaHai = ({ navigation }) => {
+const WamemalizaHawajakopaTena = ({ navigation }) => {
   const [fontsLoaded] = useFonts({
     Bold: require('../assets/fonts/Poppins-Bold.ttf'),
     Medium: require('../assets/fonts/Poppins-Medium.ttf'),
@@ -120,7 +120,7 @@ const getItems = (token) => {
     //console.log('USERTOKEN', userToken);
     //setPending(true);
     //const url = EndPoint + `/GetAllUniversities/?page=${current_page}&page_size=2`;
-   const url = EndPoint + `/GetWatejaHaiWote/?page=${current_page}&page_size=500`
+   const url = EndPoint + `/GetWamemalizaHawajakopaTenaView/?page=${current_page}&page_size=500`
     // console.log(url);
     fetch(url, {
       method: 'GET',
@@ -178,7 +178,7 @@ const handleRefresh = async () => {
     const token = await AsyncStorage.getItem('userToken');
     if (token) {
       // Call getItems with the token and reset page
-      const url = EndPoint + `/GetMarejeshoWatejaWoteHaiView/?page=1&page_size=500`;
+      const url = EndPoint + `/GetWamemalizaHawajakopaTenaView/?page=1&page_size=500`;
       const response = await fetch(url, {
         method: 'GET',
         headers: {
@@ -272,24 +272,23 @@ const handlePressDetailsPage = (item) =>
 
 
 //-----------Fetch wateja wote
-
-const [WatejaWote, setWatejaWote] = useState(0);
-const [ActiveProjects, setActiveProjects] = useState(0);
+//const [WatejaWote2, setWatejaWote2] = useState(0);
+const [WamemalizaHawajakopaKabisa, setWamemalizaHawajakopaKabisa] = useState(0);
 
 // Fetch Wateja Data
 useEffect(() => {
-  const fetchWatejaData = async () => {
+  const fetchWatejaData2 = async () => {
     try {
       const token = await AsyncStorage.getItem('userToken'); // Get the token
       if (token) {
-        const response = await axios.get(EndPoint + '/CountAllWatejaWoteView/', {
+        const response = await axios.get(EndPoint + '/CountAllWamemalizaHawajakopaTenaView/', {
           headers: {
             Authorization: `Token ${token}`, // Pass the token in the header
           },
         });
-        const { wateja_wote, wateja_hai } = response.data;
-        setWatejaWote(wateja_wote);
-        setActiveProjects(wateja_hai);
+        const { wateja_wote } = response.data;
+        //setWatejaWote2(wateja_wote);
+        setWamemalizaHawajakopaKabisa(wateja_wote);
       } else {
         console.error("No user token found");
       }
@@ -298,8 +297,10 @@ useEffect(() => {
     }
   };
 
-  fetchWatejaData();
+  fetchWatejaData2();
 }, []);
+
+
 
 
 
@@ -438,7 +439,7 @@ const TableRowComponent = ({ item}) => {
                 fontFamily: 'Medium',
               }}
             >
-              Taarifa za mikataba hai
+             Wamemailiza hawajakopa tena
             </Text>
           </View>
 
@@ -618,7 +619,7 @@ const TableRowComponent = ({ item}) => {
              paddingVertical:10,
 
            }}>
-              Jumla: {ActiveProjects}
+              Jumla: {WamemalizaHawajakopaKabisa}
             </Text>
           </TouchableOpacity>
           
@@ -668,4 +669,4 @@ const TableRowComponent = ({ item}) => {
   );
 };
 
-export default MikatabaHai;
+export default WamemalizaHawajakopaTena;

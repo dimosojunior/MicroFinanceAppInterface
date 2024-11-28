@@ -24,6 +24,9 @@ import MarejeshoWatejaWoteHai from '../Marejesho/MarejeshoWatejaWoteHai';
 import JazaRejesho from '../Marejesho/JazaRejesho';
 import JazaFaini from '../Marejesho/JazaFaini';
 
+import FutaRejesho from '../Marejesho/FutaRejesho';
+
+import FutaFaini from '../Marejesho/FutaFaini';
 
 const Stack = createStackNavigator();
 
@@ -113,6 +116,24 @@ function PokeaRejeshoStack( {navigation}){
       //     })}
       />
 
+
+
+  <Stack.Screen
+      name="Futa Rejesho"
+      component={FutaRejesho}
+      // options={ () => ({ 
+      //       headerLeft: () => <Header  title='About Page' />,
+      //     })}
+      />
+
+
+   <Stack.Screen
+      name="Futa Faini"
+      component={FutaFaini}
+      // options={ () => ({ 
+      //       headerLeft: () => <Header  title='About Page' />,
+      //     })}
+      />
 
 
 

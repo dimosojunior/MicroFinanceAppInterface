@@ -229,6 +229,36 @@ useEffect(() => {
 
 
 
+const [HawajakopaTena, setHawajakopaTena] = useState(0);
+//const [ActiveProjects, setActiveProjects] = useState(0);
+
+// Fetch Wateja Data
+useEffect(() => {
+  const fetchWatejaData4 = async () => {
+    try {
+      const token = await AsyncStorage.getItem('userToken'); // Get the token
+      if (token) {
+        const response = await axios.get(EndPoint + '/CountAllWamemalizaHawajakopaTenaView/', {
+          headers: {
+            Authorization: `Token ${token}`, // Pass the token in the header
+          },
+        });
+        const { wateja_wote } = response.data;
+        setHawajakopaTena(wateja_wote);
+        //setActiveProjects(wateja_hai);
+      } else {
+        console.error("No user token found");
+      }
+    } catch (error) {
+      console.error("Error fetching Wateja data: 4", error);
+    }
+  };
+
+  fetchWatejaData4();
+}, []);
+
+
+
 
     const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
@@ -730,6 +760,89 @@ style={globalStyles.ItemHomeScreenPressableContainer}
           </Pressable>
 
 {/*mwisho wa item */}
+
+
+
+
+
+
+
+
+
+
+{/*mwanzo wa item*/}
+
+  <Pressable 
+  onPress={() => navigation.navigate('Wamemaliza Hawajakopa Tena')}
+style={globalStyles.ItemHomeScreenPressableContainer}
+
+  >
+ {/* mwanzowa view kubwa*/}
+  <View 
+  style={globalStyles.ItemHomeScreenContainer}
+  >
+
+{/* mwanzo wa view ya icon*/}
+    <View 
+     style={globalStyles.ItemHomeScreenFirstLeftContainer}
+   >
+   {/*  <Image style={{
+      height:60,
+      width:60
+    }} 
+     source={require('../assets/i2.jpg')} 
+     >
+     </Image>*/}
+        <FontAwesome name='user-o' 
+        
+      size={30}
+      //color="black" 
+      style={globalStyles.ItemHomeScreenLeftContainerIcon}      
+       />
+    </View>
+  {/* mwiso wa view ya icon*/}
+
+   
+      <View 
+       style={globalStyles.ItemHomeScreenMiddleContainer}
+
+    >
+        <Text 
+        style={globalStyles.ItemHomeScreenMiddleContainerText1}
+        
+        >
+        WAMEMALIZA HAWAJAKOPA TENA
+        </Text>
+        <Text 
+        style={globalStyles.ItemHomeScreenMiddleContainerText2}
+        >({HawajakopaTena})</Text>
+      </View>
+
+      <View 
+      style={globalStyles.ItemHomeScreenRightContainer}
+     >
+        {/*<Text style={{color:'black',fontWeight:"600"}}>difference</Text>*/}
+        {/*<Text style={{color:'red',fontWeight:"600"}}>percentage </Text>*/}
+
+       <Ionicons name='arrow-forward-circle' 
+         onPress={() => navigation.navigate('Wamemaliza Hawajakopa Tena')}
+      size={30}
+      //color="black" 
+      //color="red"
+      style={globalStyles.ItemHomeScreenRightContainerIcon}
+         />
+      
+      </View>
+
+   
+
+  </View>
+{/* mwisho wa view kubwa*/}
+          </Pressable>
+
+{/*mwisho wa item */}
+
+
 
 
 </ScrollView>

@@ -38,6 +38,8 @@ import HawajarejeshaJana from '../Screens/HawajarejeshaJana';
 
 import JazaFaini from '../Marejesho/JazaFaini';
 
+import WamemalizaHawajakopaTena from '../Screens/WamemalizaHawajakopaTena';
+
 const Stack = createStackNavigator();
 
 function MyStack( {navigation}){
@@ -150,6 +152,15 @@ function MyStack( {navigation}){
       //     })}
       />
 */}
+
+   <Stack.Screen
+      name="Wamemaliza Hawajakopa Tena"
+      component={WamemalizaHawajakopaTena}
+      // options={ () => ({ 
+      //       headerLeft: () => <Header  title='About Page' />,
+      //     })}
+      />
+
 
          <Stack.Screen
       name="Mikataba Hai"

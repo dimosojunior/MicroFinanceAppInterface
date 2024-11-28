@@ -677,6 +677,9 @@ style={[globalStyles.FullRipotiYaSikuLeftMajorContainer,
 style={[globalStyles.FullRipotiYaSikuLeftContainer,
 
   {
+    alignItems:'center',
+    flexDirection:'row',
+    justifyContent:'space-between',
   
   }
 
@@ -685,6 +688,21 @@ style={[globalStyles.FullRipotiYaSikuLeftContainer,
 <Text 
 style={globalStyles.FullRipotiYaSikuLeftText}
  >{item.JinaKamiliLaMteja}</Text>
+
+  {userData && userData.is_admin === true && (
+  <FontAwesome
+  onPress={() => navigation.navigate('Futa Rejesho', { ...item, postId: item.id })}
+          name="trash-o"
+          size={25}
+          style={[globalStyles.TableIconColor,
+            {
+              color:'red',
+              marginRight:15,
+            }
+
+            ]}
+        />
+    )}
 </View>
 {/*mwanzo wa Left View*/} 
 
@@ -781,6 +799,9 @@ style={[globalStyles.FullRipotiYaSikuLeftMajorContainer,
 style={[globalStyles.FullRipotiYaSikuLeftContainer,
 
   {
+    alignItems:'center',
+    flexDirection:'row',
+    justifyContent:'space-between',
   
   }
 
@@ -789,6 +810,21 @@ style={[globalStyles.FullRipotiYaSikuLeftContainer,
 <Text 
 style={globalStyles.FullRipotiYaSikuLeftText}
  >{item.JinaKamiliLaMteja}</Text>
+
+  {userData && userData.is_admin === true && (
+  <FontAwesome
+  onPress={() => navigation.navigate('Futa Faini', { ...item, postId: item.id })}
+          name="trash-o"
+          size={25}
+          style={[globalStyles.TableIconColor,
+            {
+              color:'red',
+              marginRight:15,
+            }
+
+            ]}
+        />
+    )}
 </View>
 {/*mwanzo wa Left View*/} 
 

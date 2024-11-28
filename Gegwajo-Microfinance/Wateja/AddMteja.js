@@ -83,7 +83,7 @@ const [PichaYaMteja, setPichaYaMteja] = useState(null);
 const [JinaKamiliLaMteja, setJinaKamiliLaMteja] = useState('');
 const [MaelezoYaMteja, setMaelezoYaMteja] = useState('');
 const [SimuYaMteja, setSimuYaMteja] = useState('');
-const [EmailYaMteja, setEmailYaMteja] = useState('');
+//const [EmailYaMteja, setEmailYaMteja] = useState('');
 const [Mahali, setMahali] = useState('');
 const [KiasiAnachokopa, setKiasiAnachokopa] = useState(0);
 const [SimuYaMzaminiWa1, setSimuYaMzaminiWa1] = useState('');
@@ -269,14 +269,14 @@ const handleRegistration = async () => {
 
 
 
-          if (EmailYaMteja) {
-            formData.append('EmailYaMteja', EmailYaMteja);
-        } 
+        //   if (EmailYaMteja) {
+        //     formData.append('EmailYaMteja', EmailYaMteja);
+        // } 
 
-          if (!emailRegex.test(EmailYaMteja)) {
-          showAlertFunction("Tafadhali fuata kanuni za kuandika email, @");
-          return;
-        }
+        //   if (!emailRegex.test(EmailYaMteja)) {
+        //   showAlertFunction("Tafadhali fuata kanuni za kuandika email, @");
+        //   return;
+        // }
 
 
           // Validate phone number
@@ -367,7 +367,7 @@ const handleRegistration = async () => {
             setSimuYaMteja(0);
             setSimuYaMzaminiWa1(0);
             setSimuYaMzaminiWa2(0);
-            setEmailYaMteja('');
+            //setEmailYaMteja('');
             setMahali('');
             setKiasiAnachokopa(0);
 
@@ -591,71 +591,7 @@ const handleRegistration = async () => {
 
   
 
-        {/*  mwanzo wa email*/}
-            <View 
-            style={[styles.dataContainerForPassword, 
-              {
-                 width:width-20,
-                marginTop:0,
-              }
-
-              ]}
-          >
-
-            <View style={{
-          width:'10%',
-          //justifyContent:"center",
-         // backgroundColor:'red',
-        }}>
-
-         {/* Add a button to toggle password visibility */}
-        <TouchableOpacity
-          
-          style={{ 
-            alignSelf: 'flex-start', 
-            marginRight: 0,color:'black',
-            flexDirection:'row',
-            alignItems:'center',
-             }}
-          >
-
-          <FontAwesome size={25} color="green" name="envelope-o" />
-
-        {/*  <Text style={{
-           color: 'black', 
-           fontSize: 16,
-           fontWeight:'bold',
-           marginLeft:10,
-            }}>
-            +255
-          </Text>*/}
-        </TouchableOpacity>
-
-        </View>
-
-
-          <TextInput
-          style= {[styles.textinputi,{ 
-            color: 'black',width:'88%',
-            //backgroundColor:'black',
-
-            //paddingVertical:20,
-          }]}
-          placeholder="Email Ya Mteja"
-          //keyboardType="numeric"
-           keyboardType={'email-address'}
-          
-          value={EmailYaMteja}
-          onChangeText={setEmailYaMteja}
-        placeholderTextColor="black"
-        />
-
-      
-        </View>
-      {/*  mwisho wa email*/}
-
-
-
+    
 
 
 
