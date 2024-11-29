@@ -182,20 +182,24 @@ const [selectedProduct, setSelectedProduct] = useState(null);
 const [KiasiChaFainiChaSiku, setKiasiChaFainiChaSiku] = useState(0);
 
 
+
+
+ const [isPending2, setPending2] = useState(false);
+
 const addCartItem = async () => {
   if (!KiasiChaFainiChaSiku) {
-    setPending(false); 
+    setPending2(false); 
     //Alert.alert('Error', 'Please enter a quantity of product(s) you want to order');
-    Alert.alert("Tafadhali, ingiza kiasi cha faini anacholipa");
+    Alert.alert("Tafadhali, ingiza kiasi cha faini");
     return;
   }
 
 
 
-  setPending(true);
+  setPending2(true);
 
 
-  
+  setModalVisible(false);
    
 
   try {
@@ -212,17 +216,9 @@ const addCartItem = async () => {
         },
       }
     );
-    setModalVisible(false);
+    
 
-    setPending(false);
-     
-     Alert.alert("umefanikiwa kupokea faini");
-     //setShouldReload(true); 
-      //navigation.replace('Pokea Rejesho HomeScreen');
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'Pokea Rejesho HomeScreen' }],
-      }); 
+    
         
     // Ensure that the response contains the 'id' of the newly added item
     
@@ -238,32 +234,37 @@ const addCartItem = async () => {
 
       // Close the modal and reset the selected product and quantity
       // setModalVisible(false);
-      setSelectedProduct(null);
+      //setSelectedProduct(null);
       setKiasiChaFainiChaSiku('');
 
-      //navigation.replace('Pokea Rejesho HomeScreen');
+      setPending2(false);
+     
+     Alert.alert("umefanikiwa kupokea faini ya mteja" + " " + JinaKamiliLaMteja);
+     //setShouldReload(true); 
+      navigation.replace('Pokea Rejesho HomeScreen'); 
 
      // Increment the displayedItemsCount
     //setDisplayedItemsCount((prevCount) => prevCount + 1);
    
    } catch (error) {
     setModalVisible(false);
-     setPending(false);
+     setPending2(false);
      console.log("ERROR", error);
     //Alert.alert('Error', 'Failed to add item to cart');
      if (error.response && error.response.data && error.response.data.error) {
       Alert.alert(error.response.data.error);
-      setPending(false);
+      setPending2(false);
       setModalVisible(false);
     } else {
-      Alert.alert("Imeshindikana kupokea faini ");
-      setPending(false);
+      Alert.alert("Imeshindikana kupokea faini ya mteja" + " " + JinaKamiliLaMteja);
+      setPending2(false);
       setModalVisible(false);
     }
     
     
   }
 };
+
 
   return (
 

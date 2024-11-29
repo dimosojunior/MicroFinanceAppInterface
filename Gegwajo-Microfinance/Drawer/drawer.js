@@ -45,6 +45,9 @@ import HomeScreen from '../Screens/HomeScreen';
 import AddRipoti from '../Screens/AddRipoti';
 
 import HawajarejeshaJana from '../Screens/HawajarejeshaJana';
+import MikatabaYote from '../Screens/MikatabaYote';
+import NjeYaMkatabaWote from '../Screens/NjeYaMkatabaWote';
+import NJeYaMkatabaLeo from '../Screens/NJeYaMkatabaLeo';
 
 const Drawer = createDrawerNavigator();
 function MyDrawer(){
@@ -279,7 +282,7 @@ const [dropdownVisible, setDropdownVisible] = useState(false);
               }}
               onPress={() => setDropdownVisible(!dropdownVisible)}
             >
-              <FontAwesome name="book" size={30} color="white" />
+              <FontAwesome name="bar-chart" size={30} color="white" />
               <Text style={{ color: "white", 
               marginLeft: 30, fontFamily: "Light" 
             }}>
@@ -507,7 +510,7 @@ const [dropdownVisible, setDropdownVisible] = useState(false);
           component={MyStack}
         />
 
-
+ {userData && userData.is_admin === true && (
 
             <Drawer.Screen
           name="Sajili Mteja"
@@ -516,12 +519,15 @@ const [dropdownVisible, setDropdownVisible] = useState(false);
             title: "Sajili Mteja",
             
             drawerIcon: () => (
-              <FontAwesome name="user" size={30} color="white" />
+              <FontAwesome name="user-circle" size={30} color="white" />
             )
           }}
           component={AddMteja}
         />
+        )}
 
+
+ {userData && userData.is_admin === true && (
             <Drawer.Screen
           name="Andaa Ripoti Ya Siku"
           options={{
@@ -529,14 +535,16 @@ const [dropdownVisible, setDropdownVisible] = useState(false);
             title: "Andaa Ripoti Ya Siku",
             
             drawerIcon: () => (
-              <FontAwesome name="book" size={30} color="white" />
+              <FontAwesome name="pie-chart" size={30} color="white" />
             )
           }}
           component={AddRipoti}
         />
 
 
+)}
 
+ {userData && userData.is_cashier === true && (
    <Drawer.Screen
           name="Pokea Rejesho"
           options={{
@@ -544,11 +552,12 @@ const [dropdownVisible, setDropdownVisible] = useState(false);
             title: "Pokea Rejesho",
             
             drawerIcon: () => (
-              <FontAwesome name="user-circle" size={30} color="white" />
+              <FontAwesome name="credit-card" size={30} color="white" />
             )
           }}
           component={PokeaRejeshoStack}
         />
+      )}
 
    
          <Drawer.Screen
@@ -558,13 +567,26 @@ const [dropdownVisible, setDropdownVisible] = useState(false);
             title: "Hawajarejesha tarehe",
             
             drawerIcon: () => (
-              <FontAwesome name="folder-open" size={30} color="white" />
+              <FontAwesome name="user-times" size={30} color="white" />
             )
           }}
           component={HawajarejeshaJana}
         />
 
-     
+        <Drawer.Screen
+          name="Mikataba Yote"
+          options={{
+            drawerLabel: "Mikataba Yote",
+            title: "Mikataba Yote",
+            
+            drawerIcon: () => (
+              <FontAwesome name="book" size={30} color="white" />
+            )
+          }}
+          component={MikatabaYote}
+        />
+
+
 
            <Drawer.Screen
           name="Mikataba Hai"
@@ -573,15 +595,42 @@ const [dropdownVisible, setDropdownVisible] = useState(false);
             title: "Mikataba Hai",
             
             drawerIcon: () => (
-              <FontAwesome name="product-hunt" size={30} color="white" />
+              <FontAwesome name="check-square-o" size={30} color="white" />
             )
           }}
           component={MikatabaHai}
         />
 
 
+   <Drawer.Screen
+          name="Nje Ya Mkataba Tarehe"
+          options={{
+            drawerLabel: "Nje Ya Mkataba Tarehe",
+            title: "Nje Ya Mkataba Tarehe",
+            
+            drawerIcon: () => (
+              <FontAwesome name="window-close" size={30} color="white" />
+            )
+          }}
+          component={NJeYaMkatabaLeo}
+        />
 
- 
+
+
+    <Drawer.Screen
+          name="Nje Ya Mktaba Wote"
+          options={{
+            drawerLabel: "Nje Ya Mktaba Wote",
+            title: "Nje Ya Mktaba Wote",
+            
+            drawerIcon: () => (
+              <FontAwesome name="times" size={30} color="white" />
+            )
+          }}
+          component={NjeYaMkatabaWote}
+        />
+
+
 
 
 

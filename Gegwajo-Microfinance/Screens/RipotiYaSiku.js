@@ -135,7 +135,7 @@ const getItems = (token) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.queryset.length > 0) {
+        if (data.queryset && data.queryset.length > 0) {
           setQueryset(data.queryset);
           setTotalRejeshoLeo(data.total_rejesho_leo); // Set the total amount
 
@@ -1153,9 +1153,16 @@ style={[globalStyles.FullRipotiYaSikuRightText,
                </>  
 
    ) :(
-   <View style={[globalStyles.noitemTextContainer,{}]}>
-  <Text style={globalStyles.noitemText}>hukuna Taarifa
+   <View style={[globalStyles.noitemTextContainer,{
+    width:'80%',
+   }]}>
+   {!isRange ? (
+  <Text style={globalStyles.noitemText}>Ripoti ya leo bado haijathibitishwa
   </Text>
+  ):(
+ <Text style={globalStyles.noitemText}>Ripoti ya tarehe {formatDate(startDate)} haikuthibitishwa
+  </Text>
+  )}
 
 
 </View>

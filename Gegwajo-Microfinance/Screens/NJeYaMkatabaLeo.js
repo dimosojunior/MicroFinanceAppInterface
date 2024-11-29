@@ -108,7 +108,7 @@ const [userData, setUserData] = useState({});
   }, []);
 
 
-
+const [JumlaYaWote, setJumlaYaWote] = useState(0);
 const getItems = (token) => {
   if (endReached) {
     setLoading(false);
@@ -132,6 +132,7 @@ const getItems = (token) => {
       .then((data) => {
         if (data.queryset.length > 0) {
           setQueryset(data.queryset);
+           setJumlaYaWote(data.JumlaYaWote); // Set the total amount
 
         
         
@@ -187,7 +188,7 @@ const handleRefresh = async () => {
       });
       const data = await response.json();
 
-      if (data.queryset.length > 0) {
+      if (data.queryset && data.queryset.length > 0) {
         setQueryset(data.queryset); // Replace with new data
         //setcurrent_page(2); // Prepare for next page
 
@@ -619,7 +620,7 @@ const TableRowComponent = ({ item}) => {
              paddingVertical:10,
 
            }}>
-              Jumla: {ActiveProjects2}
+              Jumla: {JumlaYaWote}
             </Text>
           </TouchableOpacity>
           

@@ -180,10 +180,11 @@ const [isPending, setPending] = useState(false);
 const [selectedProduct, setSelectedProduct] = useState(null);
 const [KiasiChaRejeshoChaSiku, setKiasiChaRejeshoChaSiku] = useState(0);
 
+ const [isPending2, setPending2] = useState(false);
 
 const addCartItem = async () => {
   if (!KiasiChaRejeshoChaSiku) {
-    setPending(false); 
+    setPending2(false); 
     //Alert.alert('Error', 'Please enter a quantity of product(s) you want to order');
     Alert.alert("Tafadhali, ingiza kiasi cha rejesho");
     return;
@@ -191,10 +192,10 @@ const addCartItem = async () => {
 
 
 
-  setPending(true);
+  setPending2(true);
 
 
-  
+  setModalVisible(false);
    
 
   try {
@@ -211,13 +212,9 @@ const addCartItem = async () => {
         },
       }
     );
-    setModalVisible(false);
+    
 
-    setPending(false);
-     
-     Alert.alert("umefanikiwa kupokea rejesho");
-     //setShouldReload(true); 
-      navigation.replace('Pokea Rejesho HomeScreen'); 
+    
         
     // Ensure that the response contains the 'id' of the newly added item
     
@@ -233,24 +230,30 @@ const addCartItem = async () => {
 
       // Close the modal and reset the selected product and quantity
       // setModalVisible(false);
-      setSelectedProduct(null);
+      //setSelectedProduct(null);
       setKiasiChaRejeshoChaSiku('');
+
+      setPending2(false);
+     
+     Alert.alert("umefanikiwa kupokea rejesho la mteja" + " " + JinaKamiliLaMteja);
+     //setShouldReload(true); 
+      navigation.replace('Pokea Rejesho HomeScreen'); 
 
      // Increment the displayedItemsCount
     //setDisplayedItemsCount((prevCount) => prevCount + 1);
    
    } catch (error) {
     setModalVisible(false);
-     setPending(false);
+     setPending2(false);
      console.log("ERROR", error);
     //Alert.alert('Error', 'Failed to add item to cart');
      if (error.response && error.response.data && error.response.data.error) {
       Alert.alert(error.response.data.error);
-      setPending(false);
+      setPending2(false);
       setModalVisible(false);
     } else {
-      Alert.alert("Imeshindikana kupokea rejesho ");
-      setPending(false);
+      Alert.alert("Imeshindikana kupokea rejesho la mteja" + " " + JinaKamiliLaMteja);
+      setPending2(false);
       setModalVisible(false);
     }
     
@@ -509,7 +512,9 @@ keyboardShouldPersistTaps="handled"
           <TouchableOpacity
          //onPress={handleDeletePost}
            onPress={() => {
-        //setSelectedProduct();
+        
+        // setSelectedProduct(item);
+         //setSelectedProduct(id);
         setModalVisible(true);
         }}
            

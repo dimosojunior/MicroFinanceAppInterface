@@ -38,7 +38,7 @@ import DatePicker from "react-native-modern-datepicker";
 
 const { width, height } = Dimensions.get('screen');
 
-const MarejeshoYaLeo = ({ navigation }) => {
+const NjeYaMkatabaTarehe = ({ navigation }) => {
   const [fontsLoaded] = useFonts({
     Bold: require('../assets/fonts/Poppins-Bold.ttf'),
     Medium: require('../assets/fonts/Poppins-Medium.ttf'),
@@ -113,7 +113,7 @@ const [userData, setUserData] = useState({});
   }, []);
 
 
-
+const [JumlaYaWote, setJumlaYaWote] = useState(0);
 const getItems = (token) => {
   if (endReached) {
     setLoading(false);
@@ -125,7 +125,7 @@ const getItems = (token) => {
     //console.log('USERTOKEN', userToken);
     //setPending(true);
     //const url = EndPoint + `/GetAllUniversities/?page=${current_page}&page_size=2`;
-   const url = EndPoint + `/GetMarejeshoKwaSikuYaLeoView/?page=${current_page}&page_size=500`
+   const url = EndPoint + `/GetWatejaNjeYaMkatabaLeoView/?page=${current_page}&page_size=500`
     // console.log(url);
     fetch(url, {
       method: 'GET',
@@ -135,10 +135,10 @@ const getItems = (token) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.queryset && data.queryset.length > 0) {
+       if (data.queryset && data.queryset.length > 0) {
           setQueryset(data.queryset);
-          setTotalRejeshoLeo(data.total_rejesho_leo); // Set the total amount
-
+          //setTotalRejeshoLeo(data.total_rejesho_leo); // Set the total amount
+        setJumlaYaWote(data.JumlaYaWote); // Set the total amount
         
         
           setIsLoading(false);
@@ -184,7 +184,7 @@ const handleRefresh = async () => {
     const token = await AsyncStorage.getItem('userToken');
     if (token) {
       // Call getItems with the token and reset page
-      const url = EndPoint + `/GetMarejeshoKwaSikuYaLeoView/?page=1&page_size=500`;
+      const url = EndPoint + `/GetWatejaNjeYaMkatabaLeoView/?page=1&page_size=500`;
       const response = await fetch(url, {
         method: 'GET',
         headers: {
@@ -280,23 +280,23 @@ const handlePressDetailsPage = (item) =>
 
 //-----------Fetch wateja wote
 
-const [WatejaWote, setWatejaWote] = useState(0);
-const [ActiveProjects, setActiveProjects] = useState(0);
+const [WatejaWote2, setWatejaWote2] = useState(0);
+const [ActiveProjects2, setActiveProjects2] = useState(0);
 
 // Fetch Wateja Data
 useEffect(() => {
-  const fetchWatejaData = async () => {
+  const fetchWatejaData2 = async () => {
     try {
       const token = await AsyncStorage.getItem('userToken'); // Get the token
       if (token) {
-        const response = await axios.get(EndPoint + '/CountAllWatejaWoteView/', {
+        const response = await axios.get(EndPoint + '/CountAllWatejaWoteNjeYaMikataView/', {
           headers: {
             Authorization: `Token ${token}`, // Pass the token in the header
           },
         });
         const { wateja_wote, wateja_hai } = response.data;
-        setWatejaWote(wateja_wote);
-        setActiveProjects(wateja_hai);
+        setWatejaWote2(wateja_wote);
+        setActiveProjects2(wateja_hai);
       } else {
         console.error("No user token found");
       }
@@ -305,7 +305,7 @@ useEffect(() => {
     }
   };
 
-  fetchWatejaData();
+  fetchWatejaData2();
 }, []);
 
 
@@ -354,7 +354,7 @@ const [startDate, setStartDate] = useState(null);
   setPending(true);
 
   axios
-    .get(`${EndPoint}/FilterMarejeshoYaSikuByDate/?startDate=${formattedStartDate}`, {
+    .get(`${EndPoint}/FilterHawajarejeshaByDate/?startDate=${formattedStartDate}`, {
       headers: {
         Authorization: `Token ${userToken}`, // Add the Authorization header here
       },
@@ -527,7 +527,7 @@ const TableRowComponent = ({ item}) => {
                 fontFamily: 'Medium',
               }}
             >
-              Marejesho ya leo
+             Nje ya mkataba leo
             </Text>
             ):(
           <Text
@@ -541,7 +541,7 @@ const TableRowComponent = ({ item}) => {
                 fontFamily: 'Medium',
               }}
             >
-              Marejesho ya tarehe  {formatDate(startDate)}
+              Nje ya mkataba tarehe  {formatDate(startDate)}
             </Text>
             )}
 
@@ -727,7 +727,7 @@ style={{
               gap: 10,
             }}
           >
-            {totalRejeshoLeo > 0 ? (
+            
             <Text style={{
              //fontSize: 16, 
              //fontWeight: "500", 
@@ -743,27 +743,9 @@ style={{
              paddingVertical:10,
 
            }}>
-              Jumla: {formatToThreeDigits(totalRejeshoLeo)}
+              Jumla: {JumlaYaWote}
             </Text>
-            ):(
-           <Text style={{
-             //fontSize: 16, 
-             //fontWeight: "500", 
-             color: "white" ,
-            // padding:13,
-             backgroundColor: "black",
-             borderColor:'white',
-             borderWidth:1,
-             textAlign:'center',
-             borderRadius:8,
-             width:'100%',
-             fontFamily:'Light',
-             paddingVertical:10,
-
-           }}>
-              Jumla: 0
-            </Text>
-            )}
+         
           </TouchableOpacity>
           
 
@@ -885,4 +867,4 @@ style={{
   );
 };
 
-export default MarejeshoYaLeo;
+export default NjeYaMkatabaTarehe;

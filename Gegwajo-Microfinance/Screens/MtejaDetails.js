@@ -68,6 +68,7 @@ const MtejaDetails = ({navigation, route}) => {
     PichaYaMteja,
     Ni_Mteja_Hai,
     Created,
+    reg_no,
     Up_To
    
    } = route.params
@@ -169,7 +170,7 @@ const getItems = (token) => {
     //console.log('USERTOKEN', userToken);
     //setPending(true);
     //const url = EndPoint + `/GetAllUniversities/?page=${current_page}&page_size=2`;
-   const url = EndPoint + `/GetMarejeshoYoteYaMtejaView/?JinaKamiliLaMteja=${JinaKamiliLaMteja}&page=${current_page}&page_size=500`
+   const url = EndPoint + `/GetMarejeshoYoteYaMtejaView/?reg_no=${reg_no}&JinaKamiliLaMteja=${JinaKamiliLaMteja}&page=${current_page}&page_size=500`
     // console.log(url);
     fetch(url, {
       method: 'GET',
