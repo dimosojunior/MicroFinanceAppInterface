@@ -90,36 +90,76 @@ const [fainiisPending, setfainiPending] = useState(true);
 const [userData, setUserData] = useState({});
   const [userToken, setUserToken] = useState('');
 
-  useEffect(() => {
-    fetchUserData();
-  }, []);
+//   useEffect(() => {
+//     fetchUserData();
+//   }, []);
+
+//   const fetchUserData = async () => {
+//     try {
+//       const userDataJSON = await AsyncStorage.getItem('userData');
+//       if (userDataJSON) {
+//         const parsedUserData = JSON.parse(userDataJSON);
+//         setUserData(parsedUserData);
+
+//         //console.log(parsedUserData);
+//         //console.log(userDataJSON);
+//       }
+//     } catch (error) {
+//       // console.log(error);
+//     }
+//   };
+
+// //console.log("USERDATA USERNAME", userData.username);
+
+
+
+//  useEffect(() => {
+//   const fetchDataSequentially = async () => {
+//     try {
+//       const token = await AsyncStorage.getItem('userToken');
+//       setUserToken(token);
+
+//       if (token) {
+//         setIsLoading(true);
+
+//         // Call getItems
+//         await getItems(token);
+
+//         // Call getMarejeshoYaLeo
+//         await getMarejeshoYaLeo(token);
+
+//         // Call getFainiZaLeo
+//         await getFainiZaLeo(token);
+//     setIsLoading(false);
+        
+//       }
+//     } catch (error) {
+//       console.error("Hey Error fetching data:", error);
+//       setIsLoading(false);
+//     }
+//   };
+
+//   fetchDataSequentially();
+// }, []);
+
+
 
   const fetchUserData = async () => {
     try {
       const userDataJSON = await AsyncStorage.getItem('userData');
       if (userDataJSON) {
-        const parsedUserData = JSON.parse(userDataJSON);
-        setUserData(parsedUserData);
-
-        //console.log(parsedUserData);
-        //console.log(userDataJSON);
+        setUserData(JSON.parse(userDataJSON));
       }
     } catch (error) {
-      // console.log(error);
+      console.error('Error fetching user data:', error);
     }
   };
 
-//console.log("USERDATA USERNAME", userData.username);
-
-
-
- useEffect(() => {
-  const fetchDataSequentially = async () => {
+  const fetchTokenAndData = async () => {
     try {
       const token = await AsyncStorage.getItem('userToken');
       setUserToken(token);
-
-      if (token) {
+       if (token) {
         setIsLoading(true);
 
         // Call getItems
@@ -134,13 +174,25 @@ const [userData, setUserData] = useState({});
         
       }
     } catch (error) {
-      console.error("Hey Error fetching data:", error);
-      setIsLoading(false);
+      console.error('Error fetching token:', error);
     }
   };
 
-  fetchDataSequentially();
-}, []);
+  useFocusEffect(
+    useCallback(() => {
+      setPending(true); // Set pending to true immediately when entering the screen
+      fetchUserData();
+      fetchTokenAndData();
+
+      return () => {
+        setQueryset([]); // Reset queryset to avoid stale data
+        setcurrent_page(1); // Reset pagination
+        setEndReached(false); // Ensure endReached is reset for new focus
+      };
+    }, [])
+  );
+
+
 
 
 const [totalRejeshoLeo, setTotalRejeshoLeo] = useState(0);
