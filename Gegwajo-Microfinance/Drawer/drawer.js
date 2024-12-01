@@ -47,7 +47,7 @@ import AddRipoti from '../Screens/AddRipoti';
 import HawajarejeshaJana from '../Screens/HawajarejeshaJana';
 import MikatabaYote from '../Screens/MikatabaYote';
 import NjeYaMkatabaWote from '../Screens/NjeYaMkatabaWote';
-import NJeYaMkatabaLeo from '../Screens/NJeYaMkatabaLeo';
+import NjeYaMkatabaTarehe from '../Screens/NjeYaMkatabaTarehe';
 
 const Drawer = createDrawerNavigator();
 function MyDrawer(){
@@ -612,7 +612,7 @@ const [dropdownVisible, setDropdownVisible] = useState(false);
               <FontAwesome name="window-close" size={30} color="white" />
             )
           }}
-          component={NJeYaMkatabaLeo}
+          component={NjeYaMkatabaTarehe}
         />
 
 

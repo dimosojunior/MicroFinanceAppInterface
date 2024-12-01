@@ -620,14 +620,20 @@ keyboardShouldPersistTaps="handled"
           
             
 
-            <View style={globalStyles.ButtonConatinerViewProduct}>
-                    <TouchableOpacity style={globalStyles.ButtonCloseViewProduct}  onPress={() => setModalVisible(false)} >
-                        <Text style={globalStyles.ConfirmCancelButtonTextViewProduct}>CLOSE</Text>
-                    </TouchableOpacity>
+            <View style={[globalStyles.ButtonConatinerViewProduct,
+
+             {
+              justifyContent:'center',
+              alignItems:'center',
+             }
+              ]}>
+                    {/*<TouchableOpacity style={globalStyles.ButtonCloseViewProduct}  onPress={() => setModalVisible(false)} >
+                        <Text style={globalStyles.ConfirmCancelButtonTextViewProduct}>Ondoa</Text>
+                    </TouchableOpacity>*/}
                     <TouchableOpacity 
                     style={globalStyles.ButtonAddViewProduct}  
                     onPress={addCartItem} >
-                        <Text style={globalStyles.ConfirmCancelButtonTextViewProduct}>CONFIRM</Text>
+                        <Text style={globalStyles.ConfirmCancelButtonTextViewProduct}>Kubali</Text>
                     </TouchableOpacity>
             </View>
           </View>

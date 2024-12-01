@@ -48,7 +48,7 @@ const NjeYaMkatabaTarehe = ({ navigation }) => {
     Light: require('../assets/fonts/Poppins-Light.ttf'),
   });
 
-const [totalRejeshoLeo, setTotalRejeshoLeo] = useState(0);
+
 
  const [queryset, setQueryset] = useState([]);
 const [current_page, setcurrent_page] = useState(1);
@@ -79,41 +79,80 @@ const [isPending, setPending] = useState(true);
 const [userData, setUserData] = useState({});
   const [userToken, setUserToken] = useState('');
 
-  useEffect(() => {
-    fetchUserData();
-  }, []);
+//   useEffect(() => {
+//     fetchUserData();
+//   }, []);
 
-  const fetchUserData = async () => {
+//   const fetchUserData = async () => {
+//     try {
+//       const userDataJSON = await AsyncStorage.getItem('userData');
+//       if (userDataJSON) {
+//         const parsedUserData = JSON.parse(userDataJSON);
+//         setUserData(parsedUserData);
+
+//         //console.log(parsedUserData);
+//         //console.log(userDataJSON);
+//       }
+//     } catch (error) {
+//       // console.log(error);
+//     }
+//   };
+
+// //console.log("USERDATA USERNAME", userData.username);
+
+//  useEffect(() => {
+//     const fetchTokenAndData = async () => {
+//       const token = await AsyncStorage.getItem('userToken');
+//       setUserToken(token);
+//       if (token) {
+//         setIsLoading(true);
+//         getItems(token);
+//       }
+//     };
+//     fetchTokenAndData();
+//   }, []);
+
+
+ const fetchUserData = async () => {
     try {
       const userDataJSON = await AsyncStorage.getItem('userData');
       if (userDataJSON) {
-        const parsedUserData = JSON.parse(userDataJSON);
-        setUserData(parsedUserData);
-
-        //console.log(parsedUserData);
-        //console.log(userDataJSON);
+        setUserData(JSON.parse(userDataJSON));
       }
     } catch (error) {
-      // console.log(error);
+      console.error('Error fetching user data:', error);
     }
   };
 
-//console.log("USERDATA USERNAME", userData.username);
-
- useEffect(() => {
-    const fetchTokenAndData = async () => {
+  const fetchTokenAndData = async () => {
+    try {
       const token = await AsyncStorage.getItem('userToken');
       setUserToken(token);
       if (token) {
-        setIsLoading(true);
-        getItems(token);
+        //setcurrent_page(1); // Reset page when refetching
+        getItems(token); // Start fetching from the first page
       }
-    };
-    fetchTokenAndData();
-  }, []);
+    } catch (error) {
+      console.error('Error fetching token:', error);
+    }
+  };
 
+  useFocusEffect(
+    useCallback(() => {
+      setPending(true); // Set pending to true immediately when entering the screen
+      fetchUserData();
+      fetchTokenAndData();
+
+      return () => {
+        setQueryset([]); // Reset queryset to avoid stale data
+        setcurrent_page(1); // Reset pagination
+        setEndReached(false); // Ensure endReached is reset for new focus
+      };
+    }, [])
+  );
 
 const [JumlaYaWote, setJumlaYaWote] = useState(0);
+
 const getItems = (token) => {
   if (endReached) {
     setLoading(false);
@@ -125,7 +164,7 @@ const getItems = (token) => {
     //console.log('USERTOKEN', userToken);
     //setPending(true);
     //const url = EndPoint + `/GetAllUniversities/?page=${current_page}&page_size=2`;
-   const url = EndPoint + `/GetWatejaNjeYaMkatabaLeoView/?page=${current_page}&page_size=500`
+   const url = EndPoint + `/GetNjeYaMkatabaTareheFulaniView/?page=${current_page}&page_size=500`
     // console.log(url);
     fetch(url, {
       method: 'GET',
@@ -137,8 +176,8 @@ const getItems = (token) => {
       .then((data) => {
        if (data.queryset && data.queryset.length > 0) {
           setQueryset(data.queryset);
-          //setTotalRejeshoLeo(data.total_rejesho_leo); // Set the total amount
-        setJumlaYaWote(data.JumlaYaWote); // Set the total amount
+          setJumlaYaWote(data.JumlaYaWote); // Set the total amount
+
         
         
           setIsLoading(false);
@@ -184,7 +223,7 @@ const handleRefresh = async () => {
     const token = await AsyncStorage.getItem('userToken');
     if (token) {
       // Call getItems with the token and reset page
-      const url = EndPoint + `/GetWatejaNjeYaMkatabaLeoView/?page=1&page_size=500`;
+      const url = EndPoint + `/GetNjeYaMkatabaTareheFulaniView/?page=1&page_size=500`;
       const response = await fetch(url, {
         method: 'GET',
         headers: {
@@ -196,7 +235,7 @@ const handleRefresh = async () => {
       if (data.queryset.length > 0) {
         setQueryset(data.queryset); // Replace with new data
         //setcurrent_page(2); // Prepare for next page
-        setTotalRejeshoLeo(data.total_rejesho_leo); // Set the total amount
+        setJumlaYaWote(data.JumlaYaWote); // Set the total amount
 
          setIsLoading(false);
           setLoading(false);
@@ -280,23 +319,23 @@ const handlePressDetailsPage = (item) =>
 
 //-----------Fetch wateja wote
 
-const [WatejaWote2, setWatejaWote2] = useState(0);
-const [ActiveProjects2, setActiveProjects2] = useState(0);
+const [WatejaWote, setWatejaWote] = useState(0);
+const [ActiveProjects, setActiveProjects] = useState(0);
 
 // Fetch Wateja Data
 useEffect(() => {
-  const fetchWatejaData2 = async () => {
+  const fetchWatejaData = async () => {
     try {
       const token = await AsyncStorage.getItem('userToken'); // Get the token
       if (token) {
-        const response = await axios.get(EndPoint + '/CountAllWatejaWoteNjeYaMikataView/', {
+        const response = await axios.get(EndPoint + '/CountAllWatejaWoteView/', {
           headers: {
             Authorization: `Token ${token}`, // Pass the token in the header
           },
         });
         const { wateja_wote, wateja_hai } = response.data;
-        setWatejaWote2(wateja_wote);
-        setActiveProjects2(wateja_hai);
+        setWatejaWote(wateja_wote);
+        setActiveProjects(wateja_hai);
       } else {
         console.error("No user token found");
       }
@@ -305,7 +344,7 @@ useEffect(() => {
     }
   };
 
-  fetchWatejaData2();
+  fetchWatejaData();
 }, []);
 
 
@@ -354,15 +393,15 @@ const [startDate, setStartDate] = useState(null);
   setPending(true);
 
   axios
-    .get(`${EndPoint}/FilterHawajarejeshaByDate/?startDate=${formattedStartDate}`, {
+    .get(`${EndPoint}/FilterNjeYaMkatabaTareheFulaniByDate/?startDate=${formattedStartDate}`, {
       headers: {
         Authorization: `Token ${userToken}`, // Add the Authorization header here
       },
     })
     .then((response) => {
-      const { queryset, total_rejesho_leo } = response.data;
+      const { queryset, JumlaYaWote } = response.data;
       setQueryset(queryset);
-      setTotalRejeshoLeo(total_rejesho_leo);
+      setJumlaYaWote(JumlaYaWote);
       setModalVisible(false);
       setPending(false);
       setisRange(true);
@@ -527,7 +566,7 @@ const TableRowComponent = ({ item}) => {
                 fontFamily: 'Medium',
               }}
             >
-             Nje ya mkataba leo
+              Nje ya mkataba leo
             </Text>
             ):(
           <Text
